@@ -7,6 +7,9 @@ import { TopbarComponent } from './components/topbar/topbar.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { PageRadComponent } from './components/page-rad/page-rad.component';
 
+import { ToastModule } from 'primeng/toast';
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -16,7 +19,8 @@ import { PageRadComponent } from './components/page-rad/page-rad.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    ToastModule
   ],
   providers: [],
   bootstrap: [AppComponent]
