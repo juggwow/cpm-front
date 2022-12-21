@@ -101,6 +101,5 @@
         }
       }
     }
-  },
-  "defaultProject": "cpm-rad-frontend"
+  }
 }
