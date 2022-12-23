@@ -8,6 +8,9 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { PageRadComponent } from './components/page-rad/page-rad.component';
 
 import { ToastModule } from 'primeng/toast';
+import {MenubarModule} from 'primeng/menubar';
+import { MenuComponent } from './components/menu/menu.component';
+import {SlideMenuModule} from 'primeng/slidemenu';
 
 
 @NgModule({
@@ -15,12 +18,15 @@ import { ToastModule } from 'primeng/toast';
     AppComponent,
     TopbarComponent,
     SidebarComponent,
-    PageRadComponent
+    PageRadComponent,
+    MenuComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    ToastModule
+    ToastModule,
+    MenubarModule,
+    SlideMenuModule
   ],
   providers: [],
   bootstrap: [AppComponent]
