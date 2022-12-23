@@ -7,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TopbarComponent implements OnInit {
 
+  demoNoti = "4"
+
   constructor() { }
 
   ngOnInit(): void {

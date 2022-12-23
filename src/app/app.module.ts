@@ -8,9 +8,11 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { PageRadComponent } from './components/page-rad/page-rad.component';
 
 import { ToastModule } from 'primeng/toast';
-import {MenubarModule} from 'primeng/menubar';
+import { MenubarModule } from 'primeng/menubar';
 import { MenuComponent } from './components/menu/menu.component';
-import {SlideMenuModule} from 'primeng/slidemenu';
+import { SlideMenuModule } from 'primeng/slidemenu';
+import { ButtonModule } from 'primeng/button';
+import { BadgeModule } from 'primeng/badge';
 
 
 @NgModule({
@@ -26,7 +28,9 @@ import {SlideMenuModule} from 'primeng/slidemenu';
     AppRoutingModule,
     ToastModule,
     MenubarModule,
-    SlideMenuModule
+    SlideMenuModule,
+    ButtonModule,
+    BadgeModule
   ],
   providers: [],
   bootstrap: [AppComponent]
