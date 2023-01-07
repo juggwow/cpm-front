@@ -1,1 +1,10 @@
-/* You can add global styles to this file, and also import other style files */
+@font-face {
+  font-family: "NotoSansThai";
+  src: local("NotoSansThai"),
+      url(./assets/fonts/NotoSansThai/NotoSansThai-Regular.ttf)
+          format("truetype");
+}
+
+body{
+  font-family: "NotoSansThai";
+}
