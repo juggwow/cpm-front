@@ -1,3 +1,38 @@
+
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@use '@angular/material' as mat;
+// Plus imports for other components in your app.
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat.core();
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+$cpm-rad-frontend-primary: mat.define-palette(mat.$indigo-palette);
+$cpm-rad-frontend-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
+
+// The warn palette is optional (defaults to red).
+$cpm-rad-frontend-warn: mat.define-palette(mat.$red-palette);
+
+// Create the theme object. A theme consists of configurations for individual
+// theming systems such as "color" or "typography".
+$cpm-rad-frontend-theme: mat.define-light-theme((
+  color: (
+    primary: $cpm-rad-frontend-primary,
+    accent: $cpm-rad-frontend-accent,
+    warn: $cpm-rad-frontend-warn,
+  )
+));
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include mat.all-component-themes($cpm-rad-frontend-theme);
+
 @font-face {
   font-family: "NotoSansThai";
   src: local("NotoSansThai"),
@@ -7,4 +42,28 @@
 
 body{
   font-family: "NotoSansThai";
+  margin: 0;
+  background: #E5E5E5;
+}
+
+html, body { height: 100%; }
+
+:focus:focus{
+  outline: unset
+}
+
+//customise the typography
+@import '~@angular/material/theming';
+$custom-typography: mat-typography-config(
+  $font-family: 'NotoSansThai'
+);
+
+@include angular-material-typography($custom-typography);
+
+//color
+.neutral-08{
+  color: #454545
+}
+.neutral-09{
+  color: #292929;
 }

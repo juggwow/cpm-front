@@ -1,0 +1,26 @@
+<mat-toolbar>
+  <!-- CPM logo -->
+  <a routerLink="" class="mx-4">
+    <img src="assets/CPM.svg" alt="">
+  </a>
+  <!-- Text Topic -->
+  <div class="d-flex flex-column neutral-09">
+    <span class="fw-bold fs-5">PEA Capital Project Management</span>
+    <span class="fw-lighter fs-6">ระบบบริหารโครงการก่อสร้างระบบไฟฟ้า กฟภ.</span>
+  </div>
+
+  <!-- Space -->
+  <span class="flex-fill"></span>
+
+  <!-- Notification bell and avatar -->
+  <div class="d-flex align-items-center">
+    <button mat-button aria-label="Notification bell">
+      <mat-icon [matBadge]="denoNotiNumber" matBadgeColor="warn" class="neutral-08">notifications_none</mat-icon>
+    </button>
+    <div class="vl"></div>
+  </div>
+
+  <button mat-button>
+    <img class="avatar rounded-circle bg-white" src="https://s4.anilist.co/file/anilistcdn/character/large/b121052-bQZT3nIvaryX.png" alt="">
+  </button>
+</mat-toolbar>
