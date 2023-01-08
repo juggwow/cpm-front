@@ -1,0 +1,14 @@
+mat-sidenav {
+  width: 248px;
+  background: #FFFFFF;
+  /* PEA-Shadows-Head Bar */
+
+  box-shadow: 0px 4px 16px rgba(192, 181, 205, 0.24);
+}
+
+mat-sidenav-container {
+  height: 100%;
+  position: relative;
+  z-index: 0;
+  background-color: #E5E5E5;
+}

@@ -1,4 +1,3 @@
-
 // Custom Theming for Angular Material
 // For more information: https://material.angular.io/guide/theming
 @use '@angular/material' as mat;
@@ -20,13 +19,10 @@ $cpm-rad-frontend-warn: mat.define-palette(mat.$red-palette);
 
 // Create the theme object. A theme consists of configurations for individual
 // theming systems such as "color" or "typography".
-$cpm-rad-frontend-theme: mat.define-light-theme((
-  color: (
-    primary: $cpm-rad-frontend-primary,
-    accent: $cpm-rad-frontend-accent,
-    warn: $cpm-rad-frontend-warn,
-  )
-));
+$cpm-rad-frontend-theme: mat.define-light-theme((color: (primary: $cpm-rad-frontend-primary,
+        accent: $cpm-rad-frontend-accent,
+        warn: $cpm-rad-frontend-warn,
+      )));
 
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component
@@ -36,34 +32,39 @@ $cpm-rad-frontend-theme: mat.define-light-theme((
 @font-face {
   font-family: "NotoSansThai";
   src: local("NotoSansThai"),
-      url(./assets/fonts/NotoSansThai/NotoSansThai-Regular.ttf)
-          format("truetype");
+    url(./assets/fonts/NotoSansThai/NotoSansThai-Regular.ttf) format("truetype");
 }
 
-body{
+body {
   font-family: "NotoSansThai";
   margin: 0;
   background: #E5E5E5;
+  width: 100%;
+    margin: 0;
+
 }
 
-html, body { height: 100%; }
+html,
+body {
+  height: 100%;
+}
 
-:focus:focus{
+:focus:focus {
   outline: unset
 }
 
 //customise the typography
 @import '~@angular/material/theming';
-$custom-typography: mat-typography-config(
-  $font-family: 'NotoSansThai'
-);
+$custom-typography: mat-typography-config($font-family: 'NotoSansThai'
+  );
 
 @include angular-material-typography($custom-typography);
 
 //color
-.neutral-08{
+.neutral-08 {
   color: #454545
 }
-.neutral-09{
+
+.neutral-09 {
   color: #292929;
 }
