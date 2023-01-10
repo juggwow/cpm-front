@@ -38,9 +38,9 @@ $cpm-rad-frontend-theme: mat.define-light-theme((color: (primary: $cpm-rad-front
 body {
   font-family: "NotoSansThai";
   margin: 0;
-  background: #E5E5E5;
+  background: #fdfdfe;
   width: 100%;
-    margin: 0;
+  margin: 0;
 
 }
 
@@ -61,10 +61,19 @@ $custom-typography: mat-typography-config($font-family: 'NotoSansThai'
 @include angular-material-typography($custom-typography);
 
 //color
+
+.neutral-06 {
+  color: #7F7F7F;
+}
+
 .neutral-08 {
   color: #454545
 }
 
 .neutral-09 {
   color: #292929;
+}
+
+.primary-400 {
+  color: #7718BC;
 }
