@@ -1,29 +1,101 @@
-<div class="neutral-08 fw-bold fs-4 mt-4 mb-3 ms-4">
+<div class="container my-5">
+<div class="neutral-08 fw-bold fs-4 ">
   Receive and Damage
 </div>
 
+<div class="row mt-4">
 <nav aria-label="breadcrumb">
-  <ol class="breadcrumb ms-4 fs-6">
+  <ol class="breadcrumb fs-6">
     <li class="breadcrumb-item"><a class="neutral-06" routerLink="">ตรวจรับงาน</a></li>
     <li class="breadcrumb-item"><a class="neutral-06" routerLink="">สระบุรี 1</a></li>
     <li class="breadcrumb-item active fw-bolder" aria-current="page">Receive and Damage</li>
   </ol>
 </nav>
+</div>
 
 <div class="row">
   <div class="col-md-4">
-    <mat-card>
+    <mat-card class="rounded-4 py-3">
+      <p class="h5">
       รายการทั้งหมด
+      </p>
+      <div class="d-flex">
+        <div class="col-6 align-self-end">
+          <p>50 รายการ</p>
+        </div>
+        <div class="col-6 border-start px-3">
+          <p>รับของครบ 1 รายการ</p>
+          <p>ยังไม่ครบ 49 รายการ</p>
+        </div>
+      </div>
     </mat-card>
   </div>
   <div class="col-md-4">
-    <mat-card>
+    <mat-card class="rounded-4 py-3">
+      <p class="h5">
       รายการที่ตรวจสอบแล้ว
+      </p>
+      <div class="d-flex">
+        <div class="col-6 align-self-end">
+          <p>50 รายการ</p>
+        </div>
+        <div class="col-6 border-start px-3">
+          <p>รับของครบ 1 รายการ</p>
+          <p>ยังไม่ครบ 49 รายการ</p>
+        </div>
+      </div>
     </mat-card>
   </div>
   <div class="col-md-4">
-    <mat-card>
-      รายการรอตรวจสอบ
+    <mat-card class="rounded-4 py-3">
+      <p class="h5">
+        รายการที่รอตรวจสอบ
+      </p>
+      <div class="d-flex">
+        <div class="col-6 align-self-end">
+          <p>50 รายการ</p>
+        </div>
+        <div class="col-6 border-start px-3">
+          <p>รับของครบ 1 รายการ</p>
+          <p>ยังไม่ครบ 49 รายการ</p>
+        </div>
+      </div>
     </mat-card>
   </div>
+</div>
+
+<div class="row my-5 ">
+  <mat-card class="py-5 px-5">
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">First</th>
+        <th scope="col">Last</th>
+        <th scope="col">Handle</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row">1</th>
+        <td>Mark</td>
+        <td>Otto</td>
+        <td>@mdo</td>
+      </tr>
+      <tr>
+        <th scope="row">2</th>
+        <td>Jacob</td>
+        <td>Thornton</td>
+        <td>@fat</td>
+      </tr>
+      <tr>
+        <th scope="row">3</th>
+        <td colspan="2">Larry the Bird</td>
+        <td>@twitter</td>
+      </tr>
+    </tbody>
+  </table>
+</mat-card>
+
+</div>
 </div>
