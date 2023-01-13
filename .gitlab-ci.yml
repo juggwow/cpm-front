@@ -1,6 +1,6 @@
 variables:
   app_name: "cpm-rad-frontend" # change to your app e.g. cpm-rad
-  namespace: "devpool-rad" # change to your namespace e.g. devpool-rad
+  namespace: "devpool-rad-frontend" # change to your namespace e.g. devpool-rad
 
 include:
   - project: "pea-developer/std/ci-cd"
