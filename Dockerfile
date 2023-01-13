@@ -6,9 +6,9 @@ COPY package.json  /app
 RUN npm install
 
 COPY .  /app
-RUN ng build -c $environment
+RUN ng build -c 
 
 FROM nginx:1.23.0-alpine
 
 COPY ./conf.d/default.conf /etc/nginx/conf.d/default.conf
-COPY --from=builder /app/dist/cmdc-ng /usr/share/nginx/html
+COPY --from=builder /app/dist/cpm-rad-frontend /usr/share/nginx/html
