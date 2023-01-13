@@ -16,13 +16,15 @@ import { MatListModule } from '@angular/material/list';
 import { RadHomeComponent } from './components/rad-home/rad-home.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { RadFormComponent } from './components/rad-form/rad-form.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     SideNavComponent,
-    RadHomeComponent
+    RadHomeComponent,
+    RadFormComponent
   ],
   imports: [
     BrowserModule,
