@@ -9,7 +9,7 @@ import { Project } from 'src/app/models/project.model';
 })
 export class RadHomeComponent implements OnInit {
 
-  displayedColumns = ['ลำดับ', 'Item No.', 'รายการ', 'รายการหลัก', 'จำนวนตามสัญญา', 'จำนวนที่รอส่งมอบ', 'สภาพดี', 'พบปัญหา', 'actionCreate', 'actionFind']
+  displayedColumns = ['order', 'ItemNo', 'listName', 'mainListName', 'quantityContact', 'quantitiySent', 'quantityOk', 'quantityNg', 'action']
 
   dataSource = new MatTableDataSource<Project>();
 
