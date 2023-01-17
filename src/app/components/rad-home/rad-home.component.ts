@@ -16,6 +16,8 @@ export class RadHomeComponent implements OnInit {
 
   counter = 1;
 
+  textIdSearch: string = '';
+
   constructor() { }
 
   ngOnInit(): void {
@@ -80,6 +82,19 @@ export class RadHomeComponent implements OnInit {
       }
     ]
     this.dataSource.data = dummy
+  }
+
+  search(event: Event | null) {
+    let filterValue = ''
+    if (event) {
+      filterValue = (event.target as HTMLInputElement).value
+    }
+    this.dataSource.filter = filterValue.trim().toLowerCase()
+  }
+
+  clearSearch() {
+     this.textIdSearch = ''
+     this.search(null)
   }
 
 }

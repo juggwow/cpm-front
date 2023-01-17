@@ -99,6 +99,15 @@
   </div> -->
 
   <div class="mat-elevation-z8 table-margin table-responsive">
+
+    <div class="d-flex justify-content-between align-items-center p-3 search_form">
+      <mat-form-field appearance="outline">
+        <mat-label>Search</mat-label>
+        <input [(ngModel)]="textIdSearch" (keyup)="search($event)" matInput placeholder="">
+        <mat-icon matSuffix *ngIf="!textIdSearch">search</mat-icon>
+        <button (click)="clearSearch() " mat-icon-button matSuffix *ngIf="textIdSearch"><mat-icon>close</mat-icon></button>
+      </mat-form-field>
+    </div>
     <table mat-table [dataSource]="dataSource" class="w-100">
 
       <ng-container matColumnDef="id">
@@ -153,95 +162,8 @@
         </td>
       </ng-container>
 
-      <!-- Header bottom row for input -->
-      <ng-container matColumnDef="header-input-id">
-        <th mat-header-cell *matHeaderCellDef [attr.colspan]="1">
-          <mat-form-field appearance="outline">
-            <mat-label>Search</mat-label>
-            <input matInput placeholder="Placeholder">
-            <mat-icon matSuffix>search</mat-icon>
-          </mat-form-field>
-        </th>
-      </ng-container>
-
-      <ng-container matColumnDef="header-input-itemNo">
-        <th mat-header-cell *matHeaderCellDef [attr.colspan]="1">
-          <mat-form-field appearance="outline">
-            <mat-label>Search</mat-label>
-            <input matInput placeholder="Placeholder">
-            <mat-icon matSuffix>search</mat-icon>
-          </mat-form-field>
-        </th>
-      </ng-container>
-
-      <ng-container matColumnDef="header-input-name">
-        <th mat-header-cell *matHeaderCellDef [attr.colspan]="1">
-          <mat-form-field appearance="outline">
-            <mat-label>Search</mat-label>
-            <input matInput placeholder="Placeholder">
-            <mat-icon matSuffix>search</mat-icon>
-          </mat-form-field>
-        </th>
-      </ng-container>
-
-      <ng-container matColumnDef="header-input-group">
-        <th mat-header-cell *matHeaderCellDef [attr.colspan]="1">
-          <mat-form-field appearance="outline">
-            <mat-label>Search</mat-label>
-            <input matInput placeholder="Placeholder">
-            <mat-icon matSuffix>search</mat-icon>
-          </mat-form-field>
-        </th>
-      </ng-container>
-
-      <ng-container matColumnDef="header-input-quantity">
-        <th mat-header-cell *matHeaderCellDef [attr.colspan]="1">
-          <mat-form-field appearance="outline">
-            <mat-label>Search</mat-label>
-            <input matInput placeholder="Placeholder">
-            <mat-icon matSuffix>search</mat-icon>
-          </mat-form-field>
-        </th>
-      </ng-container>
-
-      <ng-container matColumnDef="header-input-delivery">
-        <th mat-header-cell *matHeaderCellDef [attr.colspan]="1">
-          <mat-form-field appearance="outline">
-            <mat-label>Search</mat-label>
-            <input matInput placeholder="Placeholder">
-            <mat-icon matSuffix>search</mat-icon>
-          </mat-form-field>
-        </th>
-      </ng-container>
-
-      <ng-container matColumnDef="header-input-good">
-        <th mat-header-cell *matHeaderCellDef [attr.colspan]="1">
-          <mat-form-field appearance="outline">
-            <mat-label>Search</mat-label>
-            <input matInput placeholder="Placeholder">
-            <mat-icon matSuffix>search</mat-icon>
-          </mat-form-field>
-        </th>
-      </ng-container>
-
-      <ng-container matColumnDef="header-input-bad">
-        <th mat-header-cell *matHeaderCellDef [attr.colspan]="1">
-          <mat-form-field appearance="outline">
-            <mat-label>Search</mat-label>
-            <input matInput placeholder="Placeholder">
-            <mat-icon matSuffix>search</mat-icon>
-          </mat-form-field>
-        </th>
-      </ng-container>
-
-      <ng-container matColumnDef="header-input-action">
-        <th mat-header-cell *matHeaderCellDef [attr.colspan]="1">
-        </th>
-      </ng-container>
-
       <tr mat-header-row *matHeaderRowDef="displayedColumns">
       </tr>
-      <tr mat-header-row *matHeaderRowDef="['header-input-id', 'header-input-itemNo', 'header-input-name','header-input-group','header-input-quantity','header-input-delivery','header-input-good','header-input-bad','header-input-action']"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;">
       </tr>
     </table>
