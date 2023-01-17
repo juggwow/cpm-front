@@ -50,8 +50,8 @@ a {
   flex-grow: 0;
 }
 
-th.mat-column-listName,
-td.mat-column-listName {
+th.mat-column-name,
+td.mat-column-name {
   max-width: 136px;
 }
 
@@ -71,4 +71,8 @@ th.mat-header-cell {
   th.mat-header-cell:nth-child(2) {
     min-width: 400px;
   }
+}
+
+mat-form-field {
+  width: 80px;
 }

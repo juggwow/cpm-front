@@ -101,44 +101,44 @@
   <div class="mat-elevation-z8 table-margin table-responsive">
     <table mat-table [dataSource]="dataSource" class="w-100">
 
-      <ng-container matColumnDef="order">
+      <ng-container matColumnDef="id">
         <th mat-header-cell *matHeaderCellDef> ลำดับ </th>
-        <td mat-cell *matCellDef="let data"> {{data}} </td>
+        <td mat-cell *matCellDef="let element; index as i"> {{i + 1}} </td>
       </ng-container>
 
-      <ng-container matColumnDef="ItemNo">
-        <th mat-header-cell *matHeaderCellDef> Item No. </th>
+      <ng-container matColumnDef="itemNo">
+        <th mat-header-cell *matHeaderCellDef> Item<br>No. </th>
         <td mat-cell *matCellDef="let data"> {{data.itemNo}} </td>
       </ng-container>
 
-      <ng-container matColumnDef="listName">
+      <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef> รายการ </th>
-        <td mat-cell *matCellDef="let data" class="text-truncate"> {{data.listName}} </td>
+        <td mat-cell *matCellDef="let data" class="text-truncate"> {{data.name}} </td>
       </ng-container>
 
-      <ng-container matColumnDef="mainListName">
+      <ng-container matColumnDef="group">
         <th mat-header-cell *matHeaderCellDef> รายการหลัก </th>
-        <td mat-cell *matCellDef="let data" class="text-truncate"> {{data.mainListName}} </td>
+        <td mat-cell *matCellDef="let data" class="text-truncate"> {{data.group}} </td>
       </ng-container>
 
-      <ng-container matColumnDef="quantityContact">
-        <th mat-header-cell *matHeaderCellDef> จำนวนตามสัญญา </th>
-        <td mat-cell *matCellDef="let data"> {{data.quantityContact | number}} Unit </td>
+      <ng-container matColumnDef="quantity">
+        <th mat-header-cell *matHeaderCellDef> จำนวน<br>ตามสัญญา </th>
+        <td mat-cell *matCellDef="let data"> {{data.quantity}} </td>
       </ng-container>
 
-      <ng-container matColumnDef="quantitiySent">
-        <th mat-header-cell *matHeaderCellDef> จำนวนที่รอส่งมอบ </th>
-        <td mat-cell *matCellDef="let data"> {{data.quantitiySent | number}} Unit </td>
+      <ng-container matColumnDef="delivery">
+        <th mat-header-cell *matHeaderCellDef> จำนวน<br>ที่รอส่งมอบ </th>
+        <td mat-cell *matCellDef="let data"> {{data.delivery}} </td>
       </ng-container>
 
-      <ng-container matColumnDef="quantityOk">
+      <ng-container matColumnDef="good">
         <th mat-header-cell *matHeaderCellDef> สภาพดี </th>
-        <td mat-cell *matCellDef="let data"> {{data.quantityOk | number}} Unit </td>
+        <td mat-cell *matCellDef="let data"> {{data.good}} </td>
       </ng-container>
 
-      <ng-container matColumnDef="quantityNg">
+      <ng-container matColumnDef="bad">
         <th mat-header-cell *matHeaderCellDef> พบปัญหา </th>
-        <td mat-cell *matCellDef="let data"> {{data.quantityNg | number}} Unit </td>
+        <td mat-cell *matCellDef="let data"> {{data.bad}} </td>
       </ng-container>
 
       <ng-container matColumnDef="action">
@@ -153,8 +153,95 @@
         </td>
       </ng-container>
 
+      <!-- Header bottom row for input -->
+      <ng-container matColumnDef="header-input-id">
+        <th mat-header-cell *matHeaderCellDef [attr.colspan]="1">
+          <mat-form-field appearance="outline">
+            <mat-label>Search</mat-label>
+            <input matInput placeholder="Placeholder">
+            <mat-icon matSuffix>search</mat-icon>
+          </mat-form-field>
+        </th>
+      </ng-container>
+
+      <ng-container matColumnDef="header-input-itemNo">
+        <th mat-header-cell *matHeaderCellDef [attr.colspan]="1">
+          <mat-form-field appearance="outline">
+            <mat-label>Search</mat-label>
+            <input matInput placeholder="Placeholder">
+            <mat-icon matSuffix>search</mat-icon>
+          </mat-form-field>
+        </th>
+      </ng-container>
+
+      <ng-container matColumnDef="header-input-name">
+        <th mat-header-cell *matHeaderCellDef [attr.colspan]="1">
+          <mat-form-field appearance="outline">
+            <mat-label>Search</mat-label>
+            <input matInput placeholder="Placeholder">
+            <mat-icon matSuffix>search</mat-icon>
+          </mat-form-field>
+        </th>
+      </ng-container>
+
+      <ng-container matColumnDef="header-input-group">
+        <th mat-header-cell *matHeaderCellDef [attr.colspan]="1">
+          <mat-form-field appearance="outline">
+            <mat-label>Search</mat-label>
+            <input matInput placeholder="Placeholder">
+            <mat-icon matSuffix>search</mat-icon>
+          </mat-form-field>
+        </th>
+      </ng-container>
+
+      <ng-container matColumnDef="header-input-quantity">
+        <th mat-header-cell *matHeaderCellDef [attr.colspan]="1">
+          <mat-form-field appearance="outline">
+            <mat-label>Search</mat-label>
+            <input matInput placeholder="Placeholder">
+            <mat-icon matSuffix>search</mat-icon>
+          </mat-form-field>
+        </th>
+      </ng-container>
+
+      <ng-container matColumnDef="header-input-delivery">
+        <th mat-header-cell *matHeaderCellDef [attr.colspan]="1">
+          <mat-form-field appearance="outline">
+            <mat-label>Search</mat-label>
+            <input matInput placeholder="Placeholder">
+            <mat-icon matSuffix>search</mat-icon>
+          </mat-form-field>
+        </th>
+      </ng-container>
+
+      <ng-container matColumnDef="header-input-good">
+        <th mat-header-cell *matHeaderCellDef [attr.colspan]="1">
+          <mat-form-field appearance="outline">
+            <mat-label>Search</mat-label>
+            <input matInput placeholder="Placeholder">
+            <mat-icon matSuffix>search</mat-icon>
+          </mat-form-field>
+        </th>
+      </ng-container>
+
+      <ng-container matColumnDef="header-input-bad">
+        <th mat-header-cell *matHeaderCellDef [attr.colspan]="1">
+          <mat-form-field appearance="outline">
+            <mat-label>Search</mat-label>
+            <input matInput placeholder="Placeholder">
+            <mat-icon matSuffix>search</mat-icon>
+          </mat-form-field>
+        </th>
+      </ng-container>
+
+      <ng-container matColumnDef="header-input-action">
+        <th mat-header-cell *matHeaderCellDef [attr.colspan]="1">
+        </th>
+      </ng-container>
+
       <tr mat-header-row *matHeaderRowDef="displayedColumns">
       </tr>
+      <tr mat-header-row *matHeaderRowDef="['header-input-id', 'header-input-itemNo', 'header-input-name','header-input-group','header-input-quantity','header-input-delivery','header-input-good','header-input-bad','header-input-action']"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;">
       </tr>
     </table>

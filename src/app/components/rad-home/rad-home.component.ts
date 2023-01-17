@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { Project } from 'src/app/models/project.model';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-rad-home',
@@ -9,9 +10,11 @@ import { Project } from 'src/app/models/project.model';
 })
 export class RadHomeComponent implements OnInit {
 
-  displayedColumns = ['order', 'ItemNo', 'listName', 'mainListName', 'quantityContact', 'quantitiySent', 'quantityOk', 'quantityNg', 'action']
+  displayedColumns = ['id', 'itemNo', 'name', 'group', 'quantity', 'delivery', 'good', 'bad', 'action']
 
   dataSource = new MatTableDataSource<Project>();
+
+  counter = 1;
 
   constructor() { }
 
@@ -23,30 +26,57 @@ export class RadHomeComponent implements OnInit {
     const dummy: Project[] = [
       {
         itemNo: 1.3,
-        listName: 'On-load tap-changing power transformer three-phase, 115-22 kV, 30/40/50 MVA (Dyn1)',
-        mainListName: 'POWER TRANFORMER',
-        quantityContact: 10,
-        quantitiySent: 0,
-        quantityOk: 0,
-        quantityNg: 0
+        name: 'On-load tap-changing power transformer three-phase, 115-22 kV, 30/40/50 MVA (Dyn1)',
+        group: 'POWER TRANFORMER',
+        quantity: "10 Unit",
+        delivery: "",
+        good: "",
+        bad: ""
       },
       {
         itemNo: 3.1,
-        listName: '115 kV circuit-breaker, SF6 gas, three-pole, 31.5 kA',
-        mainListName: '115 kV CIRCUIT BREAKER',
-        quantityContact: 5,
-        quantitiySent: 0,
-        quantityOk: 2,
-        quantityNg: 2
+        name: '115 kV circuit-breaker, SF6 gas, three-pole, 31.5 kA',
+        group: '115 kV CIRCUIT BREAKER',
+        quantity: "5 Unit",
+        delivery: "",
+        good: "2 Unit",
+        bad: "2 Unit"
       },
       {
         itemNo: 4.1,
-        listName: '115 kV disconnecting switch, three-pole, without grounding switch.',
-        mainListName: 'DISCONNECTING SWITCH',
-        quantityContact: 2,
-        quantitiySent: 1,
-        quantityOk: 0,
-        quantityNg: 0
+        name: '115 kV disconnecting switch, three-pole, without grounding switch.',
+        group: 'DISCONNECTING SWITCH',
+        quantity: "2 Unit",
+        delivery: "1 Unit",
+        good: "",
+        bad: ""
+      },
+      {
+        itemNo: 4.1,
+        name: '115 kV disconnecting switch, three-pole, without grounding switch.',
+        group: 'DISCONNECTING SWITCH',
+        quantity: "2 Unit",
+        delivery: "1 Unit",
+        good: "",
+        bad: ""
+      },
+      {
+        itemNo: 4.1,
+        name: '115 kV disconnecting switch, three-pole, without grounding switch.',
+        group: 'DISCONNECTING SWITCH',
+        quantity: "2 Unit",
+        delivery: "1 Unit",
+        good: "",
+        bad: ""
+      },
+      {
+        itemNo: 4.1,
+        name: '115 kV disconnecting switch, three-pole, without grounding switch.',
+        group: 'DISCONNECTING SWITCH',
+        quantity: "2 Unit",
+        delivery: "1 Unit",
+        good: "",
+        bad: ""
       }
     ]
     this.dataSource.data = dummy
