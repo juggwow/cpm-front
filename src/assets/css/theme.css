@@ -6338,7 +6338,7 @@ p-treeselect.p-treeselect-clearable .p-treeselect-clear-icon {
 
 .ui-datatable.ui-corner-all table {
     border-collapse: separate;
-    *border-collapse: collapse; /* Fallback for IE <=7. */
+    border-collapse: collapse; /* Fallback for IE <=7. */
     border-spacing: 0;
 }
 .ui-datatable.ui-corner-all table tr:first-child th:first-child {
@@ -6352,7 +6352,7 @@ p-treeselect.p-treeselect-clearable .p-treeselect-clear-icon {
 }
 .ui-datatable.ui-corner-all table tbody td {
     border-top: 0;
-    *border-top: inherit; /* Fallback for IE <=7. */
+    border-top: inherit; /* Fallback for IE <=7. */
 }
 .ui-datatable.ui-corner-all table tr:last-child td:first-child {
     -moz-border-radius: 0 0 0 6px; -webkit-border-radius: 0 0 0 6px; border-radius: 0 0 0 6px;
