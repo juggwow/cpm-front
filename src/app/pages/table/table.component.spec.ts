@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { JobAreaDailyComponent } from './job-area-daily.component';
+import { TableComponent } from './table.component';
 
-describe('JobAreaDailyComponent', () => {
-  let component: JobAreaDailyComponent;
-  let fixture: ComponentFixture<JobAreaDailyComponent>;
+describe('TableComponent', () => {
+  let component: TableComponent;
+  let fixture: ComponentFixture<TableComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ JobAreaDailyComponent ]
+      declarations: [ TableComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(JobAreaDailyComponent);
+    fixture = TestBed.createComponent(TableComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

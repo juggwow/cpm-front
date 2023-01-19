@@ -1,14 +1,14 @@
 <div class="layout-topbar">
     <div class="flex align-items-center gap-4">
         <a class="flex" routerLink="">
-            <img src="assets/img/CMDC_Logo.png" alt="logo" width="87" />
+            <img src="assets/img/CPM.svg" alt="logo" width="50" />
         </a>
         <div class="flex flex-column">
             <span class="font-bold">
-                PEA Construction Management And Document Create
+                PEA Capital Project Management
             </span>
             <span class="text-md">
-                ระบบจัดการงานก่อสร้าง และสร้างเอกสารอัตโนมัติ
+                ระบบบริหารโครงการก่อสร้างระบบไฟฟ้า กฟภ.
             </span>
         </div>
     </div>
@@ -29,20 +29,21 @@
                 layoutService.state.profileSidebarVisible
         }"
     >
-        <button class="p-link layout-topbar-button">
-            <i class="pi pi-calendar"></i>
-            <span>Calendar</span>
-        </button>
-        <button class="p-link layout-topbar-button">
-            <i class="pi pi-user"></i>
-            <span>Profile</span>
-        </button>
+
+  
+    
         <button
             class="p-link layout-topbar-button"
             [routerLink]="'/documentation'"
         >
-            <i class="pi pi-cog"></i>
+            <i class="pi pi-bell"></i>
             <span>Settings</span>
         </button>
+
+        <button class="p-link layout-topbar-button">
+            <i class="pi pi-user"></i>
+            <span>Profile</span>
+        </button>
+        
     </div>
 </div>

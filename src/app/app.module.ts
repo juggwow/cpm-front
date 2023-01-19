@@ -12,6 +12,8 @@ import { AppLayoutModule } from './layout/app.layout.module';
 import { NotfoundComponent } from './components/notfound/notfound.component';
 import { AuthInterceptorService } from './services/auth-interceptor.service';
 
+
+
 @NgModule({
     declarations: [AppComponent, NotfoundComponent],
     imports: [

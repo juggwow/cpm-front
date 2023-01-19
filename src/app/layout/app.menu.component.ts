@@ -18,20 +18,19 @@ export class AppMenuComponent implements OnInit {
             {
                 label: '',
                 items: [
-                    { label: 'หน้าหลัก', icon: 'pi pi-fw pi-home', routerLink: [''] },
-                    { label: 'Dashboard', icon: 'pi pi-fw pi-chart-bar', routerLink: ['dashboard'] },
-                    { label: 'จัดการงานก่อสร้าง', icon: 'pi pi-fw pi-table', routerLink: ['jobs'] },
+                    { label: 'บริหารจัดการสัญญา', icon: 'pi pi-fw pi-home', routerLink: [''] },
+                    { label: 'Form', icon: 'pi pi-fw pi-chart-bar', routerLink: ['form'] },
                     {
-                        label: 'ตรวจสอบมาตรฐาน',
+                        label: 'Menus',
                         icon: 'pi pi-fw pi-check-square',
                         items: [
                             {
-                                label: 'ตรวจสอบมาตรฐาน',
+                                label: 'Login',
                                 icon: 'pi pi-fw pi-sign-in',
                                 routerLink: ['/auth/login']
                             },
                             {
-                                label: 'ตรวจนับพัสดุ',
+                                label: 'Errors',
                                 icon: 'pi pi-fw pi-times-circle',
                                 routerLink: ['/auth/error']
                             },
@@ -40,8 +39,7 @@ export class AppMenuComponent implements OnInit {
                                 icon: 'pi pi-fw pi-lock',
                                 routerLink: ['/auth/access']
                             },
-                            { label: 'เอกสาร', icon: 'pi pi-fw pi-home', routerLink: ['/doc'] },
-                            { label: 'รายงานประจำวัน', icon: 'pi pi-fw pi-home', routerLink: ['/doc'] },
+                          
 
                         ]
                     },
