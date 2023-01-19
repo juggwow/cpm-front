@@ -113,7 +113,7 @@
 
       <ng-container matColumnDef="id">
         <th mat-sort-header mat-header-cell *matHeaderCellDef> ลำดับ </th>
-        <td mat-cell *matCellDef="let element; index as i"> {{i + 1}} </td>
+        <td mat-cell *matCellDef="let data"> {{data.sequencesNo | number}} </td>
       </ng-container>
 
       <ng-container matColumnDef="itemNo">
@@ -158,7 +158,7 @@
             <img src="assets/svg/note_add-box.svg" routerLink="/form" alt="">
           </button>
           <button mat-icon-button>
-            <img src="assets/svg/note_add-box-2.svg" routerLink="" alt="">
+            <img src="assets/svg/note_add-box-2.svg" routerLink="/create-list" alt="">
           </button>
         </td>
       </ng-container>

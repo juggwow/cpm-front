@@ -1,4 +1,5 @@
 export interface Project{
+  sequencesNo: number;
   itemNo: number;
   name: string;
   group: string;

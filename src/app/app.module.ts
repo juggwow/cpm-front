@@ -23,6 +23,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSortModule } from '@angular/material/sort';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { RadCreateListComponent } from './components/rad-create-list/rad-create-list.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     HeaderComponent,
     SideNavComponent,
     RadHomeComponent,
-    RadFormComponent
+    RadFormComponent,
+    RadCreateListComponent
   ],
   imports: [
     BrowserModule,

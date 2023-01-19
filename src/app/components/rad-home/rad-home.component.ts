@@ -21,9 +21,9 @@ export class RadHomeComponent implements OnInit {
   textIdSearch: string = '';
 
   length = 50;
-  pageSize = 5;
+  pageSize = 10;
   pageIndex = 0;
-  pageSizeOptions = [5, 10, 25, 100];
+  pageSizeOptions = [5, 10, 50];
 
   hidePageSize = false;
   showPageSizeOptions = true;
@@ -46,6 +46,7 @@ export class RadHomeComponent implements OnInit {
   feedData() {
     const dummy: Project[] = [
       {
+        sequencesNo: 1,
         itemNo: 1.3,
         name: 'On-load tap-changing power transformer three-phase, 115-22 kV, 30/40/50 MVA (Dyn1)',
         group: 'POWER TRANFORMER',
@@ -55,6 +56,7 @@ export class RadHomeComponent implements OnInit {
         bad: ""
       },
       {
+        sequencesNo: 2,
         itemNo: 3.1,
         name: '115 kV circuit-breaker, SF6 gas, three-pole, 31.5 kA',
         group: '115 kV CIRCUIT BREAKER',
@@ -64,6 +66,7 @@ export class RadHomeComponent implements OnInit {
         bad: "2 Unit"
       },
       {
+        sequencesNo: 3,
         itemNo: 4.1,
         name: '115 kV disconnecting switch, three-pole, without grounding switch.',
         group: 'DISCONNECTING SWITCH',
@@ -73,6 +76,7 @@ export class RadHomeComponent implements OnInit {
         bad: ""
       },
       {
+        sequencesNo: 4,
         itemNo: 4.1,
         name: '115 kV disconnecting switch, three-pole, without grounding switch.',
         group: 'DISCONNECTING SWITCH',
@@ -82,6 +86,7 @@ export class RadHomeComponent implements OnInit {
         bad: ""
       },
       {
+        sequencesNo: 5,
         itemNo: 4.1,
         name: '115 kV disconnecting switch, three-pole, without grounding switch.',
         group: 'DISCONNECTING SWITCH',
@@ -91,6 +96,7 @@ export class RadHomeComponent implements OnInit {
         bad: ""
       },
       {
+        sequencesNo: 6,
         itemNo: 4.1,
         name: '115 kV disconnecting switch, three-pole, without grounding switch.',
         group: 'DISCONNECTING SWITCH',
@@ -100,6 +106,7 @@ export class RadHomeComponent implements OnInit {
         bad: ""
       },
       {
+        sequencesNo: 7,
         itemNo: 1.3,
         name: 'On-load tap-changing power transformer three-phase, 115-22 kV, 30/40/50 MVA (Dyn1)',
         group: 'POWER TRANFORMER',
@@ -109,6 +116,7 @@ export class RadHomeComponent implements OnInit {
         bad: ""
       },
       {
+        sequencesNo: 8,
         itemNo: 3.1,
         name: '115 kV circuit-breaker, SF6 gas, three-pole, 31.5 kA',
         group: '115 kV CIRCUIT BREAKER',
@@ -118,6 +126,7 @@ export class RadHomeComponent implements OnInit {
         bad: "2 Unit"
       },
       {
+        sequencesNo: 9,
         itemNo: 4.1,
         name: '115 kV disconnecting switch, three-pole, without grounding switch.',
         group: 'DISCONNECTING SWITCH',
@@ -127,6 +136,7 @@ export class RadHomeComponent implements OnInit {
         bad: ""
       },
       {
+        sequencesNo: 10,
         itemNo: 4.1,
         name: '115 kV disconnecting switch, three-pole, without grounding switch.',
         group: 'DISCONNECTING SWITCH',
@@ -136,6 +146,7 @@ export class RadHomeComponent implements OnInit {
         bad: ""
       },
       {
+        sequencesNo: 11,
         itemNo: 4.1,
         name: '115 kV disconnecting switch, three-pole, without grounding switch.',
         group: 'DISCONNECTING SWITCH',
@@ -145,6 +156,7 @@ export class RadHomeComponent implements OnInit {
         bad: ""
       },
       {
+        sequencesNo: 12,
         itemNo: 4.1,
         name: '115 kV disconnecting switch, three-pole, without grounding switch.',
         group: 'DISCONNECTING SWITCH',
@@ -154,6 +166,7 @@ export class RadHomeComponent implements OnInit {
         bad: ""
       },
       {
+        sequencesNo: 13,
         itemNo: 1.3,
         name: 'On-load tap-changing power transformer three-phase, 115-22 kV, 30/40/50 MVA (Dyn1)',
         group: 'POWER TRANFORMER',
@@ -163,6 +176,7 @@ export class RadHomeComponent implements OnInit {
         bad: ""
       },
       {
+        sequencesNo: 14,
         itemNo: 3.1,
         name: '115 kV circuit-breaker, SF6 gas, three-pole, 31.5 kA',
         group: '115 kV CIRCUIT BREAKER',
@@ -172,6 +186,7 @@ export class RadHomeComponent implements OnInit {
         bad: "2 Unit"
       },
       {
+        sequencesNo: 15,
         itemNo: 4.1,
         name: '115 kV disconnecting switch, three-pole, without grounding switch.',
         group: 'DISCONNECTING SWITCH',
@@ -181,6 +196,7 @@ export class RadHomeComponent implements OnInit {
         bad: ""
       },
       {
+        sequencesNo: 16,
         itemNo: 4.1,
         name: '115 kV disconnecting switch, three-pole, without grounding switch.',
         group: 'DISCONNECTING SWITCH',
@@ -190,6 +206,7 @@ export class RadHomeComponent implements OnInit {
         bad: ""
       },
       {
+        sequencesNo: 17,
         itemNo: 4.1,
         name: '115 kV disconnecting switch, three-pole, without grounding switch.',
         group: 'DISCONNECTING SWITCH',
@@ -199,6 +216,7 @@ export class RadHomeComponent implements OnInit {
         bad: ""
       },
       {
+        sequencesNo: 18,
         itemNo: 4.1,
         name: '115 kV disconnecting switch, three-pole, without grounding switch.',
         group: 'DISCONNECTING SWITCH',
