@@ -1,0 +1,227 @@
+<div class="px-6 py-4 flex flex-column gap-3">
+    <span class="text-2xl font-bold">ตรวจสอบมาตรฐานงานก่อสร้าง</span>
+    <p-breadcrumb
+        *ngIf="breadcumbItems$ | async as breadcumbItems"
+        [model]="breadcumbItems"
+        class="job-daily__breadcrumb"
+    ></p-breadcrumb>
+</div>
+
+<p-card>
+    <div class="flex align-items-center justify-content-between">
+        <div class="flex flex-column gap-2">
+            <div class="font-bold text-4xl">ลานตากพืซผล บ.ทรัพย์ทิพย์ ม.4</div>
+        </div>
+
+        <div class="flex flex-column gap-2">
+            <div class="font-bold text-2xl">I-63-C-CBD65.MS.3000</div>
+            <div class="job-daily__subtitle">
+                D1-แล้วเสร็จ-ตรวจสอบพัสดุค่าใช้จ่าย
+            </div>
+        </div>
+    </div>
+    <p-carousel
+        *ngIf="jobAreaCarouselItems$ | async as jobAreaCarouselItems"
+        [value]="jobAreaCarouselItems"
+        [numVisible]="7"
+        [numScroll]="1"
+        [circular]="false"
+        [showIndicators]="false"
+        class="job-daily__carousels"
+        styleClass="pt-4"
+    >
+        <ng-template let-jobArea pTemplate="item">
+            <div class="job-daily__carousel-item">
+                <img
+                    [src]="mapJobAreaImage(jobArea.areaType)"
+                    [alt]="jobArea.areaSeq + jobArea.areaType"
+                    width="40"
+                    height="45"
+                />
+                <div class="flex gap-2">
+                    <span class="text-primary font-bold">
+                        {{ jobArea.areaSeq }}
+                    </span>
+                    <span class="text-primary">{{ jobArea.areaType }}</span>
+                </div>
+            </div>
+        </ng-template>
+    </p-carousel>
+    <div class="flex align-items-center py-6 px-7">
+        <div class="font-bold">พัสดุติดตั้งใหม่</div>
+        <div class="ml-auto flex align-items-center gap-4">
+            <div>
+                วันที่ดำเนินงาน <span class="font-bold">6 ตุลาคม 2565</span>
+            </div>
+            <button
+                pButton
+                pRipple
+                type="button"
+                label="แก้ไขวันที่"
+                class="p-button-outlined w-10rem"
+                icon="pi pi-calendar"
+            ></button>
+
+            <button
+                pButton
+                pRipple
+                type="button"
+                label="แก้ไขวันที่"
+                class="p-button-outlined w-10rem"
+                icon="pi pi-camera"
+            ></button>
+        </div>
+    </div>
+    <div class="flex px-7 gap-5">
+        <div class="flex gap-2 align-items-center">
+            <p-checkbox [binary]="true" inputId="poleFoundation"></p-checkbox>
+            <label for="poleFoundation">เทปูนหุ้มโคนเสาไฟฟ้า</label>
+        </div>
+
+        <div class="flex gap-2 align-items-center">
+            <p-checkbox [binary]="true" inputId="groundHt"></p-checkbox>
+            <label for="groundHt">ค่ากราวนด์ HT</label>
+            <p-inputNumber
+                class="job-daily__input-number--small"
+            ></p-inputNumber>
+            <span>Ω</span>
+        </div>
+
+        <div class="flex gap-2 align-items-center">
+            <p-checkbox [binary]="true" inputId="groundLt"></p-checkbox>
+            <label for="groundLt">ค่ากราวนด์ LT</label>
+            <p-inputNumber
+                class="job-daily__input-number--small"
+            ></p-inputNumber>
+            <span>Ω</span>
+        </div>
+
+        <div class="flex gap-2 align-items-center">
+            <p-checkbox [binary]="true" inputId="finished"></p-checkbox>
+            <label for="finished">ก่อสร้างแล้วเสร็จ</label>
+        </div>
+    </div>
+
+    <div class="p-6">
+        <p-table
+            [value]="parcels"
+            sortField="department"
+            sortMode="single"
+            dataKey="department"
+            rowGroupMode="subheader"
+            groupRowsBy="department"
+            responsiveLayout="scroll"
+        >
+            <ng-template pTemplate="header">
+                <tr>
+                    <th class="w-3rem text-center">ลำดับ</th>
+                    <th class="w-23rem text-center">รายการ</th>
+                    <th colspan="2" class="text-center">ติดตั้ง</th>
+                    <th class="w-23rem text-center">รายละเอียดเพิ่มเติม</th>
+                </tr>
+            </ng-template>
+            <ng-template
+                pTemplate="groupheader"
+                let-parcel
+                let-rowIndex="rowIndex"
+                let-expanded="expanded"
+            >
+                <tr>
+                    <td>
+                        <button
+                            type="button"
+                            pButton
+                            pRipple
+                            [pRowToggler]="parcel"
+                            class="p-button-text p-button-rounded p-button-plain mr-2"
+                            [icon]="
+                                expanded
+                                    ? 'pi pi-chevron-down'
+                                    : 'pi pi-chevron-right'
+                            "
+                        ></button>
+                    </td>
+                    <td class="text-center">
+                        {{ parcel.department }}
+                    </td>
+                    <td class="w-12rem text-center">
+                        {{ showExpandedText(expanded, "วันนี้") }}
+                    </td>
+                    <td class="w-12rem text-center">
+                        {{ showExpandedText(expanded, "ผลรวม") }}
+                    </td>
+                    <td class="text-center">
+                        {{ showExpandedText(expanded, "สถานะ") }}
+                    </td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="rowexpansion" let-parcel>
+                <tr>
+                    <td class="text-center">
+                        {{ parcel.no }}
+                    </td>
+                    <td>
+                        {{ parcel.detail }}
+                    </td>
+                    <td class="text-center">
+                        <p-inputNumber
+                            class="job-daily__quantity-input-number"
+                            [ngModel]="0"
+                            [min]="0"
+                            [showButtons]="true"
+                            buttonLayout="horizontal"
+                            inputId="horizontal"
+                            spinnerMode="horizontal"
+                            incrementButtonIcon="pi pi-plus"
+                            decrementButtonIcon="pi pi-minus"
+                        ></p-inputNumber>
+                    </td>
+                    <td class="text-center">
+                        {{ parcel.installQuantity }}
+                    </td>
+                    <td class="text-center relative">
+                        {{ parcel.diff }}
+                        <button
+                            pButton
+                            pRipple
+                            class="p-button p-button-secondary absolute job-daily__edit-button"
+                            icon="pi pi-pencil"
+                        ></button>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+
+    <div class="px-6 flex gap-3">
+        <div class="flex align-items-center gap-3">
+            <img src="assets/svg/info-yellow.svg" alt="Info" />
+            <span class="white-space-nowrap">พัสดุคลาดเคลื่อน</span>
+        </div>
+
+        <div class="flex align-items-center gap-3">
+            <img
+                src="assets/svg/cross-danger.svg"
+                width="24px"
+                [ngStyle]="{ objectFit: 'none' }"
+                alt="Cross"
+            />
+            <span class="white-space-nowrap">ผิดมาตรฐานงานก่อสร้าง</span>
+        </div>
+
+        <div class="flex align-items-center gap-3">
+            <img src="assets/svg/check-success.svg" alt="Cross" />
+            <span class="white-space-nowrap">พัสดุและมาตรฐานถูกต้อง</span>
+        </div>
+
+        <div class="ml-auto flex gap-4">
+            <button
+                pButton
+                pRipple
+                class="p-button-outlined w-10rem"
+                label="กลับ"
+            ></button>
+            <button pButton pRipple label="บันทึก" class="w-16rem"></button>
+        </div>
+    </div>
+</p-card>

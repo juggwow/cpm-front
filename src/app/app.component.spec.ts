@@ -20,16 +20,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'cpm-rad-frontend'`, () => {
+  it(`should have as title 'cmdc'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('cpm-rad-frontend');
+    expect(app.title).toEqual('cmdc');
   });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('cpm-rad-frontend app is running!');
+    expect(compiled.querySelector('.content span')?.textContent).toContain('cmdc app is running!');
   });
 });

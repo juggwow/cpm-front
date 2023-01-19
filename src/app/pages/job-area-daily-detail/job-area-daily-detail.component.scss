@@ -1,0 +1,58 @@
+.job-daily {
+    &__breadcrumb ::ng-deep .p-breadcrumb {
+        padding: 0;
+        border: 0;
+        background-color: transparent;
+    }
+
+    &__subtitle {
+        color: #7f7f7f;
+    }
+
+    &__carousels ::ng-deep .p-carousel-item:first-child &__carousel-item {
+        border-top-left-radius: 8px;
+        border-bottom-left-radius: 8px;
+    }
+
+    &__carousels ::ng-deep .p-carousel-item:last-child &__carousel-item {
+        border-top-right-radius: 8px;
+        border-bottom-right-radius: 8px;
+        border-right-width: 1px;
+    }
+
+    &__carousel-item {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 0.5rem;
+        border-style: solid;
+        border-color: #efefef;
+        border-width: 1px 0 1px 1px;
+        padding: 2rem;
+    }
+
+    &__input-number--small {
+        &::ng-deep input {
+            width: 4rem;
+            height: 2rem;
+        }
+    }
+
+    &__quantity-input-number {
+        &::ng-deep input {
+            width: 3rem;
+            text-align: center;
+        }
+    }
+
+    &__edit-button {
+        width: 2rem;
+        height: 2rem;
+        background-color: rgba(9, 30, 66, 0.04);
+        color: #42526e;
+        border: 0;
+        top: 1.5rem;
+        right: 1rem;
+    }
+}

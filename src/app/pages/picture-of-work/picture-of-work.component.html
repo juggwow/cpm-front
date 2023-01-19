@@ -1,0 +1,170 @@
+<div class="flex flex-column" style="font-family: Noto Sans, sans-serif">
+    <br />
+    <div>
+        <p class="font-bold text-3xl" [style]="{ padding: '1rem' }">
+            ตรวจสอบมาตรฐานก่อสร้าง
+        </p>
+    </div>
+    <div>
+        <p-breadcrumb
+            [style]="{ background: 'none', border: 'none' }"
+            [model]="menuitems"
+        ></p-breadcrumb>
+    </div>
+</div>
+
+<div style="font-family: Noto Sans, sans-serif">
+    <div class="col-12">
+        <div class="card card-w-title">
+            <h3 class="text-4xl font-bold mb-0">
+                ลานตากพืชผล บ.ทรัพย์ทิพย์ ม.4
+            </h3>
+
+            <div class="flex justify-content-between align-items-center">
+                <div class="flex align-items-center mb-4 mt-5">
+                    <div style="color: #7f7f7f">
+                        <p>จำนวนเสา 8 เสา</p>
+                    </div>
+
+                    <div class="mr-2 ml-2">
+                        <p>|</p>
+                    </div>
+
+                    <div>
+                        <p
+                            class="bg-purple-800 text-white p-1 font-bold"
+                            style="border-radius: 10px"
+                        >
+                            จำนวนรูปภาพ 6 รูป
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex flex-wrap justify-content-between">
+                <div
+                    *ngFor="let item of items"
+                    class="flex flex-column mr-2 ml-2 mb-2"
+                    style="flex: 1 0 29.333333%"
+                >
+                    <div class="relative">
+                        <p-button
+                            (click)="showModalConfirmDelete()"
+                            icon="pi pi-times"
+                            class="absolute right-0 text-2xl font-semibold button-modal__background-none"
+                        >
+                        </p-button>
+                        <p-dialog
+                            [(visible)]="displayModalDelete"
+                            [modal]="true"
+                            [style]="{ width: '30vw' }"
+                            [maximizable]="true"
+                            [baseZIndex]="10000"
+                            [draggable]="false"
+                            [resizable]="false"
+                        >
+                            <div
+                                class="flex flex-column justify-content-center align-items-center"
+                            >
+                                <i
+                                    class="pi pi-trash text-8xl text-red-600"
+                                ></i>
+
+                                <p class="mt-5 text-3xl font-bold">
+                                    คุณต้องการลบรูปภาพนี้หรือไม่
+                                </p>
+
+                                <p class="mt-3">
+                                    เลือกตกลง เพื่อลบ หรือ ยกเลิก
+                                    เพื่อกลับไปหน้าเดิม
+                                </p>
+
+                                <div class="flex mt-3 w-12">
+                                    <p-button
+                                        (click)="displayModalDelete = false"
+                                        label="ยกเลิก"
+                                        class="w-6 modal-footer-button__background-none"
+                                    ></p-button>
+                                    <p-button
+                                        (click)="displayModalDelete = false"
+                                        label="ตกลง"
+                                        class="ml-3 w-6 modal-footer-button__background-red"
+                                    ></p-button>
+                                </div>
+                            </div>
+                        </p-dialog>
+
+                        <img
+                            (click)="showModalUploadImage()"
+                            src="{{ item.img }}"
+                            style="object-fit: cover"
+                            alt="ภาพเสาไฟ"
+                            class="h-20rem w-full border-round-lg mb-2"
+                        />
+                        <p-dialog
+                            [(visible)]="displayModalUpload"
+                            [modal]="true"
+                            [style]="{ width: '30vw' }"
+                            [baseZIndex]="10000"
+                            [draggable]="false"
+                            [resizable]="false"
+                        >
+                            <div class="flex flex-column">
+                                <div>
+                                    <p class="font-bold text-xl">
+                                        เพิ่มภาพถ่าย พื้นที่ 1 | DDE
+                                    </p>
+                                    <hr />
+                                </div>
+
+                                <div class="text-center w-12">
+                                    <p-fileUpload
+                                        (uploadHandler)="myUploader($event)"
+                                        name="myfile[]"
+                                        [customUpload]="true"
+                                        [multiple]="true"
+                                        [auto]="true"
+                                        mode="basic"
+                                        chooseLabel="กดเพื่อเพิ่มรูปงานก่อสร้าง"
+                                        chooseIcon="pi pi-camera"
+                                        class="mt-3 button-upload__background-none"
+                                        [style]="{
+                                            'background-color': '#979797',
+                                            border: 'none',
+                                            height: '30rem',
+                                            width: '53vh'
+                                        }"
+                                    ></p-fileUpload>
+
+                                    <p-button
+                                        (click)="displayModalUpload = false"
+                                        label="ตกลง"
+                                        class="modal-upload__background-color"
+                                    ></p-button>
+                                </div>
+                            </div>
+                        </p-dialog>
+
+                        <div
+                            class="flex justify-content-between align-items-center surface-200 border-round-lg p-1"
+                            style="color: #7f7f7f"
+                        >
+                            <div class="flex justify-content-between">
+                                <div class="mr-3">
+                                    <p>ต้นที่ {{ item.id }}</p>
+                                </div>
+                                <div>
+                                    <p>{{ item.type }}</p>
+                                </div>
+                            </div>
+
+                            <div class="">
+                                <p>{{ item.detail }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

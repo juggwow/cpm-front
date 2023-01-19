@@ -1,0 +1,14 @@
+.app-menu ::ng-deep {
+    i.layout-menuitem-icon {
+        font-size: 1.5rem;
+        margin-right: 0;
+    }
+
+    a.p-element {
+        gap: 1.5rem;
+    }
+
+    .layout-submenu-toggler {
+        font-size: 1rem;
+    }
+}
