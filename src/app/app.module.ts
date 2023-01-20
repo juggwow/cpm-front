@@ -1,5 +1,5 @@
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { NgModule } from '@angular/core';
+import { NgModule ,CUSTOM_ELEMENTS_SCHEMA,NO_ERRORS_SCHEMA} from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
     LocationStrategy,
@@ -11,17 +11,15 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppLayoutModule } from './layout/app.layout.module';
 import { NotfoundComponent } from './components/notfound/notfound.component';
 import { AuthInterceptorService } from './services/auth-interceptor.service';
-
-
-
 @NgModule({
-    declarations: [AppComponent, NotfoundComponent],
     imports: [
         AppRoutingModule,
         AppLayoutModule,
         FormsModule,
         ReactiveFormsModule,
     ],
+    declarations: [AppComponent, NotfoundComponent],
+    schemas: [ CUSTOM_ELEMENTS_SCHEMA ,NO_ERRORS_SCHEMA],
     providers: [
         Location,
         { provide: LocationStrategy, useClass: PathLocationStrategy },
