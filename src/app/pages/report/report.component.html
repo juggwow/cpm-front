@@ -89,46 +89,41 @@
                             </th>
                             <th pSortableColumn="itemNo">
                                 <div class="flex justify-content-between align-items-center">
-                                    Item No.
+                                    เลขที่ใบส่ง
                                     <p-sortIcon field="itemNo"></p-sortIcon>
                                 </div>
                             </th>
                             <th pSortableColumn="name">
                                 <div class="flex justify-content-between align-items-center">
-                                    รายการ
+                                    จำนวนรายการ
                                     <p-sortIcon field="name"></p-sortIcon>
                                 </div>
                             </th>
                             <th pSortableColumn="group">
                                 <div class="flex justify-content-between align-items-center">
-                                    รายการหลัก
+                                    วันที่ส่งถึงหน้างาน
                                     <p-sortIcon field="group"></p-sortIcon>
                                 </div>
                             </th>
                             <th pSortableColumn="quantity">
                                 <div class="flex justify-content-between align-items-center">
-                                    จำนวนตามสัญญา
+                                    วันที่ตรวจสอบ
                                     <p-sortIcon field="quantity"></p-sortIcon>
                                 </div>
                             </th>
                             <th pSortableColumn="delivery">
                                 <div class="flex justify-content-between align-items-center">
-                                    จำนวนที่รอส่งมอบ
+                                    ผู้สร้างเอกสาร
                                     <p-sortIcon field="delivery"></p-sortIcon>
                                 </div>
                             </th>
                             <th pSortableColumn="good">
                                 <div class="flex justify-content-between align-items-center">
-                                    สภาพดี
+                                    สถานะ
                                     <p-sortIcon field="good"></p-sortIcon>
                                 </div>
                             </th>
-                            <th pSortableColumn="bad">
-                                <div class="flex justify-content-between align-items-center">
-                                    พบปัญหา
-                                    <p-sortIcon field="bad"></p-sortIcon>
-                                </div>
-                            </th>
+                          
                             <th>
 
                             </th>
@@ -240,21 +235,7 @@
                                             (click)="onClearFilter('good')"></button>
                                 </div>
                             </th>
-                            <th>
-                                <div class="flex align-items-center gap-2">
-                                    <input class="w-10"
-                                           type="text"
-                                           pInputText
-                                           (keyup)="onFilterColumn('bad',$event)"
-                                           placeholder="ค้นหาด้วย พบปัญหา" />
-                                    <button pButton
-                                            pRipple
-                                            type="button"
-                                            icon="pi pi-times"
-                                            class="p-button-rounded p-button-text p-button-plain"
-                                            (click)="onClearFilter('bad')"></button>
-                                </div>
-                            </th>
+                          
                             <th>
                                 <!-- <p-dropdown
                             *ngIf="
@@ -294,26 +275,26 @@
                                 {{ boq.group }}
                             </td>
                             <td>
+                                <button pButton type="button" class="p-button-raised p-button-rounded p-button-warning" 
+                                
+                                >
                                 {{ boq.quantity }}
+                            </button>
+                     
                             </td>
                             <td>
+                               
                                 {{ boq.delivery }}
+                           
                             </td>
                             <td>
+                               
                                 {{ boq.good }}
+                               
                             </td>
+                       
                             <td>
-                                {{ boq.bad }}
-                            </td>
-                            <td>
-                                <div class="flex gap-1">
-                                    <button pButton class="p-button-text" [routerLink]="['/form']"> 
-                                    <i class="pi pi-search-plus"></i>
-                                    </button>
-                                    <button pButton class="p-button-text"> 
-                                    <i class="pi pi-pencil"></i>
-                                </button>
-                                </div>
+                    
                             </td>
                         </tr>
                     </ng-template>
@@ -331,6 +312,14 @@
                     </ng-template>
                    
                 </p-table>
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-center">
+    
+            <div class="col text-center">
+                <button class="btn btn-lg btn-primary  px-5 mx-3 p-button-outlined" pButton [routerLink]="['/']" >กลับสู่หน้าหลัก</button>
+             
             </div>
         </div>
 

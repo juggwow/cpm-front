@@ -9,11 +9,12 @@ import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { RippleModule } from 'primeng/ripple';
 import { RouterModule } from '@angular/router';
+import { BadgeModule } from 'primeng/badge';
 @Component({
   selector: 'app-report',
   standalone:true,
   providers: [BoqService],
-  imports:[TableModule,InputTextModule,ButtonModule,RippleModule,RouterModule],
+  imports:[TableModule,InputTextModule,ButtonModule,RippleModule,RouterModule,BadgeModule],
   templateUrl: './report.component.html',
   styleUrls: ['./report.component.scss']
 })
