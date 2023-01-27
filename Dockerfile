@@ -3,7 +3,7 @@ ARG environment
 
 WORKDIR /app
 COPY package.json  /app
-RUN npm install
+RUN npm install --force
 
 COPY .  /app
 RUN ng build -c 

@@ -3,9 +3,11 @@ ARG environment
 
 WORKDIR /app
 COPY package.json  /app
-RUN npm install
+RUN npm install --force
 
 COPY .  /app
+
+
 RUN ng build -c $environment
 
 FROM nginx:1.23.0-alpine
