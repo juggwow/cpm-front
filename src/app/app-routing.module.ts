@@ -25,6 +25,13 @@ import { LoginCallbackService } from './services/login-callback.service';
                                 import(
                                     './pages/form/form.component'
                                 ).then((m) => m.FormComponent),
+                        },
+                        {
+                            path: 'report',
+                            loadComponent: () =>
+                                import(
+                                    './pages/report/report.component'
+                                ).then((m) => m.ReportComponent),
                         }
                     ],
                 },
