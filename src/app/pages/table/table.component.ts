@@ -3,9 +3,13 @@ import { BoqService } from 'src/app/services/rad-boq';
 import { Boq } from 'src/app/models/boq.model';
 import { take } from 'rxjs';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
+import {TableModule,} from 'primeng/table';
+import { InputTextModule } from 'primeng/inputtext';
+import { ButtonModule } from 'primeng/button';
+import { RippleModule } from 'primeng/ripple';
 @Component({
   providers: [BoqService],
-  imports:[Ng2SmartTableModule],
+  imports:[TableModule,InputTextModule,ButtonModule,RippleModule],
   selector: 'app-table',
   standalone:true,
   templateUrl: './table.component.html',
@@ -14,47 +18,9 @@ import { Ng2SmartTableModule } from 'ng2-smart-table';
 
 export class TableComponent implements OnInit {
 
-
   Boq: Boq[] = [];
-
-
-  settings = {
-    actions:{
-      add : false,
-      edit : false,
-      delete: false,
-    },
-    columns: {
-      sequencesNo: {
-        title: 'ลำดับ',
-      },
-      itemNo: {
-        title: 'Item No.',
-      },
-      name: {
-        title: 'รายการ',
-      },
-      group: {
-        title: 'รายการหลัก',
-      },
-      quantity: {
-        title: 'จำนวนตามสัญญา',
-      },
-      delivery: {
-        title: 'จำนวนที่รอส่งมอบ',
-      },
-      good: {
-        title: 'สภาพดี',
-      },
-      bad: {
-        title: 'พบปัญหา',
-      },
-    },
-  };
-
-
-
-  
+  first = 0
+  rows = 10
   constructor(
     private BoqService: BoqService
     ) {}
@@ -71,20 +37,64 @@ export class TableComponent implements OnInit {
 
 
 
-
-  onDeleteConfirm() {
-    console.log("Delete Event In Console")
-    console.log(event);
-  }
-
-  onCreateConfirm() {
-    console.log("Create Event In Console")
-
-  }
-
-  onSaveConfirm() {
-    console.log("Edit Event In Console")
-  }
-
   
+
+  onFilterWbs(value: string) {
+    console.log("..")
+  }
+
+  onFilterJobName(value: string) {
+    console.log("..")
+  }
+
+  onFilterJobStatus(jobStatus: string | null) {
+    console.log("..")
+  }
+
+  onFilterSupervisor(value: string) {
+    console.log("..")
+  }
+
+  onFilterCommittees(value: string) {
+    console.log("..")
+  }
+
+  onClearWbs() {
+    console.log("..")
+  }
+
+  onClearJobName() {
+    console.log("..")
+  }
+
+  onClearSupervisor() {
+    console.log("..")
+  }
+
+  onClearCommittes() {
+    console.log("..")
+  }
+
+
+
+
+    next() {
+        this.first = this.first + this.rows;
+    }
+
+    prev() {
+        this.first = this.first - this.rows;
+    }
+
+    reset() {
+        this.first = 0;
+    }
+
+    isLastPage(): boolean {
+        return this.Boq ? this.first === (this.Boq.length - this.rows): true;
+    }
+
+    isFirstPage(): boolean {
+        return this.Boq ? this.first === 0 : true;
+    }
 }

@@ -73,12 +73,263 @@
     </div>
 
 
+    <div class="container">
+        <div class="row my-5">
+            <div class="card  ">
+                <p-table [value]="Boq"
+                         styleClass="p-datatable-gridlines"
+                         [rowHover]="true"
+                         [paginator]="false"
+                         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10,25,50]"
+                         >
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th pSortableColumn="sequencesNo">
+                                <div class="flex justify-content-between align-items-center">
+                                    ลำดับ
+                                    <p-sortIcon field="sequencesNo"></p-sortIcon>
+                                </div>
+                            </th>
+                            <th pSortableColumn="itemNo">
+                                <div class="flex justify-content-between align-items-center">
+                                    Item No.
+                                    <p-sortIcon field="itemNo"></p-sortIcon>
+                                </div>
+                            </th>
+                            <th pSortableColumn="name">
+                                <div class="flex justify-content-between align-items-center">
+                                    รายการ
+                                    <p-sortIcon field="name"></p-sortIcon>
+                                </div>
+                            </th>
+                            <th pSortableColumn="group">
+                                <div class="flex justify-content-between align-items-center">
+                                    รายการหลัก
+                                    <p-sortIcon field="group"></p-sortIcon>
+                                </div>
+                            </th>
+                            <th pSortableColumn="quantity">
+                                <div class="flex justify-content-between align-items-center">
+                                    จำนวนตามสัญญา
+                                    <p-sortIcon field="quantity"></p-sortIcon>
+                                </div>
+                            </th>
+                            <th pSortableColumn="delivery">
+                                <div class="flex justify-content-between align-items-center">
+                                    จำนวนที่รอส่งมอบ
+                                    <p-sortIcon field="delivery"></p-sortIcon>
+                                </div>
+                            </th>
+                            <th pSortableColumn="good">
+                                <div class="flex justify-content-between align-items-center">
+                                    สภาพดี
+                                    <p-sortIcon field="good"></p-sortIcon>
+                                </div>
+                            </th>
+                            <th pSortableColumn="bad">
+                                <div class="flex justify-content-between align-items-center">
+                                    พบปัญหา
+                                    <p-sortIcon field="bad"></p-sortIcon>
+                                </div>
+                            </th>
+                            <th>
 
-    <div class="card mt-5">
-        <div class="table-responsive">
-       
-   <ng2-smart-table [settings]="settings" [source]="Boq" class=""></ng2-smart-table>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th>
+                                <div class="flex align-items-center gap-2">
+                                    <input class="w-10"
+                                           pInputText
+                                           placeholder="ค้นหาด้วย ลำดับ" />
+                                    <button pButton
+                                            pRipple
+                                            type="button"
+                                            icon="pi pi-times"
+                                            class="p-button-rounded p-button-text p-button-plain"
+                                            (click)="onClearWbs()"></button>
+                                </div>
+                            </th>
+                            <th>
+                                <div class="flex align-items-center gap-2">
+                                    <input class="w-10"
+                                           type="text"
+                                           pInputText
+                                           placeholder="ค้นหาด้วย BoqId" />
+                                    <button pButton
+                                            pRipple
+                                            type="button"
+                                            icon="pi pi-times"
+                                            class="p-button-rounded p-button-text p-button-plain"
+                                            (click)="onClearJobName()"></button>
+                                </div>
+                            </th>
+                            <th>
+                                <div class="flex align-items-center gap-2">
+                                    <input class="w-10"
+                                           type="text"
+                                           pInputText
+                                           placeholder="ค้นหาด้วย รายการ" />
+                                    <button pButton
+                                            pRipple
+                                            type="button"
+                                            icon="pi pi-times"
+                                            class="p-button-rounded p-button-text p-button-plain"
+                                            (click)="onClearSupervisor()"></button>
+                                </div>
+                            </th>
+                            <th>
+                                <div class="flex align-items-center gap-2">
+                                    <input class="w-10"
+                                           type="text"
+                                           pInputText
+                                           placeholder="ค้นหาด้วย รายการหลัก" />
+                                    <button pButton
+                                            pRipple
+                                            type="button"
+                                            icon="pi pi-times"
+                                            class="p-button-rounded p-button-text p-button-plain"
+                                            (click)="onClearCommittes()"></button>
+                                </div>
+                            </th>
+                            <th>
+                                <div class="flex align-items-center gap-2">
+                                    <input class="w-10"
+                                           type="text"
+                                           pInputText
+                                           placeholder="ค้นหาด้วย จำนวนตามสัญญา" />
+                                    <button pButton
+                                            pRipple
+                                            type="button"
+                                            icon="pi pi-times"
+                                            class="p-button-rounded p-button-text p-button-plain"
+                                            (click)="onClearCommittes()"></button>
+                                </div>
+                            </th>
+                            <th>
+                                <div class="flex align-items-center gap-2">
+                                    <input class="w-10"
+                                           type="text"
+                                           pInputText
+                                           placeholder="ค้นหาด้วย จำนวนที่รอส่งมอบ" />
+                                    <button pButton
+                                            pRipple
+                                            type="button"
+                                            icon="pi pi-times"
+                                            class="p-button-rounded p-button-text p-button-plain"
+                                            (click)="onClearCommittes()"></button>
+                                </div>
+                            </th>
+                            <th>
+                                <div class="flex align-items-center gap-2">
+                                    <input class="w-10"
+                                           type="text"
+                                           pInputText
+                                           placeholder="ค้นหาด้วย สภาพดี" />
+                                    <button pButton
+                                            pRipple
+                                            type="button"
+                                            icon="pi pi-times"
+                                            class="p-button-rounded p-button-text p-button-plain"
+                                            (click)="onClearCommittes()"></button>
+                                </div>
+                            </th>
+                            <th>
+                                <div class="flex align-items-center gap-2">
+                                    <input class="w-10"
+                                           type="text"
+                                           pInputText
+                                           placeholder="ค้นหาด้วย พบปัญหา" />
+                                    <button pButton
+                                            pRipple
+                                            type="button"
+                                            icon="pi pi-times"
+                                            class="p-button-rounded p-button-text p-button-plain"
+                                            (click)="onClearCommittes()"></button>
+                                </div>
+                            </th>
+                            <th>
+                                <!-- <p-dropdown
+                            *ngIf="
+                                jobPageOption$ | async as jobPageOption
+                            "
+                            [ngModel]="jobPageOption.jobStatus"
+                            [options]="jobStatusList"
+                            (ngModelChange)="onFilterJobStatus($event)"
+                            placeholder="ทั้งหมด"
+                            [showClear]="true"
+                        >
+                            <ng-template let-option pTemplate="item">
+                                <span
+                                    [class]="
+                                        'customer-badge status-' +
+                                        option.value
+                                    "
+                                >
+                                    {{ option.label }}
+                                </span>
+                            </ng-template>
+                        </p-dropdown> -->
+                            </th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body"
+                                 let-jobsdata>
+                        <tr>
+                            <td>{{ jobsdata.sequencesNo }}</td>
+                            <td>
+                                {{ jobsdata.itemNo }}
+                            </td>
+                            <td>
+                                {{ jobsdata.name }}
+                            </td>
+                            <td>
+                                {{ jobsdata.group }}
+                            </td>
+                            <td>
+                                {{ jobsdata.quantity }}
+                            </td>
+                            <td>
+                                {{ jobsdata.delivery }}
+                            </td>
+                            <td>
+                                {{ jobsdata.good }}
+                            </td>
+                            <td>
+                                {{ jobsdata.bad }}
+                            </td>
+                            <td>
+                                <div class="flex gap-2">
+                                    <i class="pi pi-search-plus"></i>
+                                    <i class="pi pi-pencil"></i>
+                                </div>
+                            </td>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="emptymessage">
+                        <tr>
+                            <td colspan="7">No jobsdatas found.</td>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="loadingbody">
+                        <tr>
+                            <td colspan="7">
+                                Loading jobsdatas data. Please wait.
+                            </td>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="summary">
+                        <div class="flex justify-content-center mt-5">
+                            <p class="flex align-items-center ml-3 p-paginat__line-height">
+                                แสดงจำนวน
+                            </p>
+
+                            
+                        </div>
+                    </ng-template>
+                </p-table>
+            </div>
+        </div>
 
     </div>
-
 </div>
