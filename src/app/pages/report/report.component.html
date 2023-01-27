@@ -278,12 +278,10 @@
 
                             
 
-                                <button pButton #badge type="button" class="p-button-raised p-button-sm p-button-rounded p-button-warning" 
+                                <p-splitButton label="รอ กฟภ.อนุมัติ" [model]="this.items" styleClass="p-button-rounded p-button-sm p-button-warning mr-2 mb-2"></p-splitButton>
+                               
                                 
-                                >
-                                รอ กฟภ. อนุมัติ
-                            </button>
-                     
+                        
                             </td>
                             <td>
                                
@@ -325,6 +323,20 @@
              
             </div>
         </div>
+
+        <p-dialog header="Title" [(visible)]="is_preview"
+        [closeOnEscape]="true"
+        [dismissableMask]="true"
+        >
+            <pdf-viewer [src]="pdfSrc"
+            [render-text]="true"
+            [original-size]="false"
+     
+            style="width:600px;height:600px"
+
+    ></pdf-viewer>
+        </p-dialog>
+  
 
     </div>
 </div>

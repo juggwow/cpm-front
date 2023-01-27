@@ -11,19 +11,26 @@ import { RippleModule } from 'primeng/ripple';
 import { RouterModule } from '@angular/router';
 import { BadgeModule } from 'primeng/badge';
 import {ContextMenuModule} from 'primeng/contextmenu';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
+import {DialogModule} from 'primeng/dialog';
+import {SplitButtonModule} from 'primeng/splitbutton';
 @Component({
   selector: 'app-report',
   standalone:true,
   providers: [BoqService],
-  imports:[TableModule,InputTextModule,ButtonModule,RippleModule,RouterModule,BadgeModule,ContextMenuModule],
+  imports:[TableModule,InputTextModule,ButtonModule,SplitButtonModule,RippleModule,RouterModule,BadgeModule,ContextMenuModule,PdfViewerModule,DialogModule],
   templateUrl: './report.component.html',
   styleUrls: ['./report.component.scss']
 })
 export class ReportComponent {
 
+  is_preview: boolean = false;
 
 
-  items: MenuItem[] = [];
+
+  items: MenuItem[] = [
+    
+  ];
   Boq: Boq[] = [];
   first = 0
   rows = 10
@@ -31,6 +38,11 @@ export class ReportComponent {
   queryParams:any = {
 
   }
+
+
+
+
+  pdfSrc = "https://vadimdez.github.io/ng2-pdf-viewer/assets/pdf-test.pdf";
 
   
 
@@ -43,37 +55,27 @@ export class ReportComponent {
 
   ngOnInit(): void {
     this.fetchAllData()
-
     this.items = [
-      {
-          label: 'File',
-          items: [{
-                  label: 'New', 
-                  icon: 'pi pi-fw pi-plus',
-                  items: [
-                      {label: 'Project'},
-                      {label: 'Other'},
-                  ]
-              },
-              {label: 'Open'},
-              {label: 'Quit'}
-          ]
+      {label: 'แก้ไข', icon: 'pi pi-pencil', command: () => {
+        console.log("hello")
       },
-      {
-          label: 'Edit',
-          icon: 'pi pi-fw pi-pencil',
-          items: [
-              {label: 'Delete', icon: 'pi pi-fw pi-trash'},
-              {label: 'Refresh', icon: 'pi pi-fw pi-refresh'}
-          ]
-      }
+    },
+      {label: 'Preview เอกสาร ', icon: 'pi pi-eye', command: () => {
+        this.showPreview();
+      },
+    },
+      {label: 'ลบเอกสาร', icon: 'pi pi-trash', url: 'http://angular.io'},
+   
   ];
+   
 
   
   }
 
 
-
+  showPreview() {
+    this.is_preview = true;
+}
 
   onSortColumn(event:SortEvent){
     let order = (event.order == 1) ? "asc" : "desc"
