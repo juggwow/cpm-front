@@ -1,4 +1,4 @@
-FROM trion/ng-cli-e2e:15.1.3 as builder
+FROM trion/ng-cli-e2e:15.1.1 as builder
 ARG environment
 
 WORKDIR /app
