@@ -24,6 +24,7 @@ import { BehaviorSubject, Subject } from 'rxjs';
 import { FormService } from './../../services/rad-form'
 @Component({
   providers: [FormService],
+  imports : [InputTextModule,ButtonModule],
   selector: 'app-form',
   standalone: true,
   templateUrl: './form.component.html',
