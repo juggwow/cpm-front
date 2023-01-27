@@ -9,6 +9,9 @@ import { MessageService, ConfirmationService } from 'primeng/api';
 import { RouterModule, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { PaginatorModule } from 'primeng/paginator';
+import {ConfirmDialogModule} from 'primeng/confirmdialog';
+
+
 import {
   debounceTime,
   distinctUntilChanged,
@@ -23,8 +26,8 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { FormService } from './../../services/rad-form'
 @Component({
-  providers: [FormService],
-  imports : [InputTextModule,ButtonModule],
+  providers: [FormService,ConfirmationService],
+  imports : [InputTextModule,ButtonModule,ConfirmDialogModule],
   selector: 'app-form',
   standalone: true,
   templateUrl: './form.component.html',
@@ -32,7 +35,7 @@ import { FormService } from './../../services/rad-form'
 })
 export class FormComponent implements OnInit {
 
-  constructor(private FormService: FormService) {
+  constructor(private FormService: FormService,private confirmationService: ConfirmationService) {
 
   }
 
@@ -40,6 +43,18 @@ export class FormComponent implements OnInit {
   }
 
 
+
+  confirm() {
+    this.confirmationService.confirm({
+        message: 'ระบบจะส่งรายละเอียดใบตรวจรับอุปกรณ์ไฟฟ้า ให้ กฟภ. อนุมัติทันทีที่ท่านกด “ตกลง”',
+        header:"ยืนยันการสร้างใบตรวจรับอุปกรณ์ไฟฟ้า",
+        acceptLabel:"ตกลง",
+        rejectLabel:"ยกเลิก",
+        accept: () => {
+            this.SendToPEA()
+        }
+    });
+}
 
   SendToPEA() {
     this.FormService.addNewForm(
