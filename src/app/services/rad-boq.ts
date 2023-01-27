@@ -12,7 +12,6 @@ export class BoqService {
     getAllBoq$() {
         return this.http.get<ResponsePage<Boq>>(
             `https://cpm-rad-api-ing-dev.pea.co.th/api/v1/contract/31/boq`,
-      
         );
     }
 
