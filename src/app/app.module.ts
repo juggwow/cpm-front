@@ -19,7 +19,7 @@ import { ReportComponent } from './pages/report/report.component';
         FormsModule,
         ReactiveFormsModule,
     ],
-    declarations: [AppComponent, NotfoundComponent, ReportComponent],
+    declarations: [AppComponent, NotfoundComponent],
     schemas: [ CUSTOM_ELEMENTS_SCHEMA ,NO_ERRORS_SCHEMA],
     providers: [
         Location,
