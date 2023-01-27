@@ -79,10 +79,14 @@
                 <p-table [value]="Boq"
                          styleClass="p-datatable-gridlines"
                          [rowHover]="true"
-                         [paginator]="false"
+                         [paginator]="true"
+                         [loading]="loading"
+                         [rows]="10"
                          [lazy]="true" 
                          (onSort)="onSortColumn($event)"
-                         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10,25,50]"
+                         
+                         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                          [rowsPerPageOptions]="[10,25,50]"
                          >
                     <ng-template pTemplate="header">
                         <tr>
@@ -286,29 +290,29 @@
                         </tr>
                     </ng-template>
                     <ng-template pTemplate="body"
-                                 let-jobsdata>
+                                 let-boq>
                         <tr>
-                            <td>{{ jobsdata.sequencesNo }}</td>
+                            <td>{{ boq.sequencesNo }}</td>
                             <td>
-                                {{ jobsdata.itemNo }}
+                                {{ boq.itemNo }}
                             </td>
                             <td>
-                                {{ jobsdata.name }}
+                                {{ boq.name }}
                             </td>
                             <td>
-                                {{ jobsdata.group }}
+                                {{ boq.group }}
                             </td>
                             <td>
-                                {{ jobsdata.quantity }}
+                                {{ boq.quantity }}
                             </td>
                             <td>
-                                {{ jobsdata.delivery }}
+                                {{ boq.delivery }}
                             </td>
                             <td>
-                                {{ jobsdata.good }}
+                                {{ boq.good }}
                             </td>
                             <td>
-                                {{ jobsdata.bad }}
+                                {{ boq.bad }}
                             </td>
                             <td>
                                 <div class="flex gap-2">
@@ -330,15 +334,7 @@
                             </td>
                         </tr>
                     </ng-template>
-                    <ng-template pTemplate="summary">
-                        <div class="flex justify-content-center mt-5">
-                            <p class="flex align-items-center ml-3 p-paginat__line-height">
-                                แสดงจำนวน
-                            </p>
-
-                            
-                        </div>
-                    </ng-template>
+                   
                 </p-table>
             </div>
         </div>

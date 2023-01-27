@@ -23,7 +23,7 @@ export class TableComponent implements OnInit {
   Boq: Boq[] = [];
   first = 0
   rows = 10
-
+  loading: boolean = true;
   queryParams:any = {
 
   }
@@ -34,13 +34,7 @@ export class TableComponent implements OnInit {
     ) {}
 
   ngOnInit(): void {
-    this.BoqService
-    .getAllBoq$().pipe(take(1))
-    .subscribe((res) => {
-        this.Boq = res.data;
-        console.log(this.Boq)
-    });
-    
+    this.fetchAllData()
   }
 
 
@@ -65,12 +59,26 @@ export class TableComponent implements OnInit {
 
 
   
+
+  fetchAllData(){
+    this.loading = true;
+    this.BoqService
+    .getAllBoq$().pipe(take(1))
+    .subscribe((res) => {
+        this.Boq = res.data;
+        console.log(this.Boq)
+        this.loading = false;
+    });
+  }
+
+  
   fetchDataWhenSortOrFilter(){
+    this.loading = true;
     const params = new HttpParams({fromObject: this.queryParams})
     this.BoqService.getSortOrFilterBoq$(params)
     .subscribe((res) =>{
       this.Boq = res.data;
-
+      this.loading = false;
     })
   }
 
