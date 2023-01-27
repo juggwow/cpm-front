@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { PageOption, ResponsePage } from 'src/app/models/response-page.model';
@@ -15,4 +15,12 @@ export class BoqService {
         );
     }
 
+
+    getSortOrFilterBoq$(param:HttpParams) {
+        return this.http.get<ResponsePage<Boq>>(
+            `https://cpm-rad-api-ing-dev.pea.co.th/api/v1/contract/31/boq`, {params: param}
+        );
+    }
+
+    
 }

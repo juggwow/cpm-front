@@ -80,6 +80,8 @@
                          styleClass="p-datatable-gridlines"
                          [rowHover]="true"
                          [paginator]="false"
+                         [lazy]="true" 
+                         (onSort)="onSortColumn($event)"
                          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10,25,50]"
                          >
                     <ng-template pTemplate="header">
@@ -141,13 +143,15 @@
                                 <div class="flex align-items-center gap-2">
                                     <input class="w-10"
                                            pInputText
+                                           name="sequencesNo"
+                                           (keyup)="onFilterColumn('sequencesNo',$event)"
                                            placeholder="ค้นหาด้วย ลำดับ" />
                                     <button pButton
                                             pRipple
                                             type="button"
                                             icon="pi pi-times"
                                             class="p-button-rounded p-button-text p-button-plain"
-                                            (click)="onClearWbs()"></button>
+                                            (click)="onClearFilter('sequencesNo')"></button>
                                 </div>
                             </th>
                             <th>
@@ -155,13 +159,14 @@
                                     <input class="w-10"
                                            type="text"
                                            pInputText
+                                           (keyup)="onFilterColumn('ItemNo',$event)"
                                            placeholder="ค้นหาด้วย BoqId" />
                                     <button pButton
                                             pRipple
                                             type="button"
                                             icon="pi pi-times"
                                             class="p-button-rounded p-button-text p-button-plain"
-                                            (click)="onClearJobName()"></button>
+                                            (click)="onClearFilter('ItemNo')"></button>
                                 </div>
                             </th>
                             <th>
@@ -169,13 +174,14 @@
                                     <input class="w-10"
                                            type="text"
                                            pInputText
+                                           (keyup)="onFilterColumn('name',$event)"
                                            placeholder="ค้นหาด้วย รายการ" />
                                     <button pButton
                                             pRipple
                                             type="button"
                                             icon="pi pi-times"
                                             class="p-button-rounded p-button-text p-button-plain"
-                                            (click)="onClearSupervisor()"></button>
+                                            (click)="onClearFilter('name')"></button>
                                 </div>
                             </th>
                             <th>
@@ -183,13 +189,14 @@
                                     <input class="w-10"
                                            type="text"
                                            pInputText
+                                           (keyup)="onFilterColumn('group',$event)"
                                            placeholder="ค้นหาด้วย รายการหลัก" />
                                     <button pButton
                                             pRipple
                                             type="button"
                                             icon="pi pi-times"
                                             class="p-button-rounded p-button-text p-button-plain"
-                                            (click)="onClearCommittes()"></button>
+                                            (click)="onClearFilter('group')"></button>
                                 </div>
                             </th>
                             <th>
@@ -197,13 +204,14 @@
                                     <input class="w-10"
                                            type="text"
                                            pInputText
+                                           (keyup)="onFilterColumn('quantity',$event)"
                                            placeholder="ค้นหาด้วย จำนวนตามสัญญา" />
                                     <button pButton
                                             pRipple
                                             type="button"
                                             icon="pi pi-times"
                                             class="p-button-rounded p-button-text p-button-plain"
-                                            (click)="onClearCommittes()"></button>
+                                            (click)="onClearFilter('quantity')"></button>
                                 </div>
                             </th>
                             <th>
@@ -211,13 +219,14 @@
                                     <input class="w-10"
                                            type="text"
                                            pInputText
+                                           (keyup)="onFilterColumn('delivery',$event)"
                                            placeholder="ค้นหาด้วย จำนวนที่รอส่งมอบ" />
                                     <button pButton
                                             pRipple
                                             type="button"
                                             icon="pi pi-times"
                                             class="p-button-rounded p-button-text p-button-plain"
-                                            (click)="onClearCommittes()"></button>
+                                            (click)="onClearFilter('delivery')"></button>
                                 </div>
                             </th>
                             <th>
@@ -225,13 +234,15 @@
                                     <input class="w-10"
                                            type="text"
                                            pInputText
+                                           (keyup)="onFilterColumn('good',$event)"
                                            placeholder="ค้นหาด้วย สภาพดี" />
                                     <button pButton
                                             pRipple
                                             type="button"
                                             icon="pi pi-times"
+                                            
                                             class="p-button-rounded p-button-text p-button-plain"
-                                            (click)="onClearCommittes()"></button>
+                                            (click)="onClearFilter('good')"></button>
                                 </div>
                             </th>
                             <th>
@@ -239,13 +250,14 @@
                                     <input class="w-10"
                                            type="text"
                                            pInputText
+                                           (keyup)="onFilterColumn('bad',$event)"
                                            placeholder="ค้นหาด้วย พบปัญหา" />
                                     <button pButton
                                             pRipple
                                             type="button"
                                             icon="pi pi-times"
                                             class="p-button-rounded p-button-text p-button-plain"
-                                            (click)="onClearCommittes()"></button>
+                                            (click)="onClearFilter('bad')"></button>
                                 </div>
                             </th>
                             <th>

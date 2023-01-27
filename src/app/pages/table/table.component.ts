@@ -7,6 +7,8 @@ import {TableModule,} from 'primeng/table';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { RippleModule } from 'primeng/ripple';
+import { HttpParams } from '@angular/common/http';
+import { SortEvent } from 'primeng/api';
 @Component({
   providers: [BoqService],
   imports:[TableModule,InputTextModule,ButtonModule,RippleModule],
@@ -21,6 +23,12 @@ export class TableComponent implements OnInit {
   Boq: Boq[] = [];
   first = 0
   rows = 10
+
+  queryParams:any = {
+
+  }
+
+
   constructor(
     private BoqService: BoqService
     ) {}
@@ -37,42 +45,39 @@ export class TableComponent implements OnInit {
 
 
 
+  onSortColumn(event:SortEvent){
+      let order = (event.order == 1) ? "asc" : "desc"
+      this.queryParams["s"+event.field!] = order;
+      this.fetchDataWhenSortOrFilter()
+  }
+
+  onFilterColumn(key:string,event:Event){
+    let filterValue = (event.target as HTMLInputElement).value;
+
+    if (filterValue == ""){
+      delete this.queryParams[key]
+    }else{
+      this.queryParams[key] = filterValue;
+    }
+
+    this.fetchDataWhenSortOrFilter()
+  }
+
+
   
+  fetchDataWhenSortOrFilter(){
+    const params = new HttpParams({fromObject: this.queryParams})
+    this.BoqService.getSortOrFilterBoq$(params)
+    .subscribe((res) =>{
+      this.Boq = res.data;
 
-  onFilterWbs(value: string) {
-    console.log("..")
+    })
   }
 
-  onFilterJobName(value: string) {
-    console.log("..")
-  }
 
-  onFilterJobStatus(jobStatus: string | null) {
-    console.log("..")
-  }
-
-  onFilterSupervisor(value: string) {
-    console.log("..")
-  }
-
-  onFilterCommittees(value: string) {
-    console.log("..")
-  }
-
-  onClearWbs() {
-    console.log("..")
-  }
-
-  onClearJobName() {
-    console.log("..")
-  }
-
-  onClearSupervisor() {
-    console.log("..")
-  }
-
-  onClearCommittes() {
-    console.log("..")
+  
+  onClearFilter(key:string) {
+    console.log("clear",key)
   }
 
 
