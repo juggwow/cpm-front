@@ -27,7 +27,7 @@ import { BehaviorSubject, Subject } from 'rxjs';
 import { FormService } from './../../services/rad-form'
 @Component({
   providers: [FormService,ConfirmationService],
-  imports : [InputTextModule,ButtonModule,ConfirmDialogModule],
+  imports : [InputTextModule,ButtonModule,ConfirmDialogModule,RouterModule],
   selector: 'app-form',
   standalone: true,
   templateUrl: './form.component.html',
