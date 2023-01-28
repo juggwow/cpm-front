@@ -66,12 +66,47 @@
 
                         <div class="col-sm-12 col-md-8">
                             <div class="row my-3  justify-content-between">
-                                <div class="col-md-12">
+                                <div class="col-md-12 my-3">
                                     <p class="fw-bold">เลขที่ใบส่ง</p>
                                     <input type="text" pInputText
                                            class="form-control"
                                            placeholder="กรุณาชื่อผู้ควบคุมงานของบริษัท">
                                 </div>
+
+                                <div class="col-md-12">
+
+                                    <p class="fw-bold">เอกสารแนบ (Packing List, ใบออกของ, ใบ Shipping, Factory Test report)</p>
+                                <ngx-dropzone (change)="onSelectFileUpload($event)">
+                                    <ngx-dropzone-label>
+                                        ลากไฟล์มาไว้ที่นี้ หรือ 
+                                        <span class="text-primary fw-bold">เลือกไฟล์เพื่ออัปโหลด</span>
+                                    </ngx-dropzone-label>
+                              
+                                </ngx-dropzone>
+                                
+                                <ngx-dropzone-preview *ngFor="let f of files" [removable]="true" (removed)="onRemoveFileUpload(f)" class="mw-100 mx-0  justify-content-start d-block" style="min-height:auto;">
+                                    <ngx-dropzone-label class="row pt-3" >
+                               
+                                        <div class="col-2">
+                                        <div class="bg-primary rounded p-3" style="width:80px;height:80px">({{ f.type }})</div>
+                                        </div>
+                                        <div class="col-6">
+                                        <p class="fw-bold"> {{ f.name }} </p>
+                                        <p > {{ f.size }} KB </p>
+                                        </div>
+                                        <div class="col-3">
+                                       
+                                            <p-dropdown [options]="doctype" optionLabel="name" class="w-100" ></p-dropdown>
+                                     
+                                        </div>
+                                        <div class="col-1 py-3">
+                                            <button pButton class="p-button-text" > 
+                                                <i class="pi pi-trush"></i>
+                                            </button>
+                                        </div>
+                                        </ngx-dropzone-label>
+                                </ngx-dropzone-preview>
+                            </div>
                             </div>
                         </div>
                     </div>

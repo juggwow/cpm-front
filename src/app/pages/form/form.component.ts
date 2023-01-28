@@ -22,12 +22,17 @@ import {
   tap,
   take,
 } from 'rxjs/operators';
+
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { FormService } from './../../services/rad-form'
+import { NgxDropzoneChangeEvent, NgxDropzoneModule } from 'ngx-dropzone';
+import {DocType} from './../../models/doc.model'
+
+
 @Component({
   providers: [FormService,ConfirmationService],
-  imports : [InputTextModule,ButtonModule,ConfirmDialogModule,RouterModule],
+  imports : [DropdownModule,CommonModule,InputTextModule,ButtonModule,ConfirmDialogModule,RouterModule,NgxDropzoneModule],
   selector: 'app-form',
   standalone: true,
   templateUrl: './form.component.html',
@@ -35,11 +40,24 @@ import { FormService } from './../../services/rad-form'
 })
 export class FormComponent implements OnInit {
 
+
+  files: File[] = [];
+
+  doctype!: DocType[];
+
+  // selectedDocType!: DocType;
+
   constructor(private FormService: FormService,private confirmationService: ConfirmationService) {
 
   }
 
   ngOnInit(): void {
+    this.doctype = [
+      {name: 'Packing List', id: 'NY'},
+      {name: 'ใบออกของ', id: 'RM'},
+      {name: 'ใบ Shipping', id: 'LDN'},
+      {name: 'Test report', id: 'IST'},
+  ];
   }
 
 
@@ -55,6 +73,20 @@ export class FormComponent implements OnInit {
         }
     });
 }
+
+
+
+onSelectFileUpload(event:NgxDropzoneChangeEvent) {
+  console.log(event);
+  this.files.push(...event.addedFiles);
+}
+
+onRemoveFileUpload(event:any) {
+  console.log(event);
+  this.files.splice(this.files.indexOf(event), 1);
+}
+
+
 
   SendToPEA() {
     this.FormService.addNewForm(
