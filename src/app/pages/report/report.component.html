@@ -29,7 +29,7 @@
                 </span>
             </div>
                 <div class="my-3">
-                <button class="btn btn-lg btn-primary  px-5 mx-3 p-button-outlined" pButton >สร้างเอกสาร</button>
+                <button class="btn btn-lg btn-primary  px-5 mx-3 p-button-outlined" pButton [routerLink]="['/form']"  >สร้างเอกสาร</button>
                 </div>
     
             </div>
@@ -301,13 +301,13 @@
                     </ng-template>
                     <ng-template pTemplate="emptymessage">
                         <tr>
-                            <td colspan="7">No jobsdatas found.</td>
+                            <td colspan="7">No boq found.</td>
                         </tr>
                     </ng-template>
                     <ng-template pTemplate="loadingbody">
                         <tr>
                             <td colspan="7">
-                                Loading jobsdatas data. Please wait.
+                                Loading boq data. Please wait.
                             </td>
                         </tr>
                     </ng-template>
@@ -337,6 +337,9 @@
     ></pdf-viewer>
         </p-dialog>
   
+
+     <p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog> 
+
 
     </div>
 </div>

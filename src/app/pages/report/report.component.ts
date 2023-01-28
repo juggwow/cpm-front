@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Boq } from 'src/app/models/boq.model';
 import { BoqService } from 'src/app/services/rad-boq';
-import { MenuItem, SortEvent } from 'primeng/api';
+import { ConfirmationService, MenuItem, SortEvent } from 'primeng/api';
 import { take } from 'rxjs';
 import { HttpParams } from '@angular/common/http';
 import {TableModule,} from 'primeng/table';
@@ -14,11 +14,13 @@ import {ContextMenuModule} from 'primeng/contextmenu';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 import {DialogModule} from 'primeng/dialog';
 import {SplitButtonModule} from 'primeng/splitbutton';
+import {ConfirmDialogModule} from 'primeng/confirmdialog';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-report',
   standalone:true,
-  providers: [BoqService],
-  imports:[TableModule,InputTextModule,ButtonModule,SplitButtonModule,RippleModule,RouterModule,BadgeModule,ContextMenuModule,PdfViewerModule,DialogModule],
+  providers: [BoqService,ConfirmationService],
+  imports:[ConfirmDialogModule,TableModule,InputTextModule,ButtonModule,SplitButtonModule,RippleModule,RouterModule,BadgeModule,ContextMenuModule,PdfViewerModule,DialogModule],
   templateUrl: './report.component.html',
   styleUrls: ['./report.component.scss']
 })
@@ -28,9 +30,7 @@ export class ReportComponent {
 
 
 
-  items: MenuItem[] = [
-    
-  ];
+  items: MenuItem[] = [];
   Boq: Boq[] = [];
   first = 0
   rows = 10
@@ -49,7 +49,10 @@ export class ReportComponent {
 
 
   constructor(
+    private confirmationService: ConfirmationService,
     private BoqService: BoqService,
+    private router:Router
+    
 
     ) {}
 
@@ -57,20 +60,37 @@ export class ReportComponent {
     this.fetchAllData()
     this.items = [
       {label: 'แก้ไข', icon: 'pi pi-pencil', command: () => {
-        console.log("hello")
+        this.router.navigate(['/form']);
       },
     },
       {label: 'Preview เอกสาร ', icon: 'pi pi-eye', command: () => {
         this.showPreview();
       },
     },
-      {label: 'ลบเอกสาร', icon: 'pi pi-trash', url: 'http://angular.io'},
+      {label: 'ลบเอกสาร', icon: 'pi pi-trash', command:()=>{
+        this.confirmDelete()
+      }
+    },
    
   ];
    
 
   
   }
+
+
+
+  confirmDelete() {
+    this.confirmationService.confirm({
+        message: 'เลือก ตกลง เพื่อลบ หรือ ย้อนกลับ เพื่อกลับไปหน้าเดิม',
+        header:"คุณต้องการลบรายการนี้หรือไม่”",
+        acceptLabel:"ตกลง",
+        rejectLabel:"ยกเลิก",
+        accept: () => {
+            console.log("delete...")
+        }
+    });
+}
 
 
   showPreview() {
