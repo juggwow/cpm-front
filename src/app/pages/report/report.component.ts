@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { Boq } from 'src/app/models/boq.model';
-import { BoqService } from 'src/app/services/rad-boq';
+import { ListDocument } from 'src/app/models/doc.model';
+import { ListDocumentService } from 'src/app/services/rad-listofdoc';
 import { ConfirmationService, MenuItem, SortEvent } from 'primeng/api';
 import { take } from 'rxjs';
 import { HttpParams } from '@angular/common/http';
@@ -16,10 +16,11 @@ import {DialogModule} from 'primeng/dialog';
 import {SplitButtonModule} from 'primeng/splitbutton';
 import {ConfirmDialogModule} from 'primeng/confirmdialog';
 import { Router } from '@angular/router';
+
 @Component({
   selector: 'app-report',
   standalone:true,
-  providers: [BoqService,ConfirmationService],
+  providers: [ListDocumentService,ConfirmationService],
   imports:[ConfirmDialogModule,TableModule,InputTextModule,ButtonModule,SplitButtonModule,RippleModule,RouterModule,BadgeModule,ContextMenuModule,PdfViewerModule,DialogModule],
   templateUrl: './report.component.html',
   styleUrls: ['./report.component.scss']
@@ -31,7 +32,7 @@ export class ReportComponent {
 
 
   items: MenuItem[] = [];
-  Boq: Boq[] = [];
+  ListDocument: ListDocument[] = [];
   first = 0
   rows = 10
   loading: boolean = true;
@@ -50,7 +51,7 @@ export class ReportComponent {
 
   constructor(
     private confirmationService: ConfirmationService,
-    private BoqService: BoqService,
+    private ListDocumentService: ListDocumentService,
     private router:Router
     
 
@@ -119,11 +120,11 @@ onFilterColumn(key:string,event:Event){
 
 fetchAllData(){
   this.loading = true;
-  this.BoqService
-  .getAllBoq$().pipe(take(1))
+  this.ListDocumentService
+  .getListOfDoc$().pipe(take(1))
   .subscribe((res) => {
-      this.Boq = res.data;
-      console.log(this.Boq)
+      this.ListDocument = res.data;
+      console.log(this.ListDocument)
       this.loading = false;
   });
 }
@@ -132,9 +133,9 @@ fetchAllData(){
 fetchDataWhenSortOrFilter(){
   this.loading = true;
   const params = new HttpParams({fromObject: this.queryParams})
-  this.BoqService.getSortOrFilterBoq$(params)
+  this.ListDocumentService.getSortOrFilterListOfDoc$(params)
   .subscribe((res) =>{
-    this.Boq = res.data;
+    this.ListDocument = res.data;
     this.loading = false;
   })
 }

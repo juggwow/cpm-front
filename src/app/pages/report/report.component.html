@@ -67,7 +67,7 @@
             </div>
 
 
-                <p-table [value]="Boq"
+                <p-table [value]="ListDocument"
                          styleClass="p-datatable-gridlines"
                          [rowHover]="true"
                          [paginator]="true"
@@ -150,7 +150,7 @@
                                            type="text"
                                            pInputText
                                            (keyup)="onFilterColumn('ItemNo',$event)"
-                                           placeholder="ค้นหาด้วย BoqId" />
+                                           placeholder="ค้นหาด้วย เลขที่ใบส่ง" />
                                     <button pButton
                                             pRipple
                                             type="button"
@@ -165,7 +165,7 @@
                                            type="text"
                                            pInputText
                                            (keyup)="onFilterColumn('name',$event)"
-                                           placeholder="ค้นหาด้วย รายการ" />
+                                           placeholder="ค้นหาด้วย จำนวนรายการ" />
                                     <button pButton
                                             pRipple
                                             type="button"
@@ -180,7 +180,7 @@
                                            type="text"
                                            pInputText
                                            (keyup)="onFilterColumn('group',$event)"
-                                           placeholder="ค้นหาด้วย รายการหลัก" />
+                                           placeholder="ค้นหาด้วย วันที่ส่งถึงหน้างาน" />
                                     <button pButton
                                             pRipple
                                             type="button"
@@ -195,7 +195,7 @@
                                            type="text"
                                            pInputText
                                            (keyup)="onFilterColumn('quantity',$event)"
-                                           placeholder="ค้นหาด้วย จำนวนตามสัญญา" />
+                                           placeholder="ค้นหาด้วย วันที่ตรวจสอบ" />
                                     <button pButton
                                             pRipple
                                             type="button"
@@ -210,7 +210,7 @@
                                            type="text"
                                            pInputText
                                            (keyup)="onFilterColumn('delivery',$event)"
-                                           placeholder="ค้นหาด้วย จำนวนที่รอส่งมอบ" />
+                                           placeholder="ค้นหาด้วย ผู้สร้างเอกสาร" />
                                     <button pButton
                                             pRipple
                                             type="button"
@@ -225,7 +225,7 @@
                                            type="text"
                                            pInputText
                                            (keyup)="onFilterColumn('good',$event)"
-                                           placeholder="ค้นหาด้วย สภาพดี" />
+                                           placeholder="ค้นหาด้วย สถานะ" />
                                     <button pButton
                                             pRipple
                                             type="button"
