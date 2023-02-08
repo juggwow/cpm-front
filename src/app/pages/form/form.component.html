@@ -17,6 +17,7 @@
     <div class="row">
         <div class="col-12">
             <div class="card ">
+                <form [formGroup]="DocFormGroup" >
                 <div>
                     <p class="fs-5 fw-bold">รายละเอียด Receive and Damage </p>
                     <hr class="my-5" />
@@ -40,12 +41,16 @@
                                 <div class="col-md-6">
                                     <p class="fw-bold">วันที่ส่งของถึงหน้างาน</p>
                                     <input type="date" pInputText
-                                           class="form-control">
+                                           class="form-control"
+                                           formControlName="arrival"
+                                           >
                                 </div>
                                 <div class="col-md-6">
                                     <p class="fw-bold">วันที่ตรวจสอบ</p>
                                     <input type="date" pInputText
-                                           class="form-control">
+                                           class="form-control"
+                                           formControlName="inspection"
+                                           >
                                 </div>
                             </div>
                             <div class="row my-3  justify-content-between">
@@ -53,7 +58,9 @@
                                     <p class="fw-bold">ชื่อผู้ควบคุมงานของบริษัท</p>
                                     <input type="text" pInputText
                                            class="form-control"
-                                           placeholder="กรุณาชื่อผู้ควบคุมงานของบริษัท">
+                                           placeholder="กรุณาชื่อผู้ควบคุมงานของบริษัท"
+                                           formControlName="taskMaster"
+                                           >
                                 </div>
                             </div>
                         </div>
@@ -70,7 +77,9 @@
                                     <p class="fw-bold">เลขที่ใบส่ง</p>
                                     <input type="text" pInputText
                                            class="form-control"
-                                           placeholder="กรุณาชื่อผู้ควบคุมงานของบริษัท">
+                                           placeholder="เลขที่ใบส่ง"
+                                           formControlName="invoice"
+                                           >
                                 </div>
 
                                 <div class="col-md-12">
@@ -120,15 +129,19 @@
                             <div class="row my-3 justify-content-between">
                                 <div class="col-md-6">
                                     <p class="fw-bold">จำนวนอุปกรณ์ที่ต้องการส่งมอบ (Unit)</p>
-                                    <input type="text" pInputText
+                                    <input type="number" pInputText
                                            class="form-control"
-                                           placeholder="กรุณากรอกจำนวนอุปกรณ์ที่ต้องการส่งมอบ">
+                                           placeholder="กรุณากรอกจำนวนอุปกรณ์ที่ต้องการส่งมอบ"
+                                           formControlName="quantity"
+                                           >
                                 </div>
                                 <div class="col-md-6">
                                     <p class="fw-bold">ประเทศผู้ผลิต</p>
                                     <input type="text" pInputText
                                            class="form-control"
-                                           placeholder="กรุณากรอกประเทศผู้ผลิต">
+                                           placeholder="กรุณากรอกประเทศผู้ผลิต"
+                                           formControlName="country"
+                                           >
                                 </div>
                             </div>
                             <div class="row my-3 justify-content-between">
@@ -136,13 +149,17 @@
                                     <p class="fw-bold">ยี่ห้อ (Brand)</p>
                                     <input type="text" pInputText
                                            class="form-control"
-                                           placeholder="กรุณากรอกเลขที่ใบส่ง">
+                                           placeholder="ยี่ห้อ"
+                                           formControlName="manufacturer"
+                                           >
                                 </div>
                                 <div class="col-md-6">
                                     <p class="fw-bold">รุ่น</p>
                                     <input type="text" pInputText
                                            class="form-control"
-                                           placeholder="กรุณากรอกรุ่น">
+                                           placeholder="กรุณากรอกรุ่น"
+                                           formControlName="model"
+                                           >
                                 </div>
                             </div>
                             <div class="row my-3  justify-content-between">
@@ -150,7 +167,9 @@
                                     <p class="fw-bold">Serial Number</p>
                                     <input type="text" pInputText
                                            class="form-control"
-                                           placeholder="กรุณากรอก Serial Number">
+                                           placeholder="กรุณากรอก Serial Number"
+                                           formControlName="serial"
+                                           >
                                 </div>
                             </div>
                             <div class="row my-3  justify-content-between">
@@ -158,12 +177,15 @@
                                     <p class="fw-bold">PEA No.</p>
                                     <input type="text" pInputText
                                            class="form-control"
-                                           placeholder="กรุณากรอก PEA No.">
+                                           placeholder="กรุณากรอก PEA No."
+                                           formControlName="peano"
+                                           >
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+            </form>
             </div>
             <div class="d-flex justify-content-between">
                 <div class="col">
