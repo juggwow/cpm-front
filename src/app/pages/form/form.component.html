@@ -192,7 +192,8 @@
                     <button class="btn btn-lg btn-primary px-5 mx-3 p-button-outlined" pButton [routerLink]="['/']"  >ยกเลิก</button>
                 </div>
                 <div class="col text-end">
-                    <button class="btn btn-lg btn-primary  px-5 mx-3 p-button-outlined" pButton >บันทึกร่าง</button>
+                    <button class="btn btn-lg btn-primary  px-5 mx-3 p-button-outlined" pButton 
+                    (click)="SaveDraft()">บันทึกร่าง</button>
                     <button class="btn btn-lg btn-primary px-5 mx-3 p-button-outlined" pButton 
                             (click)="confirm()">ส่งให้ กฟภ. </button>
                 </div>

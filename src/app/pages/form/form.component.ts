@@ -95,6 +95,8 @@ export class FormComponent implements OnInit {
     });
   }
 
+  
+
 
 
   onSelectFileUpload(event: NgxDropzoneChangeEvent) {
@@ -113,7 +115,6 @@ export class FormComponent implements OnInit {
       let formvalue = this.DocFormGroup.value as Form
       this.FormService.addNewForm(
         {...formvalue , ...{status:1,createby:"ทดสอบ"}}
-  
       ).pipe(
         take(1),
         tap(() => {
@@ -126,5 +127,28 @@ export class FormComponent implements OnInit {
           error: () => console.log('error')//this.appToastService.errorToast(),
         });
     }
+
+
+    SaveDraft() {
+      let formvalue = this.DocFormGroup.value as Form
+      this.FormService.addNewForm(
+        {...formvalue , ...{status:0,createby:"ทดสอบ"}}
+      ).pipe(
+        take(1),
+        tap(() => {
+          console.log('..')
+          // this.appToastService.successToast();
+          // this.router.navigate(['/']);
+        })
+      )
+        .subscribe({
+          error: () => console.log('error')//this.appToastService.errorToast(),
+        });
+    }
+
+
   }
+
+
+
 
