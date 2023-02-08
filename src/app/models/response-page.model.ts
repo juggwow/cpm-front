@@ -1,5 +1,6 @@
 export interface ResponsePage<T> {
     data: T[];
+    doc: T[];
     limit: number;
     page: number;
     total: number;
