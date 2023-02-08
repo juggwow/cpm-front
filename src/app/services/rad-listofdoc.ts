@@ -11,7 +11,7 @@ export class ListDocumentService {
 
     getListOfDoc$() {
         return this.http.get<ResponsePage<ListDocument>>(
-            `https://cpm-rad-api-ing-dev.pea.co.th/api/v1/listofdoc/1`,
+            `https://cpm-rad-api-ing-dev.pea.co.th/api/v1/listofdoc/9551`,
         );
     }
 

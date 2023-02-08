@@ -123,8 +123,8 @@ fetchAllData(){
   this.ListDocumentService
   .getListOfDoc$().pipe(take(1))
   .subscribe((res) => {
-      this.ListDocument = res.data;
-      console.log(this.ListDocument)
+      this.ListDocument = res.doc;
+      console.log('xx',res)
       this.loading = false;
   });
 }

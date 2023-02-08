@@ -41,7 +41,7 @@
                     อุปกรณ์ที่ส่งมอบ
                 </p>
                 <p class="my-3 h6">
-                    On-load tap-changing power transformer three-phase, 115-22 kV, 30/40/50 MVA (Dyn1)
+                   
                 </p>
             </div>
 
@@ -264,44 +264,44 @@
                     <ng-template pTemplate="body"
                                  let-boq>
                         <tr>
-                            <td>{{ boq.sequencesNo }}</td>
+                            <td>{{ boq.seq }}</td>
                             <td>
-                                {{ boq.itemNo }}
+                                {{ boq.invNo }}
                             </td>
                             <td>
-                                {{ boq.name }}
+                                {{ boq.qty }}
                             </td>
                             <td>
-                                {{ boq.group }}
+                                {{ boq.arrival }}
+                            </td>
+         
+                            <td>
+                               
+                                {{ boq.inspection }}
+                           
+                            </td>
+                            <td>
+                               
+                                {{ boq.CreateBy }}
+                               
                             </td>
                             <td>
 
-                            
-
-                                <p-splitButton label="รอ กฟภ.อนุมัติ" [model]="this.items" styleClass="p-button-rounded p-button-sm p-button-warning mr-2 mb-2"></p-splitButton>
+                                <p-button label="{{boq.StateName}}" styleClass="p-button-warning text-sm mr-2"></p-button>
+                                
+                                
                                
                                 
                         
                             </td>
                             <td>
-                               
-                                {{ boq.delivery }}
-                           
-                            </td>
-                            <td>
-                               
-                                {{ boq.good }}
-                               
-                            </td>
-                       
-                            <td>
-                    
+                                <p-splitButton label="" [model]="this.items" [style]="{'border': 'none'}" styleClass="p-button-rounded p-button-sm   mr-2 mb-2 p-button-text" ></p-splitButton>
                             </td>
                         </tr>
                     </ng-template>
                     <ng-template pTemplate="emptymessage">
                         <tr>
-                            <td colspan="7">No boq found.</td>
+                            <td colspan="7">No document found.</td>
                         </tr>
                     </ng-template>
                     <ng-template pTemplate="loadingbody">
