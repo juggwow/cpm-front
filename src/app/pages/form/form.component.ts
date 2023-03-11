@@ -27,9 +27,10 @@ import { NgxDropzoneChangeEvent, NgxDropzoneModule } from 'ngx-dropzone';
 import { DocType } from './../../models/doc.model'
 import { ListDocument } from './../../models/doc.model';
 import { Form } from 'src/app/models/form.model';
+import { ListDocumentService } from "./../../services/rad-listofdoc";
 
 @Component({
-  providers: [FormService, ConfirmationService],
+  providers: [FormService, ConfirmationService, ListDocumentService],
   imports: [DropdownModule, CommonModule, InputTextModule, ButtonModule, ConfirmDialogModule, RouterModule, NgxDropzoneModule, FormsModule, ReactiveFormsModule],
   selector: 'app-form',
   standalone: true,
@@ -51,13 +52,13 @@ export class FormComponent implements OnInit {
     taskMaster: new FormControl('', Validators.required),
     invoice: new FormControl('', Validators.required),
     quantity: new FormControl('', Validators.required),
-    country : new FormControl(''),
-    manufacturer : new FormControl(''),
-    model : new FormControl(''),
-    serial : new FormControl(''),
-    peano : new FormControl(''),
-    createby : new FormControl(''),
-    status : new FormControl(''),
+    country: new FormControl(''),
+    manufacturer: new FormControl(''),
+    model: new FormControl(''),
+    serial: new FormControl(''),
+    peano: new FormControl(''),
+    createby: new FormControl(''),
+    status: new FormControl(''),
   })
 
 
@@ -68,17 +69,28 @@ export class FormComponent implements OnInit {
 
   // selectedDocType!: DocType;
 
-  constructor(private FormService: FormService, private confirmationService: ConfirmationService) {
+  constructor(private FormService: FormService, private confirmationService: ConfirmationService, private listOfDocumentService: ListDocumentService) {
 
   }
 
   ngOnInit(): void {
-    this.doctype = [
-      { name: 'Packing List', id: 'NY' },
-      { name: 'ใบออกของ', id: 'RM' },
-      { name: 'ใบ Shipping', id: 'LDN' },
-      { name: 'Test report', id: 'IST' },
-    ];
+
+    this.getDocType()
+
+  }
+
+  getDocType() {
+    this.listOfDocumentService.getListOfDocTypes().subscribe(
+      data => {
+        this.doctype = data
+      },
+      error => {
+        console.log(JSON.stringify(error.error.message))
+      },
+      () => {
+        console.log("get list of doctype done")
+      }
+    )
   }
 
 
@@ -95,7 +107,7 @@ export class FormComponent implements OnInit {
     });
   }
 
-  
+
 
 
 
@@ -115,42 +127,42 @@ export class FormComponent implements OnInit {
 
 
   SendToPEA() {
-      let formvalue = this.DocFormGroup.value as Form
-      this.FormService.addNewForm(
-        {...formvalue , ...{status:1,createby:"ทดสอบ"}}
-      ).pipe(
-        take(1),
-        tap(() => {
-          console.log('..')
-          // this.appToastService.successToast();
-          // this.router.navigate(['/']);
-        })
-      )
-        .subscribe({
-          error: () => console.log('error')//this.appToastService.errorToast(),
-        });
-    }
-
-
-    SaveDraft() {
-      let formvalue = this.DocFormGroup.value as Form
-      this.FormService.addNewForm(
-        {...formvalue , ...{status:0,createby:"ทดสอบ"}}
-      ).pipe(
-        take(1),
-        tap(() => {
-          console.log('..')
-          // this.appToastService.successToast();
-          // this.router.navigate(['/']);
-        })
-      )
-        .subscribe({
-          error: () => console.log('error')//this.appToastService.errorToast(),
-        });
-    }
-
-
+    let formvalue = this.DocFormGroup.value as Form
+    this.FormService.addNewForm(
+      { ...formvalue, ...{ status: 1, createby: "ทดสอบ" } }
+    ).pipe(
+      take(1),
+      tap(() => {
+        console.log('..')
+        // this.appToastService.successToast();
+        // this.router.navigate(['/']);
+      })
+    )
+      .subscribe({
+        error: () => console.log('error')//this.appToastService.errorToast(),
+      });
   }
+
+
+  SaveDraft() {
+    let formvalue = this.DocFormGroup.value as Form
+    this.FormService.addNewForm(
+      { ...formvalue, ...{ status: 0, createby: "ทดสอบ" } }
+    ).pipe(
+      take(1),
+      tap(() => {
+        console.log('..')
+        // this.appToastService.successToast();
+        // this.router.navigate(['/']);
+      })
+    )
+      .subscribe({
+        error: () => console.log('error')//this.appToastService.errorToast(),
+      });
+  }
+
+
+}
 
 
 
