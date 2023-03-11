@@ -28,7 +28,8 @@ export class TableComponent implements OnInit {
   queryParams:any = {
 
   }
-
+  
+  private user_keyup_timeout : any
 
   constructor(
     private BoqService: BoqService
@@ -47,6 +48,10 @@ export class TableComponent implements OnInit {
   }
 
   onFilterColumn(key:string,event:Event){
+    if (this.user_keyup_timeout) {
+      clearTimeout(this.user_keyup_timeout);
+    }
+
     let filterValue = (event.target as HTMLInputElement).value;
 
     if (filterValue == ""){
@@ -55,7 +60,11 @@ export class TableComponent implements OnInit {
       this.queryParams[key] = filterValue;
     }
 
-    this.fetchDataWhenSortOrFilter()
+    this.user_keyup_timeout = setTimeout(() => {
+      this.fetchDataWhenSortOrFilter()
+    }, 1000);
+
+   
   }
 
 
