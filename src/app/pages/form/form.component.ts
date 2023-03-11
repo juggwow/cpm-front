@@ -7,7 +7,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { DropdownModule } from 'primeng/dropdown';
 import { MessageService, ConfirmationService } from 'primeng/api';
 import { RouterModule, Router } from '@angular/router';
-import { FormControl, FormGroup, FormsModule, Validators, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, FormsModule, Validators, ReactiveFormsModule, FormArray } from '@angular/forms';
 import { PaginatorModule } from 'primeng/paginator';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import {
@@ -28,6 +28,7 @@ import { DocType } from './../../models/doc.model'
 import { ListDocument } from './../../models/doc.model';
 import { Form } from 'src/app/models/form.model';
 import { ListDocumentService } from "./../../services/rad-listofdoc";
+import { Upload } from 'src/app/models/upload.model';
 
 @Component({
   providers: [FormService, ConfirmationService, ListDocumentService],
@@ -59,6 +60,7 @@ export class FormComponent implements OnInit {
     peano: new FormControl(''),
     createby: new FormControl(''),
     status: new FormControl(''),
+    filesAttach: new FormControl([] as Upload[] ),
   })
 
 
@@ -116,7 +118,22 @@ export class FormComponent implements OnInit {
     this.files.push(...event.addedFiles);
     console.log(this.files)
     console.log(event.addedFiles)
-    this.FormService.upload("upload","9551",event.addedFiles).pipe().subscribe()
+    this.FormService.upload("upload","9551",event.addedFiles).subscribe(
+      result => {
+   
+        const filesattach = this.DocFormGroup.controls.filesAttach.value
+        filesattach?.push({...result,...{type:1}})
+        this.DocFormGroup.controls.filesAttach.setValue(filesattach);
+
+
+        console.log('Upload successful!', result);
+        // Do something with the result here
+      },
+      error => {
+        console.log('Error uploading file!', error);
+        // Handle the error here
+      }
+    )
   }
 
   onRemoveFileUpload(event: any) {
