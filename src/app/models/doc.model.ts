@@ -1,7 +1,6 @@
 export interface DocType {
     id: string;
     name: string;
-    
 }
 
 export interface ListDocument {

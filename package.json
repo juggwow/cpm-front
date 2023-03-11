@@ -26,6 +26,7 @@
     "ng2-pdf-viewer": "^9.1.3",
     "ng2-smart-table": "^1.7.2",
     "ngx-dropzone": "^3.1.0",
+    "node-modules": "^1.0.1",
     "primeflex": "^3.2.0",
     "primeicons": "^6.0.1",
     "primeng": "^14.1.2",

@@ -2,7 +2,8 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { PageOption, ResponsePage } from 'src/app/models/response-page.model';
-import { ListDocument } from '../models/doc.model';
+import { ListDocument, DocType } from '../models/doc.model';
+import { Observable } from 'rxjs';
 
 
 @Injectable()
@@ -23,6 +24,12 @@ export class ListDocumentService {
         );
     }
 
+    getListOfDocTypes(): Observable<DocType[]> {
+      return this.http.get<DocType[]>(
+        `https://cpm-rad-api-ing-dev.pea.co.th/api/v1/doctype`
+      )
+    }
 
-    
+
+
 }
