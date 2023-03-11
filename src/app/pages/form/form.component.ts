@@ -102,6 +102,9 @@ export class FormComponent implements OnInit {
   onSelectFileUpload(event: NgxDropzoneChangeEvent) {
     console.log(event);
     this.files.push(...event.addedFiles);
+    console.log(this.files)
+    console.log(event.addedFiles)
+    this.FormService.upload("upload","9551",event.addedFiles).pipe().subscribe()
   }
 
   onRemoveFileUpload(event: any) {
