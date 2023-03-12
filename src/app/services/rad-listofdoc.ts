@@ -49,7 +49,7 @@ export class ListDocumentService {
       };
 
     return this.http.delete<any>(
-        `https://cpm-rad-api-ing-dev.pea.co.th/api/v1/radform/19`, httpOptions
+        `https://cpm-rad-api-ing-dev.pea.co.th/api/v1/form/11`, httpOptions
     )
   }
 }
