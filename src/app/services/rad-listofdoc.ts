@@ -1,4 +1,4 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { PageOption, ResponsePage } from 'src/app/models/response-page.model';
@@ -37,8 +37,19 @@ export class ListDocumentService {
     );
   }
 
+  
+  deleteDoc() {
+    const formData = new FormData();
+    formData.append("id", "19");
+    formData.append("radid", "jasdasd123312");
+    formData.append("updateby", "คนแก้ไข เอกสาร");
+    const httpOptions = {
+        headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+        body: formData
+      };
 
-
+    return this.http.delete<any>(
+        `https://cpm-rad-api-ing-dev.pea.co.th/api/v1/radform/19`, httpOptions
+    )
+  }
 }
-
-

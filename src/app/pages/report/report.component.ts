@@ -88,7 +88,12 @@ export class ReportComponent {
         acceptLabel:"ตกลง",
         rejectLabel:"ยกเลิก",
         accept: () => {
-            console.log("delete...")
+
+          this.ListDocumentService.deleteDoc().subscribe((result) =>{
+            console.log(result)
+            
+          })
+            
         }
     });
 }
