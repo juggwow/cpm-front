@@ -61,7 +61,7 @@ export class ReportComponent {
     this.fetchAllData()
     this.items = [
       {label: 'แก้ไข', icon: 'pi pi-pencil', command: () => {
-        this.router.navigate(['/form']);
+        this.router.navigate(['/formupdate']);
       },
     },
       {label: 'Preview เอกสาร ', icon: 'pi pi-eye', command: () => {

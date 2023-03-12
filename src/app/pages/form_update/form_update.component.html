@@ -1,0 +1,214 @@
+<div class="container">
+    <div class="my-5">
+        <div class="neutral-08 fw-bold fs-4 my-3">
+            บริหารสัญญา
+        </div>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb fs-6">
+                <li class="breadcrumb-item"><a class="neutral-06"
+                       routerLink="">ตรวจรับงาน</a></li>
+                <li class="breadcrumb-item"><a class="neutral-06"
+                       routerLink="">สระบุรี 1</a></li>
+                <li class="breadcrumb-item active fw-bolder"
+                    aria-current="page">Receive and Damage</li>
+            </ol>
+        </nav>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="card ">
+                <form [formGroup]="DocFormGroup" >
+                <div>
+                    <p class="fs-5 fw-bold">รายละเอียด Receive and Damage </p>
+                    <hr class="my-5" />
+                    <div class="row justify-content-between">
+                        <div class="col-sm-12 col-md-4">
+                            <p class="fw-bold">อุปกรณ์ที่ส่งมอบ</p>
+                        </div>
+                        <div class="col-sm-12 col-md-8"><input type="text" pInputText
+                                   class="form-control"
+                                   [readonly] = true
+                                   formControlName="itemName"
+                                   >
+                        </div>
+                        <hr class="my-3" />
+                    </div>
+                    <div class="row justify-content-between">
+                        <div class="col-sm-12 col-md-4">
+                            <p class="fw-bold">รายละเอียดเบื้องต้น</p>
+                        </div>
+                        <div class="col-sm-12 col-md-8">
+                            <div class="row my-3 justify-content-between">
+                                <div class="col-md-6">
+                                    <p class="fw-bold">วันที่ส่งของถึงหน้างาน</p>
+                                    <input type="date" pInputText
+                                           class="form-control"
+                                        
+                                           formControlName="arrival"
+                                           >
+                                </div>
+                                <div class="col-md-6">
+                                    <p class="fw-bold">วันที่ตรวจสอบ</p>
+                                    <input type="date" pInputText
+                                           class="form-control"
+                                          
+                                           formControlName="inspection"
+                                           >
+                                </div>
+                            </div>
+                            <div class="row my-3  justify-content-between">
+                                <div class="col-md-12">
+                                    <p class="fw-bold">ชื่อผู้ควบคุมงานของบริษัท</p>
+                                    <input type="text" pInputText
+                                           class="form-control"
+                                           placeholder="กรุณาชื่อผู้ควบคุมงานของบริษัท"
+                                           formControlName="taskMaster"
+                                           >
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr class="my-3" />
+                    <div class="row justify-content-between">
+                        <div class="col-sm-12 col-md-4">
+                            <p class="fw-bold">เอกสารการส่ง</p>
+                        </div>
+
+                        <div class="col-sm-12 col-md-8">
+                            <div class="row my-3  justify-content-between">
+                                <div class="col-md-12 my-3">
+                                    <p class="fw-bold">เลขที่ใบส่ง</p>
+                                    <input type="text" pInputText
+                                           class="form-control"
+                                           placeholder="เลขที่ใบส่ง"
+                                           formControlName="invoice"
+                                           >
+                                </div>
+
+                                <div class="col-md-12">
+
+                                    <p class="fw-bold">เอกสารแนบ (Packing List, ใบออกของ, ใบ Shipping, Factory Test report)</p>
+                                <ngx-dropzone (change)="onSelectFileUpload($event)">
+                                    <ngx-dropzone-label>
+                                        ลากไฟล์มาไว้ที่นี้ หรือ
+                                        <span class="text-primary fw-bold">เลือกไฟล์เพื่ออัปโหลด</span>
+                                    </ngx-dropzone-label>
+
+                                </ngx-dropzone>
+
+                                <ngx-dropzone-preview *ngFor="let f of filesAttach" [removable]="true" (removed)="onRemoveFileUpload(f)" class="mw-100 mx-0  justify-content-start d-block" style="min-height:auto;">
+                                    <ngx-dropzone-label class="row pt-3" >
+
+                                        <div class="col-2">
+                                        <div class="bg-primary rounded p-3" style="width:80px;height:80px">({{ f }})</div>
+                                        </div>
+                                        <div class="col-6">
+                                        <p class="fw-bold"> {{ f.Name }} </p>
+                                        <p > {{ f.Size }} {{f.Unit}} </p>
+                                        </div>
+                                        <div class="col-3">
+
+                                            <p-dropdown [options]="doctype"  optionLabel="name" class="w-100" ></p-dropdown>
+
+                                        </div>
+                                        <div class="col-1 py-3">
+                                            <button pButton class="p-button-text" >
+                                                <i class="pi pi-trush"></i>
+                                            </button>
+                                        </div>
+                                        </ngx-dropzone-label>
+                                </ngx-dropzone-preview>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr class="my-5" />
+                    <div class="row justify-content-between">
+                        <div class="col-sm-12 col-md-4">
+                            <p class="fw-bold">รายละเอียดอุปกรณ์ไฟฟ้าที่ส่ง</p>
+                        </div>
+
+                        <div class="col-sm-12 col-md-8">
+                            <div class="row my-3 justify-content-between">
+                                <div class="col-md-6">
+                                    <p class="fw-bold">จำนวนอุปกรณ์ที่ต้องการส่งมอบ (Unit)</p>
+                                    <input type="number" pInputText
+                                           class="form-control"
+                                           placeholder="กรุณากรอกจำนวนอุปกรณ์ที่ต้องการส่งมอบ"
+                                           formControlName="quantity"
+                                           >
+                                </div>
+                                <div class="col-md-6">
+                                  <p class="fw-bold">ประเทศผู้ผลิต</p>
+                                  <p-autoComplete
+                                    formControlName="country"
+                                    [suggestions]="filteredCountries"
+                                    (completeMethod)="filterCountries($event)"
+                                    [minLength]="1"
+                                    >
+                                  </p-autoComplete>
+                                    <!-- <input type="text" pInputText
+                                           class="form-control"
+                                           placeholder="กรุณากรอกประเทศผู้ผลิต"
+                                           formControlName="country"
+                                           > -->
+                                </div>
+                            </div>
+                            <div class="row my-3 justify-content-between">
+                                <div class="col-md-6">
+                                    <p class="fw-bold">ยี่ห้อ (Brand)</p>
+                                    <input type="text" pInputText
+                                           class="form-control"
+                                           placeholder="ยี่ห้อ"
+                                           formControlName="manufacturer"
+                                           >
+                                </div>
+                                <div class="col-md-6">
+                                    <p class="fw-bold">รุ่น</p>
+                                    <input type="text" pInputText
+                                           class="form-control"
+                                           placeholder="กรุณากรอกรุ่น"
+                                           formControlName="model"
+                                           >
+                                </div>
+                            </div>
+                            <div class="row my-3  justify-content-between">
+                                <div class="col-md-12">
+                                    <p class="fw-bold">Serial Number</p>
+                                    <input type="text" pInputText
+                                           class="form-control"
+                                           placeholder="กรุณากรอก Serial Number"
+                                           formControlName="serial"
+                                           >
+                                </div>
+                            </div>
+                            <div class="row my-3  justify-content-between">
+                                <div class="col-md-12">
+                                    <p class="fw-bold">PEA No.</p>
+                                    <input type="text" pInputText
+                                           class="form-control"
+                                           placeholder="กรุณากรอก PEA No."
+                                           formControlName="peano"
+                                           >
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            </div>
+            <div class="d-flex justify-content-between">
+                <div class="col">
+                    <button class="btn btn-lg btn-primary px-5 mx-3 p-button-outlined" pButton [routerLink]="['/']"  >ยกเลิก</button>
+                </div>
+                <div class="col text-end">
+                    <button class="btn btn-lg btn-primary  px-5 mx-3 p-button-outlined" pButton
+                    (click)="SaveDraft()">บันทึกร่าง</button>
+                    <button class="btn btn-lg btn-primary px-5 mx-3 p-button-outlined" pButton
+                            (click)="confirm()">ส่งให้ กฟภ. </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+</div>
