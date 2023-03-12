@@ -6,21 +6,24 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 import { ButtonModule } from 'primeng/button';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { AppConfigComponent } from './app.config.component';
+import { AutoCompleteModule } from 'primeng/autocomplete';
+
 
 @NgModule({
-    imports: [
-        CommonModule,
-        FormsModule,
-        SidebarModule,
-        RadioButtonModule,
-        ButtonModule,
-        InputSwitchModule
-    ],
-    declarations: [
-        AppConfigComponent
-    ],
-    exports: [
-        AppConfigComponent
-    ]
+  imports: [
+    CommonModule,
+    FormsModule,
+    SidebarModule,
+    RadioButtonModule,
+    ButtonModule,
+    InputSwitchModule,
+    AutoCompleteModule
+  ],
+  declarations: [
+    AppConfigComponent
+  ],
+  exports: [
+    AppConfigComponent
+  ]
 })
 export class AppConfigModule { }

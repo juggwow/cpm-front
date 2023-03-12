@@ -29,10 +29,12 @@ import { ListDocument } from './../../models/doc.model';
 import { Form } from 'src/app/models/form.model';
 import { ListDocumentService } from "./../../services/rad-listofdoc";
 import { Upload } from 'src/app/models/upload.model';
+import { RadCountryService } from "./../../services/rad-country.service";
+import { Country } from 'src/app/models/country.model';
 
 @Component({
-  providers: [FormService, ConfirmationService, ListDocumentService],
-  imports: [DropdownModule, CommonModule, InputTextModule, ButtonModule, ConfirmDialogModule, RouterModule, NgxDropzoneModule, FormsModule, ReactiveFormsModule],
+  providers: [FormService, ConfirmationService, ListDocumentService, RadCountryService],
+  imports: [DropdownModule, CommonModule, InputTextModule, ButtonModule, ConfirmDialogModule, RouterModule, NgxDropzoneModule, FormsModule, ReactiveFormsModule, AutoCompleteModule],
   selector: 'app-form',
   standalone: true,
   templateUrl: './form.component.html',
@@ -68,17 +70,19 @@ export class FormComponent implements OnInit {
 
   doctype!: DocType[];
 
+  filteredCountries!: Country[];
+  countries!: Country[]
+
 
   // selectedDocType!: DocType;
 
-  constructor(private FormService: FormService, private confirmationService: ConfirmationService, private listOfDocumentService: ListDocumentService) {
+  constructor(private FormService: FormService, private confirmationService: ConfirmationService, private listOfDocumentService: ListDocumentService, private radCountryService: RadCountryService) {
 
   }
 
   ngOnInit(): void {
-
     this.getDocType()
-
+    this.getCountries()
   }
 
   getDocType() {
@@ -95,7 +99,19 @@ export class FormComponent implements OnInit {
     )
   }
 
-
+  getCountries() {
+    this.radCountryService.getCountryList().subscribe(
+      data => {
+        this.countries = data
+      },
+      error => {
+        console.log(JSON.stringify(error.error.message))
+      },
+      () => {
+        console.log("get the list of countries done")
+      }
+    )
+  }
 
   confirm() {
     this.confirmationService.confirm({
@@ -120,7 +136,7 @@ export class FormComponent implements OnInit {
     console.log(event.addedFiles)
     this.FormService.upload("upload","9551",event.addedFiles).subscribe(
       result => {
-   
+
         const filesattach = this.DocFormGroup.controls.filesAttach.value
         filesattach?.push({...result,...{type:1}})
         this.DocFormGroup.controls.filesAttach.setValue(filesattach);
@@ -178,6 +194,18 @@ export class FormComponent implements OnInit {
       });
   }
 
+  filterCountries(event: any){
+    let filtered: Country[] = [];
+    let query = event.query;
+
+    for(let i = 0; i < this.countries.length; i++) {
+      let country = this.countries[i];
+      if (country.name.toLowerCase().indexOf(query.toLowerCase()) == 0) {
+        filtered.push(country);
+      }
+    }
+    this.filteredCountries = filtered;
+  }
 
 }
 
