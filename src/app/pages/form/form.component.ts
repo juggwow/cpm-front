@@ -70,7 +70,7 @@ export class FormComponent implements OnInit {
 
   doctype!: DocType[];
 
-  filteredCountries!: Country[];
+  filteredCountries!: String[];
   countries!: Country[]
 
 
@@ -204,7 +204,7 @@ export class FormComponent implements OnInit {
         filtered.push(country);
       }
     }
-    this.filteredCountries = filtered;
+    this.filteredCountries = filtered.map((e)=>e.name);
   }
 
 }
