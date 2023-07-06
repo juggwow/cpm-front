@@ -9,11 +9,11 @@ import { LoginCallbackService } from './services/login-callback.service';
         RouterModule.forRoot(
             [
                 {
-                    path: '',
+                    path: 'contract',
                     component: AppLayoutComponent,
                     children: [
                         {
-                            path: '',
+                            path: ':id',
                             loadComponent: () =>
                                 import(
                                     './pages/table/table.component'

@@ -284,8 +284,7 @@
                   ></button>
                 </div>
               </th>
-              <th>
-              </th>
+              <th></th>
             </tr>
           </ng-template>
           <ng-template pTemplate="body" let-boq>
@@ -349,8 +348,12 @@
             [first]="first"
             [rows]="rows"
             [totalRecords]="totalRecords"
-            [rowsPerPageOptions]="[10, 25, 50]"
+            [rowsPerPageOptions]="[5, 10, 50]"
           ></p-paginator>
+          debug: {{ totalRecords }}
+          debug: {{ first }}
+          debug: {{ rows }}
+          debug: {{ Boq.toString }}
         </div>
       </div>
     </div>

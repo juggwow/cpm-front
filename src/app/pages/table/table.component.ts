@@ -1,16 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { BoqService } from 'src/app/services/rad-boq';
 import { Boq } from 'src/app/models/boq.model';
-import { take } from 'rxjs';
-import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { TableModule, } from 'primeng/table';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { RippleModule } from 'primeng/ripple';
 import { HttpParams } from '@angular/common/http';
 import { SortEvent } from 'primeng/api';
-import { RouterModule } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { PaginatorModule } from 'primeng/paginator';
+import { BoqService } from 'src/app/services/boq.service';
 
 interface PageEvent {
   first: number;
@@ -30,10 +28,11 @@ interface PageEvent {
 
 export class TableComponent implements OnInit {
 
+  contractId: number | null = null;
   Boq: Boq[] = [];
   first: number = 0;
   rows: number = 10;
-  totalRecords: number = 100;
+  totalRecords: number = 0;
   loading: boolean = true;
   queryParams: any = {
 
@@ -42,11 +41,13 @@ export class TableComponent implements OnInit {
   private user_keyup_timeout: any
 
   constructor(
-    private BoqService: BoqService
+    private BoqService: BoqService,
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit(): void {
-    this.fetchAllData()
+    this.contractId = Number(this.route.snapshot.paramMap.get('id'));
+    this.fetchAllData(this.contractId)
   }
 
 
@@ -80,13 +81,14 @@ export class TableComponent implements OnInit {
 
 
 
-  fetchAllData() {
+  fetchAllData(id: number) {
     this.loading = true;
-    this.BoqService
-      .getAllBoq$().pipe(take(1))
+    this.BoqService.getBoqByContractId(id)
       .subscribe((res) => {
         this.Boq = res.data;
-        console.log(this.Boq)
+        this.totalRecords = res.total;
+        this.rows = res.limit;
+        this.first = res.page;
         this.loading = false;
       });
   }
