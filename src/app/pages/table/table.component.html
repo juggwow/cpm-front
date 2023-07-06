@@ -1,355 +1,358 @@
 <div class="container">
-    <div class="my-5">
-        <div class="neutral-08 fw-bold fs-4 my-3">
-            บริหารสัญญา
+  <div class="my-5">
+    <div class="neutral-08 fw-bold fs-4 my-3">บริหารสัญญา</div>
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb fs-6">
+        <li class="breadcrumb-item">
+          <a class="neutral-06" routerLink="">ตรวจรับงาน</a>
+        </li>
+        <li class="breadcrumb-item">
+          <a class="neutral-06" routerLink="">สระบุรี 1</a>
+        </li>
+        <li class="breadcrumb-item active fw-bolder" aria-current="page">
+          Receive and Damage
+        </li>
+      </ol>
+    </nav>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-12 col-md-4">
+      <div class="card">
+        <div class="">
+          <p class="fs-5 fw-bold mb-3 border-radius-5">รายการทั้งหมด</p>
         </div>
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb fs-6">
-                <li class="breadcrumb-item"><a class="neutral-06"
-                       routerLink="">ตรวจรับงาน</a></li>
-                <li class="breadcrumb-item"><a class="neutral-06"
-                       routerLink="">สระบุรี 1</a></li>
-                <li class="breadcrumb-item active fw-bolder"
-                    aria-current="page">Receive and Damage</li>
-            </ol>
-        </nav>
+        <div class="d-flex justify-content-between">
+          <div>
+            <p class="text-start">50 รายการ</p>
+          </div>
+          <div>
+            <p class="text-start">รับของครบ 1 รายการ</p>
+            <p class="text-start">ยังไม่ครบ 49 รายการ</p>
+          </div>
+        </div>
+      </div>
     </div>
 
-
-    <div class="row">
-        <div class="col-sm-12 col-md-4">
-            <div class="card">
-                <div class="">
-                    <p class="fs-5 fw-bold mb-3 border-radius-5">รายการทั้งหมด</p>
-                </div>
-                <div class="d-flex justify-content-between">
-                    <div>
-                        <p class="text-start ">50 รายการ</p>
-                    </div>
-                    <div>
-                        <p class="text-start">รับของครบ 1 รายการ</p>
-                        <p class="text-start">ยังไม่ครบ 49 รายการ</p>
-                    </div>
-                </div>
-            </div>
+    <div class="col-sm-12 col-md-4">
+      <div class="card">
+        <div class="">
+          <p class="fs-5 fw-bold mb-3 border-radius-5">รายการทั้งหมด</p>
         </div>
-
-        <div class="col-sm-12 col-md-4">
-            <div class="card  ">
-                <div class="">
-                    <p class="fs-5 fw-bold mb-3 border-radius-5">รายการทั้งหมด</p>
-                </div>
-                <div class="d-flex justify-content-between">
-                    <div>
-                        <p class="text-start ">50 รายการ</p>
-                    </div>
-                    <div>
-                        <p class="text-start">รับของครบ 1 รายการ</p>
-                        <p class="text-start">ยังไม่ครบ 49 รายการ</p>
-                    </div>
-                </div>
-            </div>
+        <div class="d-flex justify-content-between">
+          <div>
+            <p class="text-start">50 รายการ</p>
+          </div>
+          <div>
+            <p class="text-start">รับของครบ 1 รายการ</p>
+            <p class="text-start">ยังไม่ครบ 49 รายการ</p>
+          </div>
         </div>
-
-
-        <div class="col-sm-12 col-md-4">
-            <div class="card  ">
-                <div class="">
-                    <p class="fs-5 fw-bold mb-3 border-radius-5">รายการทั้งหมด</p>
-                </div>
-                <div class="d-flex justify-content-between">
-                    <div>
-                        <p class="text-start ">50 รายการ</p>
-                    </div>
-                    <div>
-                        <p class="text-start">รับของครบ 1 รายการ</p>
-                        <p class="text-start">ยังไม่ครบ 49 รายการ</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
+      </div>
     </div>
 
-
-    <div class="container">
-        <div class="row my-5">
-            <div class="card  ">
-                <p-table [value]="Boq"
-                         styleClass="p-datatable-gridlines"
-                         [rowHover]="true"
-                         [paginator]="true"
-                         [loading]="loading"
-                         [rows]="10"
-                         [lazy]="true" 
-                         (onSort)="onSortColumn($event)"
-                         
-                         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-                          [rowsPerPageOptions]="[10,25,50]"
-                         >
-                    <ng-template pTemplate="header">
-                        <tr>
-                            <th pSortableColumn="sequencesNo">
-                                <div class="flex justify-content-between align-items-center">
-                                    ลำดับ
-                                    <p-sortIcon field="sequencesNo"></p-sortIcon>
-                                </div>
-                            </th>
-                            <th pSortableColumn="itemNo">
-                                <div class="flex justify-content-between align-items-center">
-                                    Item No.
-                                    <p-sortIcon field="itemNo"></p-sortIcon>
-                                </div>
-                            </th>
-                            <th pSortableColumn="name">
-                                <div class="flex justify-content-between align-items-center">
-                                    รายการ
-                                    <p-sortIcon field="name"></p-sortIcon>
-                                </div>
-                            </th>
-                            <th pSortableColumn="group">
-                                <div class="flex justify-content-between align-items-center">
-                                    รายการหลัก
-                                    <p-sortIcon field="group"></p-sortIcon>
-                                </div>
-                            </th>
-                            <th pSortableColumn="quantity">
-                                <div class="flex justify-content-between align-items-center">
-                                    จำนวนตามสัญญา
-                                    <p-sortIcon field="quantity"></p-sortIcon>
-                                </div>
-                            </th>
-                            <th pSortableColumn="delivery">
-                                <div class="flex justify-content-between align-items-center">
-                                    จำนวนที่รอส่งมอบ
-                                    <p-sortIcon field="delivery"></p-sortIcon>
-                                </div>
-                            </th>
-                            <th pSortableColumn="good">
-                                <div class="flex justify-content-between align-items-center">
-                                    สภาพดี
-                                    <p-sortIcon field="good"></p-sortIcon>
-                                </div>
-                            </th>
-                            <th pSortableColumn="bad">
-                                <div class="flex justify-content-between align-items-center">
-                                    พบปัญหา
-                                    <p-sortIcon field="bad"></p-sortIcon>
-                                </div>
-                            </th>
-                            <th>
-
-                            </th>
-                        </tr>
-                        <tr>
-                            <th>
-                                <div class="flex align-items-center gap-2">
-                                    <input class="w-10"
-                                           pInputText
-                                           name="sequencesNo"
-                                           (keyup)="onFilterColumn('sequencesNo',$event)"
-                                           placeholder="ค้นหาด้วย ลำดับ" />
-                                    <button pButton
-                                            pRipple
-                                            type="button"
-                                            icon="pi pi-times"
-                                            class="p-button-rounded p-button-text p-button-plain"
-                                            (click)="onClearFilter('sequencesNo')"></button>
-                                </div>
-                            </th>
-                            <th>
-                                <div class="flex align-items-center gap-2">
-                                    <input class="w-10"
-                                           type="text"
-                                           pInputText
-                                           (keyup)="onFilterColumn('ItemNo',$event)"
-                                           placeholder="ค้นหาด้วย BoqId" />
-                                    <button pButton
-                                            pRipple
-                                            type="button"
-                                            icon="pi pi-times"
-                                            class="p-button-rounded p-button-text p-button-plain"
-                                            (click)="onClearFilter('ItemNo')"></button>
-                                </div>
-                            </th>
-                            <th>
-                                <div class="flex align-items-center gap-2">
-                                    <input class="w-10"
-                                           type="text"
-                                           pInputText
-                                           (keyup)="onFilterColumn('name',$event)"
-                                           placeholder="ค้นหาด้วย รายการ" />
-                                    <button pButton
-                                            pRipple
-                                            type="button"
-                                            icon="pi pi-times"
-                                            class="p-button-rounded p-button-text p-button-plain"
-                                            (click)="onClearFilter('name')"></button>
-                                </div>
-                            </th>
-                            <th>
-                                <div class="flex align-items-center gap-2">
-                                    <input class="w-10"
-                                           type="text"
-                                           pInputText
-                                           (keyup)="onFilterColumn('group',$event)"
-                                           placeholder="ค้นหาด้วย รายการหลัก" />
-                                    <button pButton
-                                            pRipple
-                                            type="button"
-                                            icon="pi pi-times"
-                                            class="p-button-rounded p-button-text p-button-plain"
-                                            (click)="onClearFilter('group')"></button>
-                                </div>
-                            </th>
-                            <th>
-                                <div class="flex align-items-center gap-2">
-                                    <input class="w-10"
-                                           type="text"
-                                           pInputText
-                                           (keyup)="onFilterColumn('quantity',$event)"
-                                           placeholder="ค้นหาด้วย จำนวนตามสัญญา" />
-                                    <button pButton
-                                            pRipple
-                                            type="button"
-                                            icon="pi pi-times"
-                                            class="p-button-rounded p-button-text p-button-plain"
-                                            (click)="onClearFilter('quantity')"></button>
-                                </div>
-                            </th>
-                            <th>
-                                <div class="flex align-items-center gap-2">
-                                    <input class="w-10"
-                                           type="text"
-                                           pInputText
-                                           (keyup)="onFilterColumn('delivery',$event)"
-                                           placeholder="ค้นหาด้วย จำนวนที่รอส่งมอบ" />
-                                    <button pButton
-                                            pRipple
-                                            type="button"
-                                            icon="pi pi-times"
-                                            class="p-button-rounded p-button-text p-button-plain"
-                                            (click)="onClearFilter('delivery')"></button>
-                                </div>
-                            </th>
-                            <th>
-                                <div class="flex align-items-center gap-2">
-                                    <input class="w-10"
-                                           type="text"
-                                           pInputText
-                                           (keyup)="onFilterColumn('good',$event)"
-                                           placeholder="ค้นหาด้วย สภาพดี" />
-                                    <button pButton
-                                            pRipple
-                                            type="button"
-                                            icon="pi pi-times"
-                                            
-                                            class="p-button-rounded p-button-text p-button-plain"
-                                            (click)="onClearFilter('good')"></button>
-                                </div>
-                            </th>
-                            <th>
-                                <div class="flex align-items-center gap-2">
-                                    <input class="w-10"
-                                           type="text"
-                                           pInputText
-                                           (keyup)="onFilterColumn('bad',$event)"
-                                           placeholder="ค้นหาด้วย พบปัญหา" />
-                                    <button pButton
-                                            pRipple
-                                            type="button"
-                                            icon="pi pi-times"
-                                            class="p-button-rounded p-button-text p-button-plain"
-                                            (click)="onClearFilter('bad')"></button>
-                                </div>
-                            </th>
-                            <th>
-                                <!-- <p-dropdown
-                            *ngIf="
-                                jobPageOption$ | async as jobPageOption
-                            "
-                            [ngModel]="jobPageOption.jobStatus"
-                            [options]="jobStatusList"
-                            (ngModelChange)="onFilterJobStatus($event)"
-                            placeholder="ทั้งหมด"
-                            [showClear]="true"
-                        >
-                            <ng-template let-option pTemplate="item">
-                                <span
-                                    [class]="
-                                        'customer-badge status-' +
-                                        option.value
-                                    "
-                                >
-                                    {{ option.label }}
-                                </span>
-                            </ng-template>
-                        </p-dropdown> -->
-                            </th>
-                        </tr>
-                    </ng-template>
-                    <ng-template pTemplate="body"
-                                 let-boq>
-                        <tr>
-                            <td>{{ boq.sequencesNo }}</td>
-                            <td>
-                                {{ boq.itemNo }}
-                            </td>
-                            <td>
-                                {{ boq.name }}
-                            </td>
-                            <td>
-                                {{ boq.group }}
-                            </td>
-                            <td>
-                                {{ boq.quantity }}
-                            </td>
-                            <td>
-                                {{ boq.delivery }}
-                            </td>
-                            <td>
-                                {{ boq.good }}
-                            </td>
-                            <td>
-                                {{ boq.bad }}
-                            </td>
-                            <td>
-                                <div class="flex gap-1">
-                                    <button pButton class="p-button-text" [routerLink]="['/form']"> 
-                                    <i class="pi pi-plus-circle"></i>
-                                    </button>
-                                    <button pButton class="p-button-text"  [routerLink]="['/report']"> 
-                                    <i class="pi pi-search"></i>
-                                </button>
-                                </div>
-                            </td>
-                        </tr>
-                    </ng-template>
-                    <ng-template pTemplate="emptymessage">
-                        <tr>
-                            <td colspan="7">No jobsdatas found.</td>
-                        </tr>
-                    </ng-template>
-                    <ng-template pTemplate="loadingbody">
-                        <tr>
-                            <td colspan="7">
-                                Loading jobsdatas data. Please wait.
-                            </td>
-                        </tr>
-                    </ng-template>
-                   
-                </p-table>
-            </div>
+    <div class="col-sm-12 col-md-4">
+      <div class="card">
+        <div class="">
+          <p class="fs-5 fw-bold mb-3 border-radius-5">รายการทั้งหมด</p>
         </div>
-
+        <div class="d-flex justify-content-between">
+          <div>
+            <p class="text-start">50 รายการ</p>
+          </div>
+          <div>
+            <p class="text-start">รับของครบ 1 รายการ</p>
+            <p class="text-start">ยังไม่ครบ 49 รายการ</p>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
+
+  <div class="container">
+    <div class="row my-5">
+      <div class="card">
+        <p-table
+          [value]="Boq"
+          [rowHover]="true"
+          [loading]="loading"
+          [lazy]="true"
+          (onSort)="onSortColumn($event)"
+        >
+          <ng-template pTemplate="header">
+            <tr>
+              <th pSortableColumn="sequencesNo">
+                <div class="flex justify-content-between align-items-center">
+                  ลำดับ
+                  <p-sortIcon field="sequencesNo"></p-sortIcon>
+                </div>
+              </th>
+              <th pSortableColumn="itemNo">
+                <div class="flex justify-content-between align-items-center">
+                  Item No.
+                  <p-sortIcon field="itemNo"></p-sortIcon>
+                </div>
+              </th>
+              <th pSortableColumn="name">
+                <div class="flex justify-content-between align-items-center">
+                  รายการ
+                  <p-sortIcon field="name"></p-sortIcon>
+                </div>
+              </th>
+              <th pSortableColumn="group">
+                <div class="flex justify-content-between align-items-center">
+                  รายการหลัก
+                  <p-sortIcon field="group"></p-sortIcon>
+                </div>
+              </th>
+              <th pSortableColumn="quantity">
+                <div class="flex justify-content-between align-items-center">
+                  จำนวนตามสัญญา
+                  <p-sortIcon field="quantity"></p-sortIcon>
+                </div>
+              </th>
+              <th pSortableColumn="delivery">
+                <div class="flex justify-content-between align-items-center">
+                  จำนวนที่รอส่งมอบ
+                  <p-sortIcon field="delivery"></p-sortIcon>
+                </div>
+              </th>
+              <th pSortableColumn="good">
+                <div class="flex justify-content-between align-items-center">
+                  สภาพดี
+                  <p-sortIcon field="good"></p-sortIcon>
+                </div>
+              </th>
+              <th pSortableColumn="bad">
+                <div class="flex justify-content-between align-items-center">
+                  พบปัญหา
+                  <p-sortIcon field="bad"></p-sortIcon>
+                </div>
+              </th>
+              <th></th>
+            </tr>
+            <tr>
+              <th>
+                <div class="flex align-items-center gap-2">
+                  <input
+                    class="w-10"
+                    pInputText
+                    name="sequencesNo"
+                    (keyup)="onFilterColumn('sequencesNo', $event)"
+                    placeholder="ค้นหาด้วย ลำดับ"
+                  />
+                  <button
+                    pButton
+                    pRipple
+                    type="button"
+                    icon="pi pi-times"
+                    class="p-button-rounded p-button-text p-button-plain"
+                    (click)="onClearFilter('sequencesNo')"
+                  ></button>
+                </div>
+              </th>
+              <th>
+                <div class="flex align-items-center gap-2">
+                  <input
+                    class="w-10"
+                    type="text"
+                    pInputText
+                    (keyup)="onFilterColumn('ItemNo', $event)"
+                    placeholder="ค้นหาด้วย BoqId"
+                  />
+                  <button
+                    pButton
+                    pRipple
+                    type="button"
+                    icon="pi pi-times"
+                    class="p-button-rounded p-button-text p-button-plain"
+                    (click)="onClearFilter('ItemNo')"
+                  ></button>
+                </div>
+              </th>
+              <th>
+                <div class="flex align-items-center gap-2">
+                  <input
+                    class="w-10"
+                    type="text"
+                    pInputText
+                    (keyup)="onFilterColumn('name', $event)"
+                    placeholder="ค้นหาด้วย รายการ"
+                  />
+                  <button
+                    pButton
+                    pRipple
+                    type="button"
+                    icon="pi pi-times"
+                    class="p-button-rounded p-button-text p-button-plain"
+                    (click)="onClearFilter('name')"
+                  ></button>
+                </div>
+              </th>
+              <th>
+                <div class="flex align-items-center gap-2">
+                  <input
+                    class="w-10"
+                    type="text"
+                    pInputText
+                    (keyup)="onFilterColumn('group', $event)"
+                    placeholder="ค้นหาด้วย รายการหลัก"
+                  />
+                  <button
+                    pButton
+                    pRipple
+                    type="button"
+                    icon="pi pi-times"
+                    class="p-button-rounded p-button-text p-button-plain"
+                    (click)="onClearFilter('group')"
+                  ></button>
+                </div>
+              </th>
+              <th>
+                <div class="flex align-items-center gap-2">
+                  <input
+                    class="w-10"
+                    type="text"
+                    pInputText
+                    (keyup)="onFilterColumn('quantity', $event)"
+                    placeholder="ค้นหาด้วย จำนวนตามสัญญา"
+                  />
+                  <button
+                    pButton
+                    pRipple
+                    type="button"
+                    icon="pi pi-times"
+                    class="p-button-rounded p-button-text p-button-plain"
+                    (click)="onClearFilter('quantity')"
+                  ></button>
+                </div>
+              </th>
+              <th>
+                <div class="flex align-items-center gap-2">
+                  <input
+                    class="w-10"
+                    type="text"
+                    pInputText
+                    (keyup)="onFilterColumn('delivery', $event)"
+                    placeholder="ค้นหาด้วย จำนวนที่รอส่งมอบ"
+                  />
+                  <button
+                    pButton
+                    pRipple
+                    type="button"
+                    icon="pi pi-times"
+                    class="p-button-rounded p-button-text p-button-plain"
+                    (click)="onClearFilter('delivery')"
+                  ></button>
+                </div>
+              </th>
+              <th>
+                <div class="flex align-items-center gap-2">
+                  <input
+                    class="w-10"
+                    type="text"
+                    pInputText
+                    (keyup)="onFilterColumn('good', $event)"
+                    placeholder="ค้นหาด้วย สภาพดี"
+                  />
+                  <button
+                    pButton
+                    pRipple
+                    type="button"
+                    icon="pi pi-times"
+                    class="p-button-rounded p-button-text p-button-plain"
+                    (click)="onClearFilter('good')"
+                  ></button>
+                </div>
+              </th>
+              <th>
+                <div class="flex align-items-center gap-2">
+                  <input
+                    class="w-10"
+                    type="text"
+                    pInputText
+                    (keyup)="onFilterColumn('bad', $event)"
+                    placeholder="ค้นหาด้วย พบปัญหา"
+                  />
+                  <button
+                    pButton
+                    pRipple
+                    type="button"
+                    icon="pi pi-times"
+                    class="p-button-rounded p-button-text p-button-plain"
+                    (click)="onClearFilter('bad')"
+                  ></button>
+                </div>
+              </th>
+              <th>
+              </th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-boq>
+            <tr>
+              <td>{{ boq.sequencesNo }}</td>
+              <td>
+                {{ boq.itemNo }}
+              </td>
+              <td>
+                {{ boq.name }}
+              </td>
+              <td>
+                {{ boq.group }}
+              </td>
+              <td>
+                {{ boq.quantity }}
+              </td>
+              <td>
+                {{ boq.delivery }}
+              </td>
+              <td>
+                {{ boq.good }}
+              </td>
+              <td>
+                {{ boq.bad }}
+              </td>
+              <td>
+                <div class="flex gap-1">
+                  <button
+                    pButton
+                    class="p-button-text"
+                    [routerLink]="['/form']"
+                  >
+                    <i class="pi pi-plus-circle"></i>
+                  </button>
+                  <button
+                    pButton
+                    class="p-button-text"
+                    [routerLink]="['/report']"
+                  >
+                    <i class="pi pi-search"></i>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="emptymessage">
+            <tr>
+              <td colspan="7">No jobsdatas found.</td>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="loadingbody">
+            <tr>
+              <td colspan="7">Loading jobsdatas data. Please wait.</td>
+            </tr>
+          </ng-template>
+        </p-table>
+        <div class="card flex justify-content-center">
+          <p-paginator
+            (onPageChange)="onPageChange($event)"
+            [first]="first"
+            [rows]="rows"
+            [totalRecords]="totalRecords"
+            [rowsPerPageOptions]="[10, 25, 50]"
+          ></p-paginator>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
-
-<p-paginator
-  [pageLinkSize]="10"
-  [rows]="1"
-  [totalRecords]="25"
-  [rowsPerPageOptions]="[10, 20, 30]"
->
-</p-paginator>

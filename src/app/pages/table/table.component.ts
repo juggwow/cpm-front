@@ -3,7 +3,7 @@ import { BoqService } from 'src/app/services/rad-boq';
 import { Boq } from 'src/app/models/boq.model';
 import { take } from 'rxjs';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
-import {TableModule,} from 'primeng/table';
+import { TableModule, } from 'primeng/table';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { RippleModule } from 'primeng/ripple';
@@ -11,11 +11,19 @@ import { HttpParams } from '@angular/common/http';
 import { SortEvent } from 'primeng/api';
 import { RouterModule } from '@angular/router';
 import { PaginatorModule } from 'primeng/paginator';
+
+interface PageEvent {
+  first: number;
+  rows: number;
+  page: number;
+  pageCount: number;
+}
+
 @Component({
   providers: [BoqService],
-  imports:[TableModule,InputTextModule,ButtonModule,RippleModule,RouterModule,PaginatorModule],
+  imports: [TableModule, InputTextModule, ButtonModule, RippleModule, RouterModule, PaginatorModule],
   selector: 'app-table',
-  standalone:true,
+  standalone: true,
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.scss']
 })
@@ -23,18 +31,19 @@ import { PaginatorModule } from 'primeng/paginator';
 export class TableComponent implements OnInit {
 
   Boq: Boq[] = [];
-  first = 0
-  rows = 10
+  first: number = 0;
+  rows: number = 10;
+  totalRecords: number = 100;
   loading: boolean = true;
-  queryParams:any = {
+  queryParams: any = {
 
   }
-  
-  private user_keyup_timeout : any
+
+  private user_keyup_timeout: any
 
   constructor(
     private BoqService: BoqService
-    ) {}
+  ) { }
 
   ngOnInit(): void {
     this.fetchAllData()
@@ -42,22 +51,22 @@ export class TableComponent implements OnInit {
 
 
 
-  onSortColumn(event:SortEvent){
-      let order = (event.order == 1) ? "asc" : "desc"
-      this.queryParams["s"+event.field!] = order;
-      this.fetchDataWhenSortOrFilter()
+  onSortColumn(event: SortEvent) {
+    let order = (event.order == 1) ? "asc" : "desc"
+    this.queryParams["s" + event.field!] = order;
+    this.fetchDataWhenSortOrFilter()
   }
 
-  onFilterColumn(key:string,event:Event){
+  onFilterColumn(key: string, event: Event) {
     if (this.user_keyup_timeout) {
       clearTimeout(this.user_keyup_timeout);
     }
 
     let filterValue = (event.target as HTMLInputElement).value;
 
-    if (filterValue == ""){
+    if (filterValue == "") {
       delete this.queryParams[key]
-    }else{
+    } else {
       this.queryParams[key] = filterValue;
     }
 
@@ -65,60 +74,63 @@ export class TableComponent implements OnInit {
       this.fetchDataWhenSortOrFilter()
     }, 1000);
 
-   
+
   }
 
 
-  
 
-  fetchAllData(){
+
+  fetchAllData() {
     this.loading = true;
     this.BoqService
-    .getAllBoq$().pipe(take(1))
-    .subscribe((res) => {
+      .getAllBoq$().pipe(take(1))
+      .subscribe((res) => {
         this.Boq = res.data;
         console.log(this.Boq)
         this.loading = false;
-    });
+      });
   }
 
-  
-  fetchDataWhenSortOrFilter(){
+
+  fetchDataWhenSortOrFilter() {
     this.loading = true;
-    const params = new HttpParams({fromObject: this.queryParams})
+    const params = new HttpParams({ fromObject: this.queryParams })
     this.BoqService.getSortOrFilterBoq$(params)
-    .subscribe((res) =>{
-      this.Boq = res.data;
-      this.loading = false;
-    })
-  }
-
-
-  
-  onClearFilter(key:string) {
-    console.log("clear",key)
+      .subscribe((res) => {
+        this.Boq = res.data;
+        this.loading = false;
+      })
   }
 
 
 
+  onClearFilter(key: string) {
+    console.log("clear", key)
+  }
 
-    next() {
-        this.first = this.first + this.rows;
-    }
+  onPageChange(event: PageEvent) {
+    this.first = event.first;
+    this.rows = event.rows;
+  }
 
-    prev() {
-        this.first = this.first - this.rows;
-    }
 
-    reset() {
-        this.first = 0;
-    }
+  next() {
+    this.first = this.first + this.rows;
+  }
 
-    isLastPage(): boolean {
-        return this.Boq ? this.first === (this.Boq.length - this.rows): true;
-    }
+  prev() {
+    this.first = this.first - this.rows;
+  }
 
-    isFirstPage(): boolean {
-        return this.Boq ? this.first === 0 : true;
-    }
+  reset() {
+    this.first = 0;
+  }
+
+  isLastPage(): boolean {
+    return this.Boq ? this.first === (this.Boq.length - this.rows) : true;
+  }
+
+  isFirstPage(): boolean {
+    return this.Boq ? this.first === 0 : true;
+  }
 }
