@@ -12,8 +12,8 @@ export class BoqService {
 
     constructor(private http: HttpClient) { }
 
-    getBoqByContractId(id: number) :Observable<ResponsePage<Boq>>{
-        return this.http.get<ResponsePage<Boq>>(`${this.url}/${id}/boq`);
+    getBoqByContractId(id: number,page:number = 1,limit:number=10) :Observable<ResponsePage<Boq>>{
+        return this.http.get<ResponsePage<Boq>>(`${this.url}/${id}/boq?page=${page}&limit=${limit}`);
     }
 
 

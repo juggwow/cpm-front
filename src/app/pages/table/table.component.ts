@@ -33,6 +33,7 @@ export class TableComponent implements OnInit {
   first: number = 0;
   rows: number = 10;
   totalRecords: number = 0;
+  page: number = 1;
   loading: boolean = true;
   queryParams: any = {
 
@@ -88,7 +89,7 @@ export class TableComponent implements OnInit {
         this.Boq = res.data;
         this.totalRecords = res.total;
         this.rows = res.limit;
-        this.first = res.page;
+        this.first = (res.page - 1) * this.rows;
         this.loading = false;
       });
   }
@@ -110,9 +111,20 @@ export class TableComponent implements OnInit {
     console.log("clear", key)
   }
 
-  onPageChange(event: PageEvent) {
+  onPageChange(event: PageEvent,id: number | null = null) {
+    this.loading = true;
+    // this.contractId = Number(this.route.snapshot.paramMap.get('id'));
     this.first = event.first;
     this.rows = event.rows;
+    this.page = event.page + 1;
+    this.BoqService.getBoqByContractId(Number(id),this.page,this.rows)
+      .subscribe((res) => {
+        this.Boq = res.data;
+        this.totalRecords = res.total;
+        this.rows = res.limit;
+        this.first = (res.page - 1) * this.rows;
+        this.loading = false;
+      });
   }
 
 

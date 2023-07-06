@@ -344,16 +344,12 @@
         </p-table>
         <div class="card flex justify-content-center">
           <p-paginator
-            (onPageChange)="onPageChange($event)"
+            (onPageChange)="onPageChange($event,contractId)"
             [first]="first"
             [rows]="rows"
             [totalRecords]="totalRecords"
             [rowsPerPageOptions]="[5, 10, 50]"
           ></p-paginator>
-          debug: {{ totalRecords }}
-          debug: {{ first }}
-          debug: {{ rows }}
-          debug: {{ Boq.toString }}
         </div>
       </div>
     </div>
