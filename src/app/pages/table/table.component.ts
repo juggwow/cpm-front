@@ -10,9 +10,10 @@ import { RippleModule } from 'primeng/ripple';
 import { HttpParams } from '@angular/common/http';
 import { SortEvent } from 'primeng/api';
 import { RouterModule } from '@angular/router';
+import { PaginatorModule } from 'primeng/paginator';
 @Component({
   providers: [BoqService],
-  imports:[TableModule,InputTextModule,ButtonModule,RippleModule,RouterModule],
+  imports:[TableModule,InputTextModule,ButtonModule,RippleModule,RouterModule,PaginatorModule],
   selector: 'app-table',
   standalone:true,
   templateUrl: './table.component.html',
