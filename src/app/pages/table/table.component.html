@@ -2,7 +2,8 @@
   <div class="my-5">
     <div class="neutral-08 fw-bold fs-4 my-3">บริหารสัญญา</div>
     <nav aria-label="breadcrumb">
-      <ol class="breadcrumb fs-6">
+      <p-breadcrumb class="max-w-full" [model]="items"></p-breadcrumb>
+      <!-- <ol class="breadcrumb fs-6">
         <li class="breadcrumb-item">
           <a class="neutral-06" routerLink="">ตรวจรับงาน</a>
         </li>
@@ -12,7 +13,7 @@
         <li class="breadcrumb-item active fw-bolder" aria-current="page">
           Receive and Damage
         </li>
-      </ol>
+      </ol> -->
     </nav>
   </div>
 
@@ -316,14 +317,14 @@
                   <button
                     pButton
                     class="p-button-text"
-                    [routerLink]="['/form']"
+                    [routerLink]="['form']"
                   >
                     <i class="pi pi-plus-circle"></i>
                   </button>
                   <button
                     pButton
                     class="p-button-text"
-                    [routerLink]="['/report']"
+                    [routerLink]="['report']"
                   >
                     <i class="pi pi-search"></i>
                   </button>
@@ -344,7 +345,7 @@
         </p-table>
         <div class="card flex justify-content-center">
           <p-paginator
-            (onPageChange)="onPageChange($event,contractId)"
+            (onPageChange)="onPageChange($event, contractId)"
             [first]="first"
             [rows]="rows"
             [totalRecords]="totalRecords"

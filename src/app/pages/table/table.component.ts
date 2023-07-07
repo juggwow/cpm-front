@@ -5,10 +5,11 @@ import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { RippleModule } from 'primeng/ripple';
 import { HttpParams } from '@angular/common/http';
-import { SortEvent } from 'primeng/api';
+import { MenuItem, SortEvent } from 'primeng/api';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { PaginatorModule } from 'primeng/paginator';
 import { BoqService } from 'src/app/services/boq.service';
+import { BreadcrumbModule } from 'primeng/breadcrumb';
 
 interface PageEvent {
   first: number;
@@ -19,7 +20,15 @@ interface PageEvent {
 
 @Component({
   providers: [BoqService],
-  imports: [TableModule, InputTextModule, ButtonModule, RippleModule, RouterModule, PaginatorModule],
+  imports: [
+    TableModule,
+    InputTextModule,
+    ButtonModule,
+    RippleModule,
+    RouterModule,
+    PaginatorModule,
+    BreadcrumbModule
+  ],
   selector: 'app-table',
   standalone: true,
   templateUrl: './table.component.html',
@@ -29,17 +38,19 @@ interface PageEvent {
 export class TableComponent implements OnInit {
 
   contractId: number | null = null;
+  projectName: string = "...";
   Boq: Boq[] = [];
   first: number = 0;
   rows: number = 10;
   totalRecords: number = 0;
   page: number = 1;
   loading: boolean = true;
-  queryParams: any = {
+  queryParams: any = {};
 
-  }
+  private user_keyup_timeout: any;
 
-  private user_keyup_timeout: any
+  items: MenuItem[] = [];
+  home: MenuItem = {};
 
   constructor(
     private BoqService: BoqService,
@@ -47,8 +58,21 @@ export class TableComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    
     this.contractId = Number(this.route.snapshot.paramMap.get('id'));
-    this.fetchAllData(this.contractId)
+    this.BoqService.getProjectDetail(this.contractId)
+      .subscribe((res) => {
+        this.projectName = res.name;
+        this.items = [
+          { label: 'บริหารจัดการสัญญา' },
+          { label: 'บริหารสัญญา' },
+          { label: this.projectName },
+          { label: 'Receive and Damage' }
+        ];
+      });
+    
+    this.fetchAllData(this.contractId);
+    // this.home = { icon: 'pi pi-home', routerLink: '/' };
   }
 
 
@@ -79,9 +103,6 @@ export class TableComponent implements OnInit {
 
   }
 
-
-
-
   fetchAllData(id: number) {
     this.loading = true;
     this.BoqService.getBoqByContractId(id)
@@ -111,13 +132,13 @@ export class TableComponent implements OnInit {
     console.log("clear", key)
   }
 
-  onPageChange(event: PageEvent,id: number | null = null) {
+  onPageChange(event: PageEvent, id: number | null = null) {
     this.loading = true;
     // this.contractId = Number(this.route.snapshot.paramMap.get('id'));
     this.first = event.first;
     this.rows = event.rows;
     this.page = event.page + 1;
-    this.BoqService.getBoqByContractId(Number(id),this.page,this.rows)
+    this.BoqService.getBoqByContractId(Number(id), this.page, this.rows)
       .subscribe((res) => {
         this.Boq = res.data;
         this.totalRecords = res.total;

@@ -9,3 +9,9 @@ export interface Boq {
     good: number;
     bad: number;
 }
+
+export interface Project {
+    contractID: number;
+    workID: number;
+    name: string;
+}
