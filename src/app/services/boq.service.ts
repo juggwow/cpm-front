@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ResponsePage } from 'src/app/models/response-page.model';
-import { Boq, Project } from '../models/boq.model';
+import { CardDetail, Boq, Project } from '../models/boq.model';
 
 
 @Injectable()
@@ -25,6 +25,10 @@ export class BoqService {
 
     getProjectDetail(id:number):Observable<Project>{
         return this.http.get<Project>(`${this.url}/${id}`);
+    }
+
+    getCardDetail(id:number):Observable<CardDetail>{
+        return this.http.get<CardDetail>(`${this.url}/${id}/card`)
     }
 
 

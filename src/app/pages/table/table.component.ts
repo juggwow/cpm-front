@@ -10,6 +10,7 @@ import { ActivatedRoute, RouterModule } from '@angular/router';
 import { PaginatorModule } from 'primeng/paginator';
 import { BoqService } from 'src/app/services/boq.service';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
+import { CardComponent } from 'src/app/components/card/card.component';
 
 interface PageEvent {
   first: number;
@@ -27,7 +28,8 @@ interface PageEvent {
     RippleModule,
     RouterModule,
     PaginatorModule,
-    BreadcrumbModule
+    BreadcrumbModule,
+    CardComponent
   ],
   selector: 'app-table',
   standalone: true,
@@ -52,13 +54,21 @@ export class TableComponent implements OnInit {
   items: MenuItem[] = [];
   home: MenuItem = {};
 
+  allAmount: number = 0;
+  allComplete: number = 0;
+  allIncomplate: number = 0;
+  checkAmount: number = 0;
+  checkGood: number = 0;
+  checkWaste: number = 0;
+  progressAmount: number = 0;
+
   constructor(
     private BoqService: BoqService,
     private route: ActivatedRoute
   ) { }
 
   ngOnInit(): void {
-    
+
     this.contractId = Number(this.route.snapshot.paramMap.get('id'));
     this.BoqService.getProjectDetail(this.contractId)
       .subscribe((res) => {
@@ -70,8 +80,18 @@ export class TableComponent implements OnInit {
           { label: 'Receive and Damage' }
         ];
       });
-    
+    this.BoqService.getCardDetail(this.contractId)
+      .subscribe((res) => {
+        this.allAmount = res.all.Amount;
+        this.allComplete = res.all.Complete;
+        this.allIncomplate = res.all.Incomplete
+        this.checkAmount = res.check.Amount;
+        this.checkGood = res.check.Good;
+        this.checkWaste = res.check.Waste;
+        this.progressAmount = res.progress.Amount;
+      });
     this.fetchAllData(this.contractId);
+
     // this.home = { icon: 'pi pi-home', routerLink: '/' };
   }
 
