@@ -14,6 +14,10 @@ import { ReportProgress } from 'src/app/models/report.model';
 import { ResponsePage } from 'src/app/models/response-page.model';
 import { BoqService } from 'src/app/services/boq.service';
 import { ReportService } from 'src/app/services/report.service';
+import { MenuModule } from 'primeng/menu';
+import { ToastModule } from 'primeng/toast';
+import { SplitButtonModule } from 'primeng/splitbutton';
+import { ContextMenuModule } from 'primeng/contextmenu';
 
 @Component({
   selector: 'app-progress',
@@ -27,7 +31,10 @@ import { ReportService } from 'src/app/services/report.service';
     InputTextModule,
     ButtonModule,
     RippleModule,
-    PaginatorModule
+    PaginatorModule,
+    MenuModule,
+    ToastModule,
+    ContextMenuModule
   ],
   providers: [BoqService, ReportService]
 })
@@ -57,6 +64,8 @@ export class ProgressComponent implements OnInit {
   search: HttpParams = new HttpParams();
 
   private user_keyup_timeout: any;
+
+  reportMenu: MenuItem[] = [];
 
   constructor(
     private boqService: BoqService,
@@ -135,6 +144,7 @@ export class ProgressComponent implements OnInit {
         this.first = (res.page - 1) * this.rows;
         this.page = res.page;
         this.loading = false;
+        this.setReportMenu();
       });
   }
 
@@ -152,6 +162,28 @@ export class ProgressComponent implements OnInit {
       params = params.set(key, this.sort.get(key)!)
     }
     return params;
+  }
+
+  setReportMenu() {
+    this.reportMenu = [
+      {
+        label: 'แก้ไข',
+        icon: 'pi pi-external-link',
+        routerLink: '../formupdate/'
+      },
+      {
+        label: 'Preview เอกสาร',
+        icon: 'pi pi-external-link',
+        routerLink: '/fileupload'
+      },
+      {
+        label: 'ลบเอกสาร',
+        icon: 'pi pi-external-link',
+        command: () => {
+          // this.update();
+        }
+      }
+    ];
   }
 
 }

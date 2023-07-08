@@ -196,12 +196,10 @@
                 </td>
                 <td>
                   <div class="flex gap-1">
-                    <button
-                      pButton
-                      class="p-button-text"
-                    >
+                    <button pButton class="p-button-text" (click)="menu.toggle($event)">
                       <i class="pi pi-ellipsis-v"></i>
                     </button>
+                    <p-menu #menu [model]="reportMenu" [popup]="true"></p-menu>
                   </div>
                 </td>
               </tr>
