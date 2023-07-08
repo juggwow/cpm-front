@@ -1,9 +1,17 @@
 export interface ResponsePage<T> {
+    item: Item;
     data: T[];
     doc: T[];
     limit: number;
     page: number;
     total: number;
+}
+
+export interface Item {
+    id: number;
+    name: string;
+    contractQTY: string;
+    deliveredQTY: string;
 }
 
 export interface PageOption {
