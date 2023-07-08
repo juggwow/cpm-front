@@ -8,8 +8,8 @@
   
   <div style="display: inline-flex; align-items: flex-end; gap: 40px;">
     <app-card [title]="'รายการทั้งหมด'" [bgcolor]="'#7718bc'" [textcolor]="'#fcfcfc'" [amount1]="allAmount" [amount2]="allComplete" [amount3]="allIncomplate" [detail1]="'รับของครบ'" [detail2]="'ยังไม่ครบ'" [icon1]="'assets/svg/check_circle_white.svg'" [icon2]="'assets/svg/error_white.svg'"></app-card>
-    <app-card [title]="'รายการที่ตรวจสอบแล้ว'" [amount1]="checkAmount" [amount2]="checkGood" [amount3]="checkWaste" [detail1]="'ดี'" [detail2]="'พบปัญหา'" [icon1]="'assets/svg/thumb_up_black.svg'" [icon2]="'assets/svg/assignment_late_black.svg'"></app-card>
-    <app-card [title]="'รายการอยู่ระหว่างดำเนินการ'" [amount1]="progressAmount" [amount2]="0" [amount3]="0" [display]="'none'"></app-card>  
+    <app-card [title]="'รายการที่ตรวจสอบแล้ว'" [amount1]="checkAmount" [amount2]="checkGood" [amount3]="checkWaste" [detail1]="'ดี'" [detail2]="'พบปัญหา'" [icon1]="'assets/svg/thumb_up_black.svg'" [icon2]="'assets/svg/assignment_late_black.svg'" [routerLink]="['report']"></app-card>
+    <app-card [title]="'รายการอยู่ระหว่างดำเนินการ'" [amount1]="progressAmount" [amount2]="0" [amount3]="0" [display]="'none'" [routerLink]="['report']"></app-card>  
   </div>
 
   <div class="container">
