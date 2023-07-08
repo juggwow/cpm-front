@@ -18,31 +18,31 @@ export class AppMenuComponent implements OnInit {
             {
                 label: '',
                 items: [
-                    { label: 'บริหารจัดการสัญญา', icon: 'pi pi-fw pi-home', routerLink: [''] },
+                    { label: 'บริหาร/จัดการสัญญา', icon: 'pi pi-fw pi-home', routerLink: ['.'] },
                     // { label: 'Form', icon: 'pi pi-fw pi-chart-bar', routerLink: ['form'] },
-                    {
-                        label: 'Menus',
-                        icon: 'pi pi-fw pi-check-square',
-                        items: [
-                            {
-                                label: 'Login',
-                                icon: 'pi pi-fw pi-sign-in',
-                                routerLink: ['/auth/login']
-                            },
-                            {
-                                label: 'Errors',
-                                icon: 'pi pi-fw pi-times-circle',
-                                routerLink: ['/auth/error']
-                            },
-                            {
-                                label: 'Access Denied',
-                                icon: 'pi pi-fw pi-lock',
-                                routerLink: ['/auth/access']
-                            },
+                    // {
+                    //     label: 'Menus',
+                    //     icon: 'pi pi-fw pi-check-square',
+                    //     items: [
+                    //         {
+                    //             label: 'Login',
+                    //             icon: 'pi pi-fw pi-sign-in',
+                    //             routerLink: ['/auth/login']
+                    //         },
+                    //         {
+                    //             label: 'Errors',
+                    //             icon: 'pi pi-fw pi-times-circle',
+                    //             routerLink: ['/auth/error']
+                    //         },
+                    //         {
+                    //             label: 'Access Denied',
+                    //             icon: 'pi pi-fw pi-lock',
+                    //             routerLink: ['/auth/access']
+                    //         },
                           
 
-                        ]
-                    },
+                    //     ]
+                    // },
                 ],
             }
         ];
