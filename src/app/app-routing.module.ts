@@ -20,7 +20,7 @@ import { LoginCallbackService } from './services/login-callback.service';
                                 ).then((m) => m.TableComponent),
                         },
                         {
-                            path: 'form',
+                            path: 'report/item/:id/create',
                             loadComponent: () =>
                                 import(
                                     './pages/form/form.component'
@@ -41,7 +41,7 @@ import { LoginCallbackService } from './services/login-callback.service';
                                 ).then((m) => m.FormInprogressComponent),
                         },
                         {
-                            path: 'item/:id/report',
+                            path: 'report/item/:id',
                             loadComponent: () =>
                                 import(
                                     './pages/report/report.component'
