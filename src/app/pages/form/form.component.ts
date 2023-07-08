@@ -6,7 +6,7 @@ import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { DropdownModule } from 'primeng/dropdown';
 import { MessageService, ConfirmationService } from 'primeng/api';
-import { RouterModule, Router } from '@angular/router';
+import { RouterModule, Router, ActivatedRoute } from '@angular/router';
 import { FormControl, FormGroup, FormsModule, Validators, ReactiveFormsModule, FormArray } from '@angular/forms';
 import { PaginatorModule } from 'primeng/paginator';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
@@ -46,10 +46,11 @@ import { Country } from 'src/app/models/country.model';
 
 export class FormComponent implements OnInit {
 
-
+  contractId!: number;
+  itemId!: number;
 
   DocFormGroup = new FormGroup({
-    itemID: new FormControl(9551),
+    itemID: new FormControl(this.itemId),
     arrival: new FormControl('', Validators.required),
     inspection: new FormControl('', Validators.required),
     taskMaster: new FormControl('', Validators.required),
@@ -62,7 +63,7 @@ export class FormComponent implements OnInit {
     peano: new FormControl(''),
     createby: new FormControl(''),
     status: new FormControl(''),
-    filesAttach: new FormControl([] as Upload[] ),
+    filesAttach: new FormControl([] as Upload[]),
   })
 
 
@@ -76,11 +77,17 @@ export class FormComponent implements OnInit {
 
   // selectedDocType!: DocType;
 
-  constructor(private FormService: FormService, private confirmationService: ConfirmationService, private listOfDocumentService: ListDocumentService, private radCountryService: RadCountryService) {
-
-  }
+  constructor(
+    private FormService: FormService,
+    private confirmationService: ConfirmationService,
+    private listOfDocumentService: ListDocumentService,
+    private radCountryService: RadCountryService,
+    private route: ActivatedRoute,
+  ) { }
 
   ngOnInit(): void {
+    this.contractId = Number(this.route.snapshot.parent?.paramMap.get('id'));
+    this.itemId = Number(this.route.snapshot.paramMap.get('id'));
     this.getDocType()
     this.getCountries()
   }
@@ -134,11 +141,11 @@ export class FormComponent implements OnInit {
     this.files.push(...event.addedFiles);
     console.log(this.files)
     console.log(event.addedFiles)
-    this.FormService.upload("upload","9551",event.addedFiles).subscribe(
+    this.FormService.upload("upload", "9551", event.addedFiles).subscribe(
       result => {
 
         const filesattach = this.DocFormGroup.controls.filesAttach.value
-        filesattach?.push({...result,...{type:1}})
+        filesattach?.push({ ...result, ...{ type: 1 } })
         this.DocFormGroup.controls.filesAttach.setValue(filesattach);
 
 
@@ -194,17 +201,17 @@ export class FormComponent implements OnInit {
       });
   }
 
-  filterCountries(event: any){
+  filterCountries(event: any) {
     let filtered: Country[] = [];
     let query = event.query;
 
-    for(let i = 0; i < this.countries.length; i++) {
+    for (let i = 0; i < this.countries.length; i++) {
       let country = this.countries[i];
       if (country.name.toLowerCase().indexOf(query.toLowerCase()) == 0) {
         filtered.push(country);
       }
     }
-    this.filteredCountries = filtered.map((e)=>e.name);
+    this.filteredCountries = filtered.map((e) => e.name);
   }
 
 }

@@ -23,6 +23,11 @@ export class ReportService {
     return this.http.get<T>(`${this.url}/check/contract/${id}`, options);
   }
 
+  getReportByItem<T>(id: number, params?: HttpParams): Observable<T> {
+    const options = { params: params };
+    return this.http.get<T>(`${this.url}/${id}`, options);
+  }
+
   //   get<T>(path: string): Observable<T> {
   //     let httpParams = new HttpParams();
   //     httpParams = httpParams.append("language", "en");
