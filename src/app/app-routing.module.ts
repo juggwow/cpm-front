@@ -53,6 +53,13 @@ import { LoginCallbackService } from './services/login-callback.service';
                                 import(
                                     './pages/progress/progress.component'
                                 ).then((m) => m.ProgressComponent),
+                        },
+                        {
+                            path: 'approve',
+                            loadComponent: () =>
+                                import(
+                                    './pages/approve/approve.component'
+                                ).then((m) => m.ApproveComponent),
                         }
                     ],
                 },

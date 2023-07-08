@@ -5,8 +5,11 @@
     </div>
     <div style="display: inline-flex; align-items: flex-end; gap: 40px;">
       <app-card [title]="'รายการทั้งหมด'" [amount1]="allAmount" [amount2]="allComplete" [amount3]="allIncomplate" [detail1]="'รับของครบ'" [detail2]="'ยังไม่ครบ'" [icon1]="'assets/svg/check_circle_black.svg'" [icon2]="'assets/svg/error_black.svg'" [routerLink]="['../']"></app-card>
-      <app-card [title]="'รายการที่ตรวจสอบแล้ว'" [amount1]="checkAmount" [amount2]="checkGood" [amount3]="checkWaste" [detail1]="'ดี'" [detail2]="'พบปัญหา'" [icon1]="'assets/svg/thumb_up_black.svg'" [icon2]="'assets/svg/assignment_late_black.svg'" [routerLink]="['../approve']"></app-card>
-      <app-card [title]="'รายการอยู่ระหว่างดำเนินการ'" [bgcolor]="'#7718bc'" [textcolor]="'#fcfcfc'" [amount1]="progressAmount" [amount2]="0" [amount3]="0" [display]="'none'"></app-card>  
+      <app-card [title]="'รายการที่ตรวจสอบแล้ว'" [bgcolor]="'#7718bc'" [textcolor]="'#fcfcfc'" [amount1]="checkAmount" [amount2]="checkGood" [amount3]="checkWaste" [detail1]="'ดี'" [detail2]="'พบปัญหา'" [icon1]="'assets/svg/thumb_up_white.svg'" [icon2]="'assets/svg/assignment_late_white.svg'" ></app-card>
+      <app-card [title]="'รายการอยู่ระหว่างดำเนินการ'" [amount1]="progressAmount" [amount2]="0" [amount3]="0" [display]="'none'" [routerLink]="['../progress']"></app-card>  
+    </div>
+    <div class="card flex justify-content-center">
+        <p-button styleClass="p-button-outlined" icon="pi pi-print" iconPos="right" style="width: 1.5rem"></p-button>
     </div>
     <div class="container">
       <div class="row my-5">
@@ -20,45 +23,61 @@
           >
             <ng-template pTemplate="header">
               <tr>
+                <th></th>
                 <th pSortableColumn="sSeq">
                   <div class="flex justify-content-between align-items-center">
                     ลำดับ
                     <p-sortIcon field="sSeq"></p-sortIcon>
                   </div>
                 </th>
-                <th pSortableColumn="invNo">
+                <th pSortableColumn="sInvNo">
                   <div class="flex justify-content-between align-items-center">
                     เลขที่ใบส่ง
-                    <p-sortIcon field="invNo"></p-sortIcon>
+                    <p-sortIcon field="sInvNo"></p-sortIcon>
                   </div>
                 </th>
-                <th pSortableColumn="itemName">
+                <th pSortableColumn="sitemName">
                   <div class="flex justify-content-between align-items-center">
                     รายการ
-                    <p-sortIcon field="itemName"></p-sortIcon>
+                    <p-sortIcon field="sitemName"></p-sortIcon>
                   </div>
                 </th>
-                <th pSortableColumn="arrival">
+                <th pSortableColumn="sArrival">
                   <div class="flex justify-content-between align-items-center">
                     วันที่ส่งถึงหน้างาน
-                    <p-sortIcon field="arrival"></p-sortIcon>
+                    <p-sortIcon field="sArrival"></p-sortIcon>
                   </div>
                 </th>
-                <th pSortableColumn="inspection">
+                <th pSortableColumn="sInspection">
                   <div class="flex justify-content-between align-items-center">
                     วันที่ตรวจสอบ
-                    <p-sortIcon field="inspection"></p-sortIcon>
+                    <p-sortIcon field="sInspection"></p-sortIcon>
                   </div>
                 </th>
-                <th pSortableColumn="stateName">
+                <th pSortableColumn="sAmount">
                   <div class="flex justify-content-between align-items-center">
-                    สถานะ
-                    <p-sortIcon field="stateName"></p-sortIcon>
+                    จำนวนที่ส่งมอบ
+                    <p-sortIcon field="sAmount"></p-sortIcon>
                   </div>
                 </th>
+                <th pSortableColumn="sGood">
+                    <div class="flex justify-content-between align-items-center">
+                      สภาพดี
+                      <p-sortIcon field="sGood"></p-sortIcon>
+                    </div>
+                  </th>
+                  <th pSortableColumn="sWaste">
+                    <div class="flex justify-content-between align-items-center">
+                      พบปัญหา
+                      <p-sortIcon field="sWaste"></p-sortIcon>
+                    </div>
+                  </th>
                 <th></th>
               </tr>
               <tr>
+                <th style="width: 4rem">
+                    <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                </th>
                 <th>
                   <div class="flex align-items-center gap-2">
                     <input
@@ -103,7 +122,7 @@
                       class="w-10"
                       type="text"
                       pInputText
-                      (keyup)="onFilterColumn('name', $event)"
+                      (keyup)="onFilterColumn('itemName', $event)"
                       placeholder="Search"
                     />
                     <button
@@ -112,7 +131,7 @@
                       type="button"
                       icon="pi pi-times"
                       class="p-button-rounded p-button-text p-button-plain"
-                      (click)="onClearFilter('name')"
+                      (click)="onClearFilter('itemName')"
                     ></button>
                   </div>
                 </th>
@@ -160,7 +179,7 @@
                       class="w-10"
                       type="text"
                       pInputText
-                      (keyup)="onFilterColumn('stateName', $event)"
+                      (keyup)="onFilterColumn('amount', $event)"
                       placeholder="Search"
                     />
                     <button
@@ -169,54 +188,66 @@
                       type="button"
                       icon="pi pi-times"
                       class="p-button-rounded p-button-text p-button-plain"
-                      (click)="onClearFilter('stateName')"
+                      (click)="onClearFilter('amount')"
                     ></button>
                   </div>
                 </th>
+                <th>
+                    <div class="flex align-items-center gap-2">
+                      <input
+                        class="w-10"
+                        type="text"
+                        pInputText
+                        (keyup)="onFilterColumn('good', $event)"
+                        placeholder="Search"
+                      />
+                      <button
+                        pButton
+                        pRipple
+                        type="button"
+                        icon="pi pi-times"
+                        class="p-button-rounded p-button-text p-button-plain"
+                        (click)="onClearFilter('good')"
+                      ></button>
+                    </div>
+                  </th>
+                  <th>
+                    <div class="flex align-items-center gap-2">
+                      <input
+                        class="w-10"
+                        type="text"
+                        pInputText
+                        (keyup)="onFilterColumn('waste', $event)"
+                        placeholder="Search"
+                      />
+                      <button
+                        pButton
+                        pRipple
+                        type="button"
+                        icon="pi pi-times"
+                        class="p-button-rounded p-button-text p-button-plain"
+                        (click)="onClearFilter('waste')"
+                      ></button>
+                    </div>
+                  </th>
                 <th></th>
               </tr>
             </ng-template>
             <ng-template pTemplate="body" let-report>
               <tr>
+                <td>
+                    <p-tableCheckbox [value]="report"></p-tableCheckbox>
+                </td>
                 <td>{{ report.seq }}</td>
+                <td>{{ report.invNo }}</td>
+                <td>{{ report.itemName }}</td>
+                <td>{{ report.arrival }}</td>
+                <td>{{ report.inspection }}</td>
+                <td>{{ report.amount }}</td>
+                <td>{{ report.good }}</td>
+                <td>{{ report.waste }}</td>
                 <td>
-                  {{ report.invNo }}
-                </td>
-                <td>
-                  {{ report.itemName }}
-                </td>
-                <td>
-                  {{ report.arrival }}
-                </td>
-                <td>
-                  {{ report.inspection }}
-                </td>
-                <td>
-                  {{ report.stateName }}
-                </td>
-                <!-- <td *ngIf="report.stateID===1">
-                  <div class="flex gap-1"  >
-                    <button pButton class="p-button-text" (click)="menu.toggle($event)">
-                      <i class="pi pi-ellipsis-v"></i>
-                    </button>
-                    <p-menu #menu [model]="reportDrafMenu" [popup]="true"></p-menu>
-                  </div>
-                </td>
-                <td *ngIf="report.stateID===2">
-                  <div class="flex gap-1"  >
-                    <button pButton class="p-button-text" (click)="menu.toggle($event)">
-                      <i class="pi pi-ellipsis-v"></i>
-                    </button>
-                    <p-menu #menu [model]="getMenuItemsForItem(report)" [popup]="true"></p-menu>
-                  </div>
-                </td> -->
-                <td>
-                  <div class="flex gap-1"  >
-                    <button pButton class="p-button-text" (click)="setReportManageMenu(report);menu.toggle($event)">
-                      <i class="pi pi-ellipsis-v"></i>
-                    </button>
-                    <p-menu #menu [model]="reportManageMenu" [popup]="true" appendTo="body"></p-menu>
-                  </div>
+                    <p-button icon="pi pi-eye" styleClass="p-button-rounded p-button-text"></p-button>
                 </td>
               </tr>
             </ng-template>

@@ -1,29 +1,30 @@
+import { CommonModule } from '@angular/common';
 import { HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { MenuItem, PrimeIcons, SortEvent } from 'primeng/api';
+import { MenuItem, SortEvent } from 'primeng/api';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { ButtonModule } from 'primeng/button';
+import { ContextMenuModule } from 'primeng/contextmenu';
 import { InputTextModule } from 'primeng/inputtext';
+import { MenuModule } from 'primeng/menu';
 import { PaginatorModule } from 'primeng/paginator';
 import { RippleModule } from 'primeng/ripple';
 import { TableModule } from 'primeng/table';
+import { ToastModule } from 'primeng/toast';
 import { CardComponent } from 'src/app/components/card/card.component';
 import { PageEvent } from 'src/app/models/paginator.model';
-import { ReportProgress } from 'src/app/models/report.model';
+import { ReportApprove } from 'src/app/models/report.model';
 import { ResponsePage } from 'src/app/models/response-page.model';
 import { BoqService } from 'src/app/services/boq.service';
 import { ReportService } from 'src/app/services/report.service';
-import { MenuModule } from 'primeng/menu';
-import { ToastModule } from 'primeng/toast';
-import { ContextMenuModule } from 'primeng/contextmenu';
-import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-progress',
+  selector: 'app-approve',
   standalone: true,
-  templateUrl: './progress.component.html',
-  styleUrls: ['./progress.component.scss'],
+  templateUrl: './approve.component.html',
+  styleUrls: ['./approve.component.scss'],
+  providers: [BoqService, ReportService],
   imports: [
     BreadcrumbModule,
     CardComponent,
@@ -36,11 +37,9 @@ import { CommonModule } from '@angular/common';
     ToastModule,
     ContextMenuModule,
     CommonModule
-  ],
-  providers: [BoqService, ReportService]
+  ]
 })
-export class ProgressComponent implements OnInit {
-
+export class ApproveComponent implements OnInit {
   contractId!: number;
   items: MenuItem[] = [];
   projectName: string = "...";
@@ -55,7 +54,7 @@ export class ProgressComponent implements OnInit {
 
   loading: boolean = true;
 
-  data!: ReportProgress[];
+  data!: ReportApprove[];
   first: number = 0;
   rows: number = 10;
   totalRecords: number = 0;
@@ -66,9 +65,6 @@ export class ProgressComponent implements OnInit {
 
   private user_keyup_timeout: any;
 
-  reportManageMenu: MenuItem[] = [];
-  activeItem!:ReportProgress;
-
   constructor(
     private boqService: BoqService,
     private route: ActivatedRoute,
@@ -76,7 +72,6 @@ export class ProgressComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-
     this.contractId = Number(this.route.snapshot.parent?.paramMap.get('id'));
     this.boqService.getProjectDetail(this.contractId)
       .subscribe((res) => {
@@ -98,7 +93,50 @@ export class ProgressComponent implements OnInit {
         this.checkWaste = res.check.Waste;
         this.progressAmount = res.progress.Amount;
       });
-    this.fetchData(this.contractId);
+      this.fetchData(this.contractId);
+  }
+
+  fetchData(id: number, params?: HttpParams) {
+    this.loading = true;
+    this.report.getApproveByContractId<ResponsePage<ReportApprove>>(id, params)
+      .subscribe((res) => {
+        this.data = res.data;
+        this.totalRecords = res.total;
+        this.rows = res.limit;
+        this.first = (res.page - 1) * this.rows;
+        this.page = res.page;
+        this.loading = false;        
+      });
+  }
+
+  setParams(): HttpParams {
+    let params = new HttpParams({
+      fromObject: {
+        'page': this.page,
+        'limit': this.rows
+      }
+    });
+    for (var key of this.sort.keys()) {
+      params = params.set(key, this.sort.get(key)!)
+    }
+    for (var key of this.search.keys()) {
+      params = params.set(key, this.sort.get(key)!)
+    }
+    return params;
+  }
+
+  onPageChange(event: PageEvent, id: number) {
+    this.loading = true;
+    this.first = event.first;
+    this.rows = event.rows;
+    this.page = event.page + 1;
+    this.fetchData(id, this.setParams());
+  }
+
+  onSortColumn(event: SortEvent, id: number) {
+    let order = (event.order == 1) ? "asc" : "desc";
+    this.sort = this.sort.set(event.field!, order);
+    this.fetchData(id, this.setParams());
   }
 
   onFilterColumn(key: string, event: Event) {
@@ -123,94 +161,9 @@ export class ProgressComponent implements OnInit {
     console.log("clear", key)
   }
 
-  onSortColumn(event: SortEvent, id: number) {
-    let order = (event.order == 1) ? "asc" : "desc";
-    this.sort = this.sort.set(event.field!, order);
-    this.fetchData(id, this.setParams());
-  }
-
-  onPageChange(event: PageEvent, id: number) {
-    this.loading = true;
-    this.first = event.first;
-    this.rows = event.rows;
-    this.page = event.page + 1;
-    this.fetchData(id, this.setParams());
-  }
-
-  fetchData(id: number, params?: HttpParams) {
-    this.loading = true;
-    this.report.getProgressByContractId<ResponsePage<ReportProgress>>(id, params)
-      .subscribe((res) => {
-        this.data = res.data;
-        this.totalRecords = res.total;
-        this.rows = res.limit;
-        this.first = (res.page - 1) * this.rows;
-        this.page = res.page;
-        this.loading = false;
-        
-      });
-  }
-
-  setParams(): HttpParams {
-    let params = new HttpParams({
-      fromObject: {
-        'page': this.page,
-        'limit': this.rows
-      }
-    });
-    for (var key of this.sort.keys()) {
-      params = params.set(key, this.sort.get(key)!)
-    }
-    for (var key of this.search.keys()) {
-      params = params.set(key, this.sort.get(key)!)
-    }
-    return params;
-  }
-
-  setReportDrafMenu(report:ReportProgress) {
-    this.reportManageMenu = [
-      {
-        label: 'แก้ไข',
-        icon: PrimeIcons.PENCIL,
-        routerLink: `../formupdate/${report.id}`
-      },
-      {
-        label: 'Preview เอกสาร',
-        icon: PrimeIcons.EYE,
-        routerLink: '/fileupload'
-      },
-      {
-        label: 'ลบเอกสาร',
-        icon: PrimeIcons.TRASH,
-        command: () => {
-          console.log(report.id)
-        }
-      }
-    ];
-  }
-  setReportSubmitMenu(report:ReportProgress) {
-    this.reportManageMenu = [
-      {
-        label: 'ดูรายละเอียด',
-        icon: PrimeIcons.SEARCH,
-        routerLink: `../formupdate/${report.id}`
-      },
-      {
-        label: 'Preview เอกสาร',
-        icon: PrimeIcons.EYE,
-        command: () => {
-          console.log(report.id)
-        }
-      }
-    ];
-  }
   
-  setReportManageMenu(report:ReportProgress){
-    if(report.stateID===1){
-      this.setReportDrafMenu(report);
-    }else{
-      this.setReportSubmitMenu(report);
-    }
-  }
+
+  
+
 
 }
