@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 @Injectable()
 export class ReportService {
 
-  readonly url = 'https://cpm-rad-api-ing-dev.pea.co.th/api/v1/listofdoc/progress/contract';
+  readonly url = 'https://cpm-rad-api-ing-dev.pea.co.th/api/v1/listofdoc';
 
   constructor(private http: HttpClient) { }
 
@@ -15,7 +15,12 @@ export class ReportService {
 
   getProgressByContractId<T>(id: number, params?: HttpParams): Observable<T> {
     const options = { params: params };
-    return this.http.get<T>(`${this.url}/${id}`, options);
+    return this.http.get<T>(`${this.url}/progress/contract/${id}`, options);
+  }
+
+  getApproveByContractId<T>(id: number, params?: HttpParams): Observable<T> {
+    const options = { params: params };
+    return this.http.get<T>(`${this.url}/check/contract/${id}`, options);
   }
 
   //   get<T>(path: string): Observable<T> {
