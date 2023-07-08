@@ -11,13 +11,8 @@ import { PaginatorModule } from 'primeng/paginator';
 import { BoqService } from 'src/app/services/boq.service';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { CardComponent } from 'src/app/components/card/card.component';
+import { PageEvent } from 'src/app/models/paginator.model';
 
-interface PageEvent {
-  first: number;
-  rows: number;
-  page: number;
-  pageCount: number;
-}
 
 @Component({
   providers: [BoqService],
