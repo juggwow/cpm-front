@@ -1,5 +1,3 @@
-import { LookupAllOptions } from "dns";
-
 export interface Boq {
     sequencesNo: number;
     boqID: number;
