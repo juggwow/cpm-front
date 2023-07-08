@@ -41,7 +41,7 @@ import { LoginCallbackService } from './services/login-callback.service';
                                 ).then((m) => m.FormInprogressComponent),
                         },
                         {
-                            path: 'report',
+                            path: 'item/:id/report',
                             loadComponent: () =>
                                 import(
                                     './pages/report/report.component'
@@ -63,8 +63,8 @@ import { LoginCallbackService } from './services/login-callback.service';
                         }
                     ],
                 },
-                { path: 'pages/notfound', component: NotfoundComponent },
-                { path: '**', redirectTo: 'pages/notfound' },
+                // { path: 'pages/notfound', component: NotfoundComponent },
+                // { path: '**', redirectTo: 'pages/notfound' },
             ],
             {
                 scrollPositionRestoration: 'enabled',
