@@ -194,7 +194,7 @@
                 <td>
                   {{ report.stateName }}
                 </td>
-                <td *ngIf="report.stateID===1">
+                <!-- <td *ngIf="report.stateID===1">
                   <div class="flex gap-1"  >
                     <button pButton class="p-button-text" (click)="menu.toggle($event)">
                       <i class="pi pi-ellipsis-v"></i>
@@ -207,7 +207,15 @@
                     <button pButton class="p-button-text" (click)="menu.toggle($event)">
                       <i class="pi pi-ellipsis-v"></i>
                     </button>
-                    <p-menu #menu [model]="reportSubmitMenu" [popup]="true"></p-menu>
+                    <p-menu #menu [model]="getMenuItemsForItem(report)" [popup]="true"></p-menu>
+                  </div>
+                </td> -->
+                <td>
+                  <div class="flex gap-1"  >
+                    <button pButton class="p-button-text" (click)="setReportManageMenu(report);menu.toggle($event)">
+                      <i class="pi pi-ellipsis-v"></i>
+                    </button>
+                    <p-menu #menu [model]="reportManageMenu" [popup]="true" appendTo="body"></p-menu>
                   </div>
                 </td>
               </tr>

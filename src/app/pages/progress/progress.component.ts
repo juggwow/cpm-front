@@ -17,7 +17,6 @@ import { ReportService } from 'src/app/services/report.service';
 import { MenuModule } from 'primeng/menu';
 import { ToastModule } from 'primeng/toast';
 import { ContextMenuModule } from 'primeng/contextmenu';
-import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -67,10 +66,8 @@ export class ProgressComponent implements OnInit {
 
   private user_keyup_timeout: any;
 
-  reportDrafMenu: MenuItem[] = [];
-  reportSubmitMenu: MenuItem[] = [];
-
-  isShow:boolean = true;
+  reportManageMenu: MenuItem[] = [];
+  activeItem!:ReportProgress;
 
   constructor(
     private boqService: BoqService,
@@ -79,10 +76,7 @@ export class ProgressComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-        
-    
-    this.setReportDrafMenu();
-    this.setReportSubmitMenu();
+
     this.contractId = Number(this.route.snapshot.parent?.paramMap.get('id'));
     this.boqService.getProjectDetail(this.contractId)
       .subscribe((res) => {
@@ -153,7 +147,7 @@ export class ProgressComponent implements OnInit {
         this.first = (res.page - 1) * this.rows;
         this.page = res.page;
         this.loading = false;
-        this.isShow = false;
+        
       });
   }
 
@@ -173,12 +167,12 @@ export class ProgressComponent implements OnInit {
     return params;
   }
 
-  setReportDrafMenu() {
-    this.reportDrafMenu = [
+  setReportDrafMenu(report:ReportProgress) {
+    this.reportManageMenu = [
       {
         label: 'แก้ไข',
         icon: PrimeIcons.PENCIL,
-        routerLink: '../formupdate/'
+        routerLink: `../formupdate/${report.id}`
       },
       {
         label: 'Preview เอกสาร',
@@ -189,26 +183,34 @@ export class ProgressComponent implements OnInit {
         label: 'ลบเอกสาร',
         icon: PrimeIcons.TRASH,
         command: () => {
-          // this.update();
+          console.log(report.id)
         }
       }
     ];
   }
-  setReportSubmitMenu() {
-    this.reportSubmitMenu = [
+  setReportSubmitMenu(report:ReportProgress) {
+    this.reportManageMenu = [
       {
         label: 'ดูรายละเอียด',
         icon: PrimeIcons.SEARCH,
-        routerLink: '/fileupload'
+        routerLink: `../formupdate/${report.id}`
       },
       {
         label: 'Preview เอกสาร',
         icon: PrimeIcons.EYE,
         command: () => {
-          // this.update();
+          console.log(report.id)
         }
       }
     ];
+  }
+  
+  setReportManageMenu(report:ReportProgress){
+    if(report.stateID===1){
+      this.setReportDrafMenu(report);
+    }else{
+      this.setReportSubmitMenu(report);
+    }
   }
 
 }
