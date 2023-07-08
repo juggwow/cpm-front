@@ -194,12 +194,20 @@
                 <td>
                   {{ report.stateName }}
                 </td>
-                <td>
-                  <div class="flex gap-1">
+                <td *ngIf="report.stateID===1">
+                  <div class="flex gap-1"  >
                     <button pButton class="p-button-text" (click)="menu.toggle($event)">
                       <i class="pi pi-ellipsis-v"></i>
                     </button>
-                    <p-menu #menu [model]="reportMenu" [popup]="true"></p-menu>
+                    <p-menu #menu [model]="reportDrafMenu" [popup]="true"></p-menu>
+                  </div>
+                </td>
+                <td *ngIf="report.stateID===2">
+                  <div class="flex gap-1"  >
+                    <button pButton class="p-button-text" (click)="menu.toggle($event)">
+                      <i class="pi pi-ellipsis-v"></i>
+                    </button>
+                    <p-menu #menu [model]="reportSubmitMenu" [popup]="true"></p-menu>
                   </div>
                 </td>
               </tr>

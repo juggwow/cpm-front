@@ -5,6 +5,6 @@ export interface ReportProgress{
     itemName:string;
     arrival:string;
     inspection:string;
-    strteID:number;
+    stateID:number;
     stateName:string;
 }

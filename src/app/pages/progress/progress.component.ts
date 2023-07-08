@@ -1,7 +1,7 @@
 import { HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { MenuItem, SortEvent } from 'primeng/api';
+import { MenuItem, PrimeIcons, SortEvent } from 'primeng/api';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
@@ -16,8 +16,9 @@ import { BoqService } from 'src/app/services/boq.service';
 import { ReportService } from 'src/app/services/report.service';
 import { MenuModule } from 'primeng/menu';
 import { ToastModule } from 'primeng/toast';
-import { SplitButtonModule } from 'primeng/splitbutton';
 import { ContextMenuModule } from 'primeng/contextmenu';
+import { BrowserModule } from '@angular/platform-browser';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-progress',
@@ -34,7 +35,8 @@ import { ContextMenuModule } from 'primeng/contextmenu';
     PaginatorModule,
     MenuModule,
     ToastModule,
-    ContextMenuModule
+    ContextMenuModule,
+    CommonModule
   ],
   providers: [BoqService, ReportService]
 })
@@ -65,7 +67,10 @@ export class ProgressComponent implements OnInit {
 
   private user_keyup_timeout: any;
 
-  reportMenu: MenuItem[] = [];
+  reportDrafMenu: MenuItem[] = [];
+  reportSubmitMenu: MenuItem[] = [];
+
+  isShow:boolean = true;
 
   constructor(
     private boqService: BoqService,
@@ -74,6 +79,10 @@ export class ProgressComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+        
+    
+    this.setReportDrafMenu();
+    this.setReportSubmitMenu();
     this.contractId = Number(this.route.snapshot.parent?.paramMap.get('id'));
     this.boqService.getProjectDetail(this.contractId)
       .subscribe((res) => {
@@ -144,7 +153,7 @@ export class ProgressComponent implements OnInit {
         this.first = (res.page - 1) * this.rows;
         this.page = res.page;
         this.loading = false;
-        this.setReportMenu();
+        this.isShow = false;
       });
   }
 
@@ -164,21 +173,37 @@ export class ProgressComponent implements OnInit {
     return params;
   }
 
-  setReportMenu() {
-    this.reportMenu = [
+  setReportDrafMenu() {
+    this.reportDrafMenu = [
       {
         label: 'แก้ไข',
-        icon: 'pi pi-external-link',
+        icon: PrimeIcons.PENCIL,
         routerLink: '../formupdate/'
       },
       {
         label: 'Preview เอกสาร',
-        icon: 'pi pi-external-link',
+        icon: PrimeIcons.EYE,
         routerLink: '/fileupload'
       },
       {
         label: 'ลบเอกสาร',
-        icon: 'pi pi-external-link',
+        icon: PrimeIcons.TRASH,
+        command: () => {
+          // this.update();
+        }
+      }
+    ];
+  }
+  setReportSubmitMenu() {
+    this.reportSubmitMenu = [
+      {
+        label: 'ดูรายละเอียด',
+        icon: PrimeIcons.SEARCH,
+        routerLink: '/fileupload'
+      },
+      {
+        label: 'Preview เอกสาร',
+        icon: PrimeIcons.EYE,
         command: () => {
           // this.update();
         }
