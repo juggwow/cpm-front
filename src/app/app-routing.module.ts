@@ -25,7 +25,7 @@ import { LoginCallbackService } from './services/login-callback.service';
                                 import(
                                     './pages/form/form.component'
                                 ).then((m) => m.FormComponent),
-                        },   
+                        },
                         {
                             path: 'formupdate',
                             loadComponent: () =>
@@ -46,6 +46,13 @@ import { LoginCallbackService } from './services/login-callback.service';
                                 import(
                                     './pages/report/report.component'
                                 ).then((m) => m.ReportComponent),
+                        },
+                        {
+                            path: 'progress',
+                            loadComponent: () =>
+                                import(
+                                    './pages/progress/progress.component'
+                                ).then((m) => m.ProgressComponent),
                         }
                     ],
                 },
@@ -62,4 +69,4 @@ import { LoginCallbackService } from './services/login-callback.service';
     providers: [LoginCallbackService],
     exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }
