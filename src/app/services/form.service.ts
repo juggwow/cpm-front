@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { Boq } from '../models/boq.model';
 import { Form } from '../models/form.model';
 import { Upload } from '../models/upload.model'
@@ -7,6 +8,8 @@ import { Upload } from '../models/upload.model'
 @Injectable()
 export class FormService {
   constructor(private http: HttpClient) { }
+
+  readonly apiUrl = 'https://cpm-rad-api-ing-dev.pea.co.th/api/v1'
 
   addNewForm(form: Form) {
     return this.http.post<Form>(
@@ -27,6 +30,18 @@ export class FormService {
       `https://cpm-rad-api-ing-dev.pea.co.th/api/v1/upload/${field}/${itemid}`, formData, { 'headers': headers }
 
     );
+  }
+
+  getListOfDocTypes<T>(): Observable<T> {
+    return this.http.get<T>(`${this.apiUrl}/doctype`)
+  }
+
+  getCountryList<T>(): Observable<T> {
+    return this.http.get<T>(`${this.apiUrl}/country`);
+  }
+
+  addNewReport<T>(formData: FormData) : Observable<T>{
+    return this.http.post<T>(`${this.apiUrl}/form`, formData);
   }
 
 }

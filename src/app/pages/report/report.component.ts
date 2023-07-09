@@ -60,7 +60,9 @@ export class ReportComponent implements OnInit{
     id: 0,
     name: '',
     contractQTY: '',
-    deliveredQTY: ''
+    deliveredQTY: '',
+    quantity: 0,
+    unit: ''
   };
   items: MenuItem[] = [];
   projectName: string = "...";
