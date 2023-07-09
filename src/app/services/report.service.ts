@@ -1,11 +1,13 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { DocType } from '../models/doc.model';
 
 @Injectable()
 export class ReportService {
 
   readonly url = 'https://cpm-rad-api-ing-dev.pea.co.th/api/v1/listofdoc';
+  readonly apiUrl = 'https://cpm-rad-api-ing-dev.pea.co.th/api/v1'
 
   constructor(private http: HttpClient) { }
 

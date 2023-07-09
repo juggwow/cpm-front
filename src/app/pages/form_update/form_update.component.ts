@@ -22,7 +22,6 @@ import {
 } from 'rxjs/operators';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { BehaviorSubject, Subject } from 'rxjs';
-import { FormService } from '../../services/rad-form'
 import { NgxDropzoneChangeEvent, NgxDropzoneModule } from 'ngx-dropzone';
 import { DocType ,Document,FilesAttach} from '../../models/doc.model'
 import { ListDocument } from '../../models/doc.model';
@@ -31,6 +30,7 @@ import { ListDocumentService } from "../../services/rad-listofdoc";
 import { Upload } from 'src/app/models/upload.model';
 import { RadCountryService } from "../../services/rad-country.service";
 import { Country } from 'src/app/models/country.model';
+import { FormService } from 'src/app/services/form.service';
 
 @Component({
   providers: [FormService, ConfirmationService, ListDocumentService, RadCountryService],
@@ -77,9 +77,13 @@ export class FormUpdateComponent implements OnInit {
 
   // selectedDocType!: DocType;
 
-  constructor(private FormService: FormService, private confirmationService: ConfirmationService, private listOfDocumentService: ListDocumentService, private radCountryService: RadCountryService) {
-
-  }
+  constructor(
+    private FormService: FormService, 
+    private confirmationService: ConfirmationService, 
+    private listOfDocumentService: ListDocumentService, 
+    private radCountryService: RadCountryService,
+    private form: FormService       
+    ) { }
 
   ngOnInit(): void {
     this.getDocType()
@@ -105,31 +109,17 @@ export class FormUpdateComponent implements OnInit {
   }
 
   getDocType() {
-    this.listOfDocumentService.getListOfDocTypes().subscribe(
-      data => {
-        this.doctype = data
-      },
-      error => {
-        console.log(JSON.stringify(error.error.message))
-      },
-      () => {
-        console.log("get list of doctype done")
-      }
-    )
+    this.form.getListOfDocTypes<DocType[]>()
+      .subscribe((res) => {
+        this.doctype = res;
+      });
   }
 
   getCountries() {
-    this.radCountryService.getCountryList().subscribe(
-      data => {
-        this.countries = data
-      },
-      error => {
-        console.log(JSON.stringify(error.error.message))
-      },
-      () => {
-        console.log("get the list of countries done")
-      }
-    )
+    this.form.getListOfDocTypes<Country[]>()
+      .subscribe((res) => {
+        this.countries = res;
+      });
   }
 
   confirm() {

@@ -22,15 +22,15 @@ import {
 } from 'rxjs/operators';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { BehaviorSubject, Subject } from 'rxjs';
-import { FormService } from '../../services/rad-form'
 import { NgxDropzoneChangeEvent, NgxDropzoneModule } from 'ngx-dropzone';
-import { DocType ,Document} from '../../models/doc.model'
+import { DocType, Document } from '../../models/doc.model'
 import { ListDocument } from '../../models/doc.model';
 import { Form } from 'src/app/models/form.model';
 import { ListDocumentService } from "../../services/rad-listofdoc";
 import { Upload } from 'src/app/models/upload.model';
 import { RadCountryService } from "../../services/rad-country.service";
 import { Country } from 'src/app/models/country.model';
+import { FormService } from 'src/app/services/form.service';
 
 @Component({
   providers: [FormService, ConfirmationService, ListDocumentService, RadCountryService],
@@ -62,21 +62,21 @@ export class FormInprogressComponent implements OnInit {
     peano: new FormControl(''),
     createby: new FormControl(''),
     status: new FormControl(''),
-    filesAttach: new FormControl([] as Upload[] ),
+    filesAttach: new FormControl([] as Upload[]),
   })
 
 
   files: File[] = [];
 
   doctype!: DocType[];
-  document! : Document;
+  document!: Document;
   filteredCountries!: Country[];
   countries!: Country[]
 
 
   // selectedDocType!: DocType;
 
-  constructor(private FormService: FormService, private confirmationService: ConfirmationService, private listOfDocumentService: ListDocumentService, private radCountryService: RadCountryService) {
+  constructor(private form: FormService, private FormService: FormService, private confirmationService: ConfirmationService, private listOfDocumentService: ListDocumentService, private radCountryService: RadCountryService) {
 
   }
 
@@ -88,36 +88,22 @@ export class FormInprogressComponent implements OnInit {
         this.document = result
         console.log(this.document.itemName)
       }
-      
+
     )
   }
 
   getDocType() {
-    this.listOfDocumentService.getListOfDocTypes().subscribe(
-      data => {
-        this.doctype = data
-      },
-      error => {
-        console.log(JSON.stringify(error.error.message))
-      },
-      () => {
-        console.log("get list of doctype done")
-      }
-    )
+    this.form.getListOfDocTypes<DocType[]>()
+      .subscribe((res) => {
+        this.doctype = res;
+      });
   }
 
   getCountries() {
-    this.radCountryService.getCountryList().subscribe(
-      data => {
-        this.countries = data
-      },
-      error => {
-        console.log(JSON.stringify(error.error.message))
-      },
-      () => {
-        console.log("get the list of countries done")
-      }
-    )
+    this.form.getListOfDocTypes<Country[]>()
+      .subscribe((res) => {
+        this.countries = res;
+      });
   }
 
   confirm() {
@@ -141,11 +127,11 @@ export class FormInprogressComponent implements OnInit {
     this.files.push(...event.addedFiles);
     console.log(this.files)
     console.log(event.addedFiles)
-    this.FormService.upload("upload","9551",event.addedFiles).subscribe(
+    this.FormService.upload("upload", "9551", event.addedFiles).subscribe(
       result => {
 
         const filesattach = this.DocFormGroup.controls.filesAttach.value
-        filesattach?.push({...result,...{type:1}})
+        filesattach?.push({ ...result, ...{ type: 1 } })
         this.DocFormGroup.controls.filesAttach.setValue(filesattach);
 
 
@@ -163,6 +149,8 @@ export class FormInprogressComponent implements OnInit {
     console.log(event);
     this.files.splice(this.files.indexOf(event), 1);
   }
+
+  
 
 
 
@@ -201,11 +189,11 @@ export class FormInprogressComponent implements OnInit {
       });
   }
 
-  filterCountries(event: any){
+  filterCountries(event: any) {
     let filtered: Country[] = [];
     let query = event.query;
 
-    for(let i = 0; i < this.countries.length; i++) {
+    for (let i = 0; i < this.countries.length; i++) {
       let country = this.countries[i];
       if (country.name.toLowerCase().indexOf(query.toLowerCase()) == 0) {
         filtered.push(country);

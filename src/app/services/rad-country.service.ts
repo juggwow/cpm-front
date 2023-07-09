@@ -8,9 +8,5 @@ export class RadCountryService {
 
   constructor(private http: HttpClient) { }
 
-  getCountryList(): Observable<Country[]> {
-    return this.http.get<Country[]>(
-      `https://cpm-rad-api-ing-dev.pea.co.th/api/v1/country`
-    )
-  }
+  
 }

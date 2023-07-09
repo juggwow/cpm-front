@@ -12,6 +12,9 @@ export interface Item {
     name: string;
     contractQTY: string;
     deliveredQTY: string;
+    quantity:number;
+    unit:string;
+
 }
 
 export interface PageOption {
