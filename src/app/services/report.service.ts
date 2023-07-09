@@ -30,6 +30,11 @@ export class ReportService {
     return this.http.get<T>(`${this.url}/${id}`, options);
   }
 
+  deleteReport<T>(id: number, params?: HttpParams): Observable<T> {
+    const options = { params: params };
+    return this.http.delete<T>(`${this.apiUrl}/form/${id}`, options);
+  }
+
   //   get<T>(path: string): Observable<T> {
   //     let httpParams = new HttpParams();
   //     httpParams = httpParams.append("language", "en");

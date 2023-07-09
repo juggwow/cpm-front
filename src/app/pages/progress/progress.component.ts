@@ -1,7 +1,7 @@
 import { HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { MenuItem, PrimeIcons, SortEvent } from 'primeng/api';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ConfirmationService, MenuItem, PrimeIcons, SortEvent } from 'primeng/api';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
@@ -18,6 +18,8 @@ import { MenuModule } from 'primeng/menu';
 import { ToastModule } from 'primeng/toast';
 import { ContextMenuModule } from 'primeng/contextmenu';
 import { CommonModule } from '@angular/common';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { take, tap } from 'rxjs';
 
 @Component({
   selector: 'app-progress',
@@ -35,9 +37,10 @@ import { CommonModule } from '@angular/common';
     MenuModule,
     ToastModule,
     ContextMenuModule,
-    CommonModule
+    CommonModule,
+    ConfirmDialogModule
   ],
-  providers: [BoqService, ReportService]
+  providers: [BoqService, ReportService, ConfirmationService]
 })
 export class ProgressComponent implements OnInit {
 
@@ -67,12 +70,14 @@ export class ProgressComponent implements OnInit {
   private user_keyup_timeout: any;
 
   reportManageMenu: MenuItem[] = [];
-  activeItem!:ReportProgress;
+  activeItem!: ReportProgress;
 
   constructor(
     private boqService: BoqService,
     private route: ActivatedRoute,
-    private report: ReportService
+    private report: ReportService,
+    private confirmationService: ConfirmationService,
+    private router: Router,
   ) { }
 
   ngOnInit(): void {
@@ -147,7 +152,7 @@ export class ProgressComponent implements OnInit {
         this.first = (res.page - 1) * this.rows;
         this.page = res.page;
         this.loading = false;
-        
+
       });
   }
 
@@ -167,7 +172,7 @@ export class ProgressComponent implements OnInit {
     return params;
   }
 
-  setReportDrafMenu(report:ReportProgress) {
+  setReportDrafMenu(report: ReportProgress) {
     this.reportManageMenu = [
       {
         label: 'แก้ไข',
@@ -183,12 +188,13 @@ export class ProgressComponent implements OnInit {
         label: 'ลบเอกสาร',
         icon: PrimeIcons.TRASH,
         command: () => {
-          console.log(report.id)
+          //console.log(report.id)
+          this.ReportDelete(report.id);
         }
       }
     ];
   }
-  setReportSubmitMenu(report:ReportProgress) {
+  setReportSubmitMenu(report: ReportProgress) {
     this.reportManageMenu = [
       {
         label: 'ดูรายละเอียด',
@@ -204,13 +210,43 @@ export class ProgressComponent implements OnInit {
       }
     ];
   }
-  
-  setReportManageMenu(report:ReportProgress){
-    if(report.stateID===1){
+
+  setReportManageMenu(report: ReportProgress) {
+    if (report.stateID === 1) {
       this.setReportDrafMenu(report);
-    }else{
+    } else {
       this.setReportSubmitMenu(report);
     }
+  }
+
+  ReportDelete(id: number) {
+    this.confirmationService.confirm({
+      message: '`คุณต้องการลบรายการนี้หรือไม่',
+      header: "เลือก ตกลง เพื่อลบ หรือ ย้อนกลับ เพื่อกลับไปหน้าเดิม",
+      acceptLabel: "ตกลง",
+      rejectLabel: "ย้อนกลับ",
+      accept: () => {
+        this.report.deleteReport(id).pipe(
+          take(1),
+          tap(() => {
+            console.log('..');
+            // this.show(status);        
+            // // this.appToastService.successToast();
+            // this.router.navigate(['/']);     
+          })
+        )
+          .subscribe({
+            error: () => console.log('error'),
+            complete: () => {
+              console.log('complete')
+              this.fetchData(this.contractId);
+              //   setTimeout(() => {
+              //     this.router.navigate(['/contract',this.contractId,'report','item',this.itemId]);
+              //  }, 1000);
+            }
+          });
+      }
+    });
   }
 
 }
