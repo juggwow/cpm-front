@@ -1,7 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Boq } from '../models/boq.model';
 import { Form } from '../models/form.model';
 import { Upload } from '../models/upload.model'
 
@@ -16,6 +15,10 @@ export class FormService {
       `https://cpm-rad-api-ing-dev.pea.co.th/api/v1/form`, form
 
     );
+  }
+
+  reportView<T>(id:number): Observable<T>{
+    return this.http.get<T>(`${this.apiUrl}/form/view/${id}`)
   }
 
   upload(field: String, itemid: String, files: any) {

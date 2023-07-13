@@ -60,6 +60,13 @@ import { LoginCallbackService } from './services/login-callback.service';
                                 import(
                                     './pages/approve/approve.component'
                                 ).then((m) => m.ApproveComponent),
+                        },
+                        {
+                            path: 'report/:id',
+                            loadComponent: () =>
+                                import(
+                                    './pages/report-view/report-view.component'
+                                ).then((m) => m.ReportViewComponent),
                         }
                     ],
                 },
