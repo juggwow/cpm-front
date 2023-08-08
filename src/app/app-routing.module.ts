@@ -12,13 +12,6 @@ import { LoginCallbackService } from './services/login-callback.service';
                     path: 'contract/:id',
                     component: AppLayoutComponent,
                     children: [
-                        // {
-                        //     path: '',
-                        //     loadComponent: () =>
-                        //         import(
-                        //             './pages/table/table.component'
-                        //         ).then((m) => m.TableComponent),
-                        // },
                         {
                             path: '',
                             loadComponent: () =>
@@ -27,7 +20,7 @@ import { LoginCallbackService } from './services/login-callback.service';
                                 ).then((m) => m.BoqItemComponent),
                         },
                         {
-                            path: 'report/item/:id/create',
+                            path: 'item/:id/report/create',
                             loadComponent: () =>
                                 import(
                                     './pages/form/form.component'
