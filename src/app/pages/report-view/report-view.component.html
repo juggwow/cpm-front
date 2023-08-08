@@ -1,0 +1,147 @@
+<div class="container">
+    <div class="my-5">
+        <div class="neutral-08 fw-bold fs-4 my-3">บริหารสัญญา</div>
+        <!-- <p-breadcrumb class="max-w-full" [model]="items"
+            [style]="{background:'none',border:'none',padding:'0'}">
+        </p-breadcrumb> -->
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="card ">
+                <div>
+                    <div class="row justify-content-between">
+                        <div class="col-sm-12 col-md-8">
+                            <p class="fs-5 fw-bold">รายละเอียด Receive and Damage </p>
+                        </div>
+                        <div class="col-sm-auto col-md-auto">
+                            <button class="btn btn-lg btn-primary  px-5 mx-3 p-button-outlined" pButton
+                                [routerLink]="['create']" icon="pi pi-eye" label="Preview เอกสาร"></button>
+                        </div>
+                    </div>
+                    <hr class="my-3" />
+                    <div class="row justify-content-between">
+                        <div class="col-sm-12 col-md-4">
+                            <p class="fw-bold">อุปกรณ์ที่ส่งมอบ</p>
+                        </div>
+                        <div class="col-sm-12 col-md-8">
+                            <p class="fw-bold">{{report.itemName}}</p>
+                        </div>
+                        <hr class="my-3" />
+                    </div>
+                    <div class="row justify-content-between">
+                        <div class="col-sm-12 col-md-4">
+                            <p class="fw-bold">รายละเอียดเบื้องต้น</p>
+                        </div>
+                        <div class="col-sm-12 col-md-8">
+                            <div class="row justify-content-between">
+                                <div class="col-md-6">
+                                    <p>วันที่ส่งของถึงหน้างาน</p>
+                                    <p class="fw-bold">{{report.arrival}}</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p>วันที่ตรวจสอบ</p>
+                                    <p class="fw-bold">{{report.inspection}}</p>
+                                </div>
+                            </div>
+                            <div class="row my-3 justify-content-between">
+                                <div class="col-md-12">
+                                    <p>ชื่อผู้ควบคุมงานของบริษัท</p>
+                                    <p class="fw-bold">{{report.taskMaster}}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="my-3" />
+                    </div>
+
+                    <div class="row justify-content-between">
+                        <div class="col-sm-12 col-md-4">
+                            <p class="fw-bold">เอกสารการส่ง</p>
+                        </div>
+                        <div class="col-sm-12 col-md-8">
+                            <div class="row justify-content-between">
+                                <div class="col-md-12">
+                                    <p>เลขที่ใบส่ง</p>
+                                    <p class="fw-bold">{{report.invoice}}</p>
+                                </div>
+
+                                <div class="col-md-12 my-5">
+                                    <div *ngFor="let af of report.attachFiles;  index as i">
+                                        <p>{{af.typeName}}</p>
+                                        <div>
+                                            <div class="row justify-content-start bg-light text-dark m-3 p-2" *ngFor="let f of af.files;  index as i">
+                                                <div class="col-md-1">
+                                                    <div class="bg-primary rounded p-2" style="width:50px;height:50px">
+                                                        PDF</div>
+                                                </div>
+                                                <div class="col-md-9">
+                                                    <p class="fw-bold"> {{ f.name }} </p>
+                                                    <p> ขนาดไฟล์ {{ f.size }} {{ f.unit }} </p>
+                                                </div>
+                                                <div class="col-md-1">
+                                                    <p-button icon="pi pi-ellipsis-v"
+                                                        styleClass="p-button-rounded p-button-text"
+                                                        (click)="ShowMenuManage(f.id);menu.toggle($event);"></p-button>
+                                                    <p-menu #menu [model]="manageMenu" [popup]="true"
+                                                        appendTo="body"></p-menu>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="my-3" />
+                    </div>
+
+                    <div class="row justify-content-between">
+                        <div class="col-sm-12 col-md-4">
+                            <p class="fw-bold">รายละเอียดอุปกรณ์ไฟฟ้าที่ส่ง</p>
+                        </div>
+
+                        <div class="col-sm-12 col-md-8">
+                            <div class="row my-3 justify-content-between">
+                                <div class="col-md-6">
+                                    <p>จำนวนอุปกรณ์ที่ต้องการส่งมอบ</p>
+                                    <p class="fw-bold">{{report.quantity}} {{report.itemUnit}}</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p>ประเทศผู้ผลิต</p>
+                                    <p class="fw-bold">{{report.country}}</p>
+                                </div>
+                            </div>
+                            <div class="row my-3 justify-content-between">
+                                <div class="col-md-6">
+                                    <p>ยี่ห้อ (Brand)</p>
+                                    <p class="fw-bold">{{report.brand}}</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p>รุ่น</p>
+                                    <p class="fw-bold">{{report.model}}</p>
+                                </div>
+                            </div>
+                            <div class="row my-3  justify-content-between">
+                                <div class="col-md-6">
+                                    <p>Serial Number</p>
+                                    <p class="fw-bold">{{report.serial}}</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p>PEA No.</p>
+                                    <p class="fw-bold">{{report.peano}}</p>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col text-center">
+                <button class="btn btn-lg btn-primary  px-5 mx-3 p-button-outlined" pButton
+                    [routerLink]="['/contract']">ย้อนกลับ</button>
+            </div>
+        </div>
+    </div>
+    <!-- <p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+    <p-toast [breakpoints]="{'920px': {width: '100%', right: '0', left: '0'}}"></p-toast> -->
+</div>
