@@ -276,7 +276,7 @@ export class ReportComponent implements OnInit{
       {
         label: 'แก้ไข',
         icon: PrimeIcons.PENCIL,
-        routerLink: `../formupdate/${report.id}`
+        routerLink: `../report/${report.id}/edit`
       },
       {
         label: 'Preview เอกสาร',
@@ -297,7 +297,7 @@ export class ReportComponent implements OnInit{
       {
         label: 'ดูรายละเอียด',
         icon: PrimeIcons.SEARCH,
-        routerLink: `../formupdate/${report.id}`
+        routerLink: `../report/${report.id}`
       },
       {
         label: 'Preview เอกสาร',

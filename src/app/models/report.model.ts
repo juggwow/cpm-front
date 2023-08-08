@@ -28,7 +28,7 @@ export interface ReportItem {
     qty: string,
     arrival: string,
     inspection: string,
-    CreateBy: string,
-    StateID: number,
-    StateName: string
+    createBy: string,
+    stateID: number,
+    stateName: string
 }
