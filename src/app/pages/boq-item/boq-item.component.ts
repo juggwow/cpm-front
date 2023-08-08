@@ -1,18 +1,17 @@
-import { Component, OnInit } from '@angular/core';
-import { Boq } from 'src/app/models/boq.model';
-import { TableModule, } from 'primeng/table';
-import { InputTextModule } from 'primeng/inputtext';
-import { ButtonModule } from 'primeng/button';
-import { RippleModule } from 'primeng/ripple';
 import { HttpParams } from '@angular/common/http';
-import { MenuItem, SortEvent } from 'primeng/api';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterModule } from '@angular/router';
-import { PaginatorModule } from 'primeng/paginator';
-import { BoqService } from 'src/app/services/boq.service';
+import { MenuItem, SortEvent } from 'primeng/api';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
+import { ButtonModule } from 'primeng/button';
+import { InputTextModule } from 'primeng/inputtext';
+import { PaginatorModule } from 'primeng/paginator';
+import { RippleModule } from 'primeng/ripple';
+import { TableModule } from 'primeng/table';
 import { CardComponent } from 'src/app/components/card/card.component';
+import { Boq } from 'src/app/models/boq.model';
 import { PageEvent } from 'src/app/models/paginator.model';
-
+import { BoqService } from 'src/app/services/boq.service';
 
 @Component({
   providers: [BoqService],
@@ -26,13 +25,12 @@ import { PageEvent } from 'src/app/models/paginator.model';
     BreadcrumbModule,
     CardComponent
   ],
-  selector: 'app-table',
+  selector: 'app-boq-item',
   standalone: true,
-  templateUrl: './table.component.html',
-  styleUrls: ['./table.component.scss']
+  templateUrl: './boq-item.component.html',
+  styleUrls: ['./boq-item.component.scss']
 })
-
-export class TableComponent implements OnInit {
+export class BoqItemComponent implements OnInit {
 
   contractId: number | null = null;
   projectName: string = "...";
@@ -184,3 +182,4 @@ export class TableComponent implements OnInit {
     return this.Boq ? this.first === 0 : true;
   }
 }
+

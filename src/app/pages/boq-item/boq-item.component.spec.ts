@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TableComponent } from './table.component';
+import { BoqItemComponent } from './boq-item.component';
 
-describe('TableComponent', () => {
-  let component: TableComponent;
-  let fixture: ComponentFixture<TableComponent>;
+describe('BoqItemComponent', () => {
+  let component: BoqItemComponent;
+  let fixture: ComponentFixture<BoqItemComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ TableComponent ]
+      declarations: [ BoqItemComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(TableComponent);
+    fixture = TestBed.createComponent(BoqItemComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

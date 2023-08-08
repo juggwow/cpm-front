@@ -12,12 +12,19 @@ import { LoginCallbackService } from './services/login-callback.service';
                     path: 'contract/:id',
                     component: AppLayoutComponent,
                     children: [
+                        // {
+                        //     path: '',
+                        //     loadComponent: () =>
+                        //         import(
+                        //             './pages/table/table.component'
+                        //         ).then((m) => m.TableComponent),
+                        // },
                         {
                             path: '',
                             loadComponent: () =>
                                 import(
-                                    './pages/table/table.component'
-                                ).then((m) => m.TableComponent),
+                                    './pages/boq-item/boq-item.component'
+                                ).then((m) => m.BoqItemComponent),
                         },
                         {
                             path: 'report/item/:id/create',
@@ -41,7 +48,7 @@ import { LoginCallbackService } from './services/login-callback.service';
                                 ).then((m) => m.FormInprogressComponent),
                         },
                         {
-                            path: 'report/item/:id',
+                            path: 'item/:id/report',
                             loadComponent: () =>
                                 import(
                                     './pages/report/report.component'
