@@ -139,7 +139,7 @@ export class FormComponent implements OnInit {
       acceptLabel: "ยืนยัน",
       rejectLabel: "ยกเลิก",
       accept: () => {
-        this.router.navigate(['/contract', this.contractId, 'report', 'item', this.itemId]);
+        this.router.navigate(['/contract', this.contractId, 'item', this.itemId,'report']);
       }
     });
   }
