@@ -89,7 +89,7 @@ export class FormComponent implements OnInit {
       invoice: [''],
       quantity: [''],
       country: [''],
-      manufacturer: [''],
+      brand: [''],
       model: [''],
       serial: [''],
       peano: [''],
@@ -108,7 +108,7 @@ export class FormComponent implements OnInit {
   }
 
   getCountries() {
-    this.form.getListOfDocTypes<Country[]>()
+    this.form.getCountryList<Country[]>()
       .subscribe((res) => {
         this.countries = res;
       });
