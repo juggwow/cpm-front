@@ -44,7 +44,7 @@ export class FormService {
   }
 
   addNewReport<T>(formData: FormData) : Observable<T>{
-    return this.http.post<T>(`${this.apiUrl}/form`, formData);
+    return this.http.post<T>(`${this.apiUrl}/report`, formData);
   }
 
 }
