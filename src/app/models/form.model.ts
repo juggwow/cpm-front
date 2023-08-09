@@ -53,9 +53,13 @@ export interface ReportView {
     attachFiles: AttachFile[];
 }
 
-interface AttachFile {
+export interface AttachFile {
+    id: number;
+    name: string;
+    size: string;
+    unit: string;
+    typeID: number;
     typeName: string;
-    files: file[];
 }
 
 interface file {

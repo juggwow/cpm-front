@@ -1,5 +1,5 @@
 export interface DocType {
-    id: string;
+    id: number;
     name: string;
 }
 

@@ -16,15 +16,22 @@ import { LoginCallbackService } from './services/login-callback.service';
                             path: '',
                             loadComponent: () =>
                                 import(
-                                    './pages/table/table.component'
-                                ).then((m) => m.TableComponent),
+                                    './pages/boq-item/boq-item.component'
+                                ).then((m) => m.BoqItemComponent),
                         },
                         {
-                            path: 'report/item/:id/create',
+                            path: 'item/:id/report/create',
                             loadComponent: () =>
                                 import(
                                     './pages/form/form.component'
                                 ).then((m) => m.FormComponent),
+                        },
+                        {
+                            path: 'item/:itemID/report/:reportID/edit',
+                            loadComponent: () =>
+                                import(
+                                    './pages/form-edit/form-edit.component'
+                                ).then((m) => m.FormEditComponent),
                         },
                         {
                             path: 'formupdate',
@@ -41,7 +48,7 @@ import { LoginCallbackService } from './services/login-callback.service';
                                 ).then((m) => m.FormInprogressComponent),
                         },
                         {
-                            path: 'report/item/:id',
+                            path: 'item/:id/report',
                             loadComponent: () =>
                                 import(
                                     './pages/report/report.component'
@@ -62,7 +69,7 @@ import { LoginCallbackService } from './services/login-callback.service';
                                 ).then((m) => m.ApproveComponent),
                         },
                         {
-                            path: 'report/:id',
+                            path: 'item/:itemID/report/:reportID/view',
                             loadComponent: () =>
                                 import(
                                     './pages/report-view/report-view.component'
@@ -70,6 +77,13 @@ import { LoginCallbackService } from './services/login-callback.service';
                         }
                     ],
                 },
+                {
+                    path: 'file/:id',
+                    loadComponent: () =>
+                        import(
+                            './pages/report-pdf/report-pdf.component'
+                        ).then((m) => m.ReportPdfComponent),
+                }
                 // { path: 'pages/notfound', component: NotfoundComponent },
                 // { path: '**', redirectTo: 'pages/notfound' },
             ],
