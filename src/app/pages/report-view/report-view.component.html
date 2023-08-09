@@ -15,7 +15,8 @@
                         </div>
                         <div class="col-sm-auto col-md-auto">
                             <button class="btn btn-lg btn-primary  px-5 mx-3 p-button-outlined" pButton
-                                [routerLink]="['create']" icon="pi pi-eye" label="Preview เอกสาร"></button>
+                            (click)="clickEvent()" icon="pi pi-eye"
+                                label="Preview เอกสาร"></button>
                         </div>
                     </div>
                     <hr class="my-3" />
@@ -65,30 +66,28 @@
                                 </div>
 
                                 <div class="col-md-12 my-5">
-                                    <div *ngFor="let af of report.attachFiles;  index as i">
-                                        <p>{{af.typeName}}</p>
-                                        <div>
-                                            <div class="row justify-content-start bg-light text-dark m-3 p-2" *ngFor="let f of af.files;  index as i">
+                                    <div *ngFor="let d of doctype">
+                                        <p *ngIf="filteredAttachFiles(d.id)">{{ d.name }}</p>
+                                        <div *ngFor="let af of file">
+                                            <div class="row justify-content-start bg-light text-dark m-3 p-2">
                                                 <div class="col-md-1">
                                                     <div class="bg-primary rounded p-2" style="width:50px;height:50px">
                                                         PDF</div>
                                                 </div>
                                                 <div class="col-md-9">
-                                                    <p class="fw-bold"> {{ f.name }} </p>
-                                                    <p> ขนาดไฟล์ {{ f.size }} {{ f.unit }} </p>
+                                                    <p class="fw-bold"> {{ af.name }} </p>
+                                                    <p> ขนาดไฟล์ {{ af.size }} {{ af.unit }} </p>
                                                 </div>
                                                 <div class="col-md-1">
                                                     <p-button icon="pi pi-ellipsis-v"
                                                         styleClass="p-button-rounded p-button-text"
-                                                        (click)="ShowMenuManage(f.id);menu.toggle($event);"></p-button>
+                                                        (click)="ShowMenuManage(af.id);menu.toggle($event);"></p-button>
                                                     <p-menu #menu [model]="manageMenu" [popup]="true"
                                                         appendTo="body"></p-menu>
                                                 </div>
                                             </div>
                                         </div>
-
                                     </div>
-
                                 </div>
                             </div>
                         </div>
@@ -138,10 +137,22 @@
             </div>
             <div class="col text-center">
                 <button class="btn btn-lg btn-primary  px-5 mx-3 p-button-outlined" pButton
-                    [routerLink]="['/contract']">ย้อนกลับ</button>
+                    [routerLink]="['/contract',contractId,'item',itemId,'report']">ย้อนกลับ</button>
             </div>
         </div>
     </div>
-    <!-- <p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>
-    <p-toast [breakpoints]="{'920px': {width: '100%', right: '0', left: '0'}}"></p-toast> -->
+    <p-dialog [(visible)]="display" [modal]="true" [style]="{width: '80vw'}" [maximizable]="false"
+    [draggable]="false" [resizable]="false" (onHide)="onHide()">
+        <!-- <div id="outerContainer"> -->
+            <div class="pdf-container">
+              <pdf-viewer
+                [src]="src"
+                [rotation]="0"
+                [original-size]="false"
+                [show-all]="true"
+                style="width: 100%; height: 600px;"
+              ></pdf-viewer>
+            </div>
+          <!-- </div> -->
+    </p-dialog>
 </div>
