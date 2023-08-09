@@ -29,17 +29,17 @@ import { ToastModule } from 'primeng/toast';
 @Component({
   selector: 'app-report',
   standalone: true,
-  providers: [ListDocumentService, ConfirmationService,BoqService, ReportService],
-  imports: [ConfirmDialogModule, 
-    TableModule, 
-    InputTextModule, 
-    ButtonModule, 
-    SplitButtonModule, 
-    RippleModule, 
-    RouterModule, 
-    BadgeModule, 
-    ContextMenuModule, 
-    PdfViewerModule, 
+  providers: [ListDocumentService, ConfirmationService, BoqService, ReportService],
+  imports: [ConfirmDialogModule,
+    TableModule,
+    InputTextModule,
+    ButtonModule,
+    SplitButtonModule,
+    RippleModule,
+    RouterModule,
+    BadgeModule,
+    ContextMenuModule,
+    PdfViewerModule,
     DialogModule,
     BreadcrumbModule,
     PaginatorModule,
@@ -50,7 +50,7 @@ import { ToastModule } from 'primeng/toast';
   templateUrl: './report.component.html',
   styleUrls: ['./report.component.scss']
 })
-export class ReportComponent implements OnInit{
+export class ReportComponent implements OnInit {
 
   is_preview: boolean = false;
 
@@ -271,17 +271,19 @@ export class ReportComponent implements OnInit{
   //     })
   // }
 
-  setReportDrafMenu(report:ReportProgress) {
+  setReportDrafMenu(report: ReportProgress) {
     this.reportManageMenu = [
       {
         label: 'แก้ไข',
         icon: PrimeIcons.PENCIL,
-        routerLink: `../formupdate/${report.id}`
+        routerLink: `../report/${report.id}/edit`
       },
       {
         label: 'Preview เอกสาร',
         icon: PrimeIcons.EYE,
-        routerLink: '/fileupload'
+        command: () => {
+          this.pdf(report.id)
+        }
       },
       {
         label: 'ลบเอกสาร',
@@ -292,35 +294,38 @@ export class ReportComponent implements OnInit{
       }
     ];
   }
-  setReportSubmitMenu(report:ReportProgress) {
+  setReportSubmitMenu(report: ReportProgress) {
     this.reportManageMenu = [
       {
         label: 'ดูรายละเอียด',
         icon: PrimeIcons.SEARCH,
-        routerLink: `../formupdate/${report.id}`
+        routerLink: `../report/${report.id}/view`
       },
       {
         label: 'Preview เอกสาร',
         icon: PrimeIcons.EYE,
         command: () => {
-          console.log(report.id)
+          this.pdf(report.id)
         }
       }
     ];
   }
-  
-  setReportManageMenu(report:ReportProgress){
-    if(report.stateID===1){
+
+  setReportManageMenu(report: ReportProgress) {
+    if (report.stateID === 1) {
       this.setReportDrafMenu(report);
-    }else{
+    } else {
       this.setReportSubmitMenu(report);
     }
   }
 
-
-
-
-
+  pdf(id: number) {
+    this.report.getPdfReport(id).subscribe((response) => {
+      let file = new Blob([response], { type: 'application/pdf' });
+      var fileURL = URL.createObjectURL(file);
+      window.open(fileURL);
+    })
+  }
 
 
 }
