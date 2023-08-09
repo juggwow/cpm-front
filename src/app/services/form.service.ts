@@ -18,7 +18,7 @@ export class FormService {
   }
 
   reportView<T>(id:number): Observable<T>{
-    return this.http.get<T>(`${this.apiUrl}/form/view/${id}`)
+    return this.http.get<T>(`${this.apiUrl}/report/${id}`)
   }
 
   upload(field: String, itemid: String, files: any) {
