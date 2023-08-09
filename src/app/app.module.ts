@@ -11,8 +11,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppLayoutModule } from './layout/app.layout.module';
 import { NotfoundComponent } from './components/notfound/notfound.component';
 import { AuthInterceptorService } from './services/auth-interceptor.service';
-import { ReportViewComponent } from './pages/report-view/report-view.component';
-import { BoqItemComponent } from './pages/boq-item/boq-item.component';
+
 @NgModule({
     imports: [
         AppRoutingModule,
