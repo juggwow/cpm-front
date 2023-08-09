@@ -89,7 +89,7 @@ export class FormComponent implements OnInit {
       invoice: [''],
       quantity: [''],
       country: [''],
-      manufacturer: [''],
+      brand: [''],
       model: [''],
       serial: [''],
       peano: [''],
@@ -108,7 +108,7 @@ export class FormComponent implements OnInit {
   }
 
   getCountries() {
-    this.form.getListOfDocTypes<Country[]>()
+    this.form.getCountryList<Country[]>()
       .subscribe((res) => {
         this.countries = res;
       });
@@ -139,7 +139,7 @@ export class FormComponent implements OnInit {
       acceptLabel: "ยืนยัน",
       rejectLabel: "ยกเลิก",
       accept: () => {
-        this.router.navigate(['/contract', this.contractId, 'report', 'item', this.itemId]);
+        this.router.navigate(['/contract', this.contractId, 'item', this.itemId,'report']);
       }
     });
   }
