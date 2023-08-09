@@ -53,8 +53,8 @@ export class ReportService {
       // 'responseType': 'arraybuffer' as 'json'
       'responseType'  : 'blob' as 'json'        //This also worked
     };
-    // return this.http.get<any>(`${this.apiUrl}/download/${id}`, httpOptions);
-    return this.http.get<any>(`http://localhost:8000/api/v1/download/${id}`, httpOptions);
+    return this.http.get<any>(`${this.apiUrl}/download/${id}`, httpOptions);
+    // return this.http.get<any>(`http://localhost:8000/api/v1/download/${id}`, httpOptions);
 
   }
 
@@ -65,8 +65,8 @@ export class ReportService {
       'responseType'  : 'blob' as 'json',        //This also worked
       // 'headers' : {"Content-Disposition" : `attachment; filename="123.pdf"`}
     };
-    // return this.http.get<any>(`${this.apiUrl}/download/${id}`, httpOptions);
-    return this.http.get<any>(`http://localhost:8000/api/v1/download/${id}`, httpOptions);
+    return this.http.get<any>(`${this.apiUrl}/download/${id}`, httpOptions);
+    // return this.http.get<any>(`http://localhost:8000/api/v1/download/${id}`, httpOptions);
 
   }
 
