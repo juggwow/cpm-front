@@ -22,8 +22,8 @@ import { FormService } from 'src/app/services/form.service';
 import { ToastModule } from 'primeng/toast';
 
 @Component({
-  providers: [FormService, ConfirmationService, BoqService, ReportService,MessageService],
-  imports: [ToastModule,BreadcrumbModule, DropdownModule, CommonModule, InputTextModule, ButtonModule, ConfirmDialogModule, RouterModule, NgxDropzoneModule, FormsModule, ReactiveFormsModule, AutoCompleteModule],
+  providers: [FormService, ConfirmationService, BoqService, ReportService, MessageService],
+  imports: [ToastModule, BreadcrumbModule, DropdownModule, CommonModule, InputTextModule, ButtonModule, ConfirmDialogModule, RouterModule, NgxDropzoneModule, FormsModule, ReactiveFormsModule, AutoCompleteModule],
   selector: 'app-form',
   standalone: true,
   templateUrl: './form.component.html',
@@ -44,7 +44,7 @@ export class FormComponent implements OnInit {
   files: File[] = [];
   doctype!: DocType[];
 
-  filteredCountries!: String[];
+  filteredCountries!: Country[];
   countries!: Country[];
   // selectedDocType!: DocType;
   filesAttach!: Number[];
@@ -66,7 +66,8 @@ export class FormComponent implements OnInit {
     this.itemId = Number(this.route.snapshot.paramMap.get('id'));
     this.boqService.getBoqItemDetail(this.itemId)
       .subscribe((res) => {
-        this.itemDetial = res;
+        this.itemDetial = { ...this.itemDetial, ...res };
+        this.fg.patchValue({ quantity: `${this.itemDetial.quantity}` });
       });
     this.boqService.getProjectDetail(this.contractId)
       .subscribe((res) => {
@@ -76,7 +77,7 @@ export class FormComponent implements OnInit {
           { label: 'บริหารสัญญา' },
           { label: this.projectName },
           { label: 'Receive and Damage' },
-          { label: `${this.itemDetial.name.slice(0,25)}...` }
+          { label: `${this.itemDetial.name.slice(0, 25)}...` }
         ];
       });
     this.getDocType()
@@ -124,7 +125,7 @@ export class FormComponent implements OnInit {
         filtered.push(country);
       }
     }
-    this.filteredCountries = filtered.map((e) => e.name);
+    this.filteredCountries = filtered;
   }
 
   selectType(event: any, index: number) {
@@ -139,7 +140,7 @@ export class FormComponent implements OnInit {
       acceptLabel: "ยืนยัน",
       rejectLabel: "ยกเลิก",
       accept: () => {
-        this.router.navigate(['/contract', this.contractId, 'item', this.itemId,'report']);
+        this.router.navigate(['/contract', this.contractId, 'item', this.itemId, 'report']);
       }
     });
   }
@@ -157,7 +158,7 @@ export class FormComponent implements OnInit {
   }
 
   onDraft() {
-    let formvalue = this.fg.value as Form
+    // let formvalue = this.fg.value as Form
     this.submitData("1");
     // this.FormService.addNewForm(
     //   { ...formvalue, ...{ status: 0, createby: "ทดสอบ" } }
@@ -177,28 +178,8 @@ export class FormComponent implements OnInit {
 
 
   onSelectFileUpload(event: NgxDropzoneChangeEvent) {
-    console.log(event);
     this.files.push(...event.addedFiles);
-    console.log(this.files)
-    console.log(event.addedFiles)
     //check file type and size
-
-    // this.FormService.upload("upload", "9551", event.addedFiles).subscribe(
-    //   result => {
-
-    //     const filesattach = this.DocFormGroup.controls.filesAttach.value
-    //     filesattach?.push({ ...result, ...{ type: 1 } })
-    //     this.DocFormGroup.controls.filesAttach.setValue(filesattach);
-
-
-    //     console.log('Upload successful!', result);
-    //     // Do something with the result here
-    //   },
-    //   error => {
-    //     console.log('Error uploading file!', error);
-    //     // Handle the error here
-    //   }
-    // )
   }
 
   onRemoveFileUpload(event: any, index: number) {
@@ -231,17 +212,22 @@ export class FormComponent implements OnInit {
     let formData = new FormData();
     formData.append("itemID", this.itemId.toString());
     Object.keys(this.fg.controls).forEach(formControlName => {
-      formData.append(formControlName, this.fg.get(formControlName)?.value);
+      if (formControlName == 'country') {
+        formData.append(formControlName, this.fg.get(formControlName)?.value.code);
+      } else {
+        formData.append(formControlName, this.fg.get(formControlName)?.value);
+      }
     });
     formData.append("status", status);
     this.files.forEach(file => {
       formData.append("filesAttach", file);
     });
     formData.append("docType", this.filesAttachType.toString());
+    // console.log(formData)
     this.form.addNewReport(formData).pipe(
       take(1),
       tap(() => {
-        console.log('..');   
+        console.log('..');
         // this.show(status);        
         // // this.appToastService.successToast();
         // this.router.navigate(['/']);     
@@ -252,19 +238,19 @@ export class FormComponent implements OnInit {
         complete: () => {
           this.show(status);
           setTimeout(() => {
-            this.router.navigate(['/contract',this.contractId,'report','item',this.itemId]);
-         }, 1000);
+            this.router.navigate(['/contract', this.contractId, 'item', this.itemId, 'report']);
+          }, 1000);
         }
       });
   }
 
   show(status: string) {
-    if(status==="1"){
+    if (status === "1") {
       this.messageService.add({ severity: 'success', summary: 'Success', detail: 'บันทึกร่างสำเร็จ' });
-    }else{
+    } else {
       this.messageService.add({ severity: 'success', summary: 'Success', detail: 'ส่งให้ กฟภ.สำเร็จ' });
     }
-}
+  }
 
 
 

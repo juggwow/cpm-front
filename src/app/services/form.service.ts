@@ -17,7 +17,7 @@ export class FormService {
     );
   }
 
-  reportView<T>(id:number): Observable<T>{
+  reportView<T>(id: number): Observable<T> {
     return this.http.get<T>(`${this.apiUrl}/report/${id}`)
   }
 
@@ -43,8 +43,12 @@ export class FormService {
     return this.http.get<T>(`${this.apiUrl}/country`);
   }
 
-  addNewReport<T>(formData: FormData) : Observable<T>{
+  addNewReport<T>(formData: FormData): Observable<T> {
     return this.http.post<T>(`${this.apiUrl}/report`, formData);
+  }
+
+  editReport<T>(formData: FormData, id: number): Observable<T> {
+    return this.http.put<T>(`${this.apiUrl}/report/${id}`, formData);
   }
 
 }

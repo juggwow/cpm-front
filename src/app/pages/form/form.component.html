@@ -109,19 +109,14 @@
                                         <p class="fw-bold">จำนวนอุปกรณ์ที่ต้องการส่งมอบ ({{itemDetial ? itemDetial.unit : ''}})</p>
                                         <input type="number" pInputText class="form-control"
                                             placeholder="กรุณากรอกจำนวนอุปกรณ์ที่ต้องการส่งมอบ"
-                                            formControlName="quantity"
-                                            value="{{itemDetial ? itemDetial.quantity : ''}}" >
+                                            formControlName="quantity">
                                     </div>
                                     <div class="col-md-6">
                                         <p class="fw-bold">ประเทศผู้ผลิต</p>
                                         <p-autoComplete formControlName="country" [suggestions]="filteredCountries"
-                                            (completeMethod)="filterCountries($event)" [minLength]="1">
+                                            (completeMethod)="filterCountries($event)" [minLength]="1"
+                                            placeholder="กรุณากรอกประเทศผู้ผลิต" field="name">
                                         </p-autoComplete>
-                                        <!-- <input type="text" pInputText
-                                           class="form-control"
-                                           placeholder="กรุณากรอกประเทศผู้ผลิต"
-                                           formControlName="country"
-                                           > -->
                                     </div>
                                 </div>
                                 <div class="row my-3 justify-content-between">
