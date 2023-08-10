@@ -11,7 +11,7 @@ export interface Item {
     id: number;
     name: string;
     contractQTY: string;
-    deliveredQTY: string;
+    receiveQTY: string;
     quantity:number;
     unit:string;
 
