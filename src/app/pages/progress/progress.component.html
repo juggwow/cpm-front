@@ -245,5 +245,13 @@
     </div>
     <p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>
   </div>
-  
+  <p-dialog [(visible)]="display" [modal]="true" [style]="{width: '80vw'}" [maximizable]="false" [draggable]="false"
+  [resizable]="false" (onHide)="onHide()">
+  <!-- <div id="outerContainer"> -->
+  <div class="pdf-container">
+    <pdf-viewer [src]="src" [rotation]="0" [original-size]="false" [show-all]="true"
+      style="width: 100%; height: 600px;"></pdf-viewer>
+  </div>
+  <!-- </div> -->
+</p-dialog>
   

@@ -1,5 +1,5 @@
 import { HttpParams } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmationService, MenuItem, PrimeIcons, SortEvent } from 'primeng/api';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
@@ -20,6 +20,8 @@ import { ContextMenuModule } from 'primeng/contextmenu';
 import { CommonModule } from '@angular/common';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { take, tap } from 'rxjs';
+import { PdfViewerComponent, PdfViewerModule } from 'ng2-pdf-viewer';
+import { DialogModule } from 'primeng/dialog';
 
 @Component({
   selector: 'app-progress',
@@ -38,11 +40,18 @@ import { take, tap } from 'rxjs';
     ToastModule,
     ContextMenuModule,
     CommonModule,
-    ConfirmDialogModule
+    ConfirmDialogModule,
+    PdfViewerModule,
+    DialogModule
   ],
   providers: [BoqService, ReportService, ConfirmationService]
 })
 export class ProgressComponent implements OnInit {
+  @ViewChild(PdfViewerComponent)
+  private pdfComponent!: PdfViewerComponent;
+
+  src: string = "";
+  display: boolean = false;
 
   contractId!: number;
   items: MenuItem[] = [];
@@ -177,12 +186,15 @@ export class ProgressComponent implements OnInit {
       {
         label: 'แก้ไข',
         icon: PrimeIcons.PENCIL,
-        routerLink: `../formupdate/${report.id}`
+        routerLink: `../item/${report.itemID}/report/${report.id}/edit`
+        // routerLink: ['/file',id]
       },
       {
         label: 'Preview เอกสาร',
         icon: PrimeIcons.EYE,
-        routerLink: '/fileupload'
+        command: () => {
+          this.reportPreview(report.id)
+        }
       },
       {
         label: 'ลบเอกสาร',
@@ -199,13 +211,13 @@ export class ProgressComponent implements OnInit {
       {
         label: 'ดูรายละเอียด',
         icon: PrimeIcons.SEARCH,
-        routerLink: `../formupdate/${report.id}`
+        routerLink: `../item/${report.itemID}/report/${report.id}/view`
       },
       {
         label: 'Preview เอกสาร',
         icon: PrimeIcons.EYE,
         command: () => {
-          console.log(report.id)
+          this.reportPreview(report.id)
         }
       }
     ];
@@ -247,6 +259,22 @@ export class ProgressComponent implements OnInit {
           });
       }
     });
+  }
+
+  reportPreview(id:number) {
+    this.display = true;
+    this.report.getPdfReport<Blob>(id).subscribe((response) => {
+      // let file = new Blob([response], { type: 'application/pdf' });
+      // var fileURL = URL.createObjectURL(file);
+      this.src = URL.createObjectURL(response);
+    })
+  }
+
+  onHide() {
+    // this.display = false;
+    // URL.revokeObjectURL(this.src);
+    this.pdfComponent.clear();
+    // console.log(this.pdfComponent.src);
   }
 
 }
