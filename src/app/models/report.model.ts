@@ -2,6 +2,7 @@ export interface ReportProgress {
     id: number;
     seq: number;
     invNo: string;
+    itemID : number;
     itemName: string;
     arrival: string;
     inspection: string;
