@@ -16,7 +16,7 @@
                                 <p class="fw-bold">อุปกรณ์ที่ส่งมอบ</p>
                             </div>
                             <div class="col-sm-12 col-md-8"><input type="text" pInputText class="form-control"
-                                    value="{{itemDetial ? itemDetial.name : ''}}" disabled>
+                                    value="{{report ? report.itemName : ''}}" disabled >
                             </div>
                             <hr class="my-3" />
                         </div>
@@ -70,12 +70,30 @@
                                                 <span>ไฟล์ขนาดไม่เกิน 50 MB (เฉพาะ .pdf เท่านั้น)</span>
                                             </ngx-dropzone-label>
                                         </ngx-dropzone>
-
+                                        <div *ngFor="let f of report.attachFiles"
+                                            class="mw-100 mx-0  justify-content-start d-block" style="min-height:auto;">
+                                            <div class="row pt-3">
+                                                <div class="col-2">
+                                                    <div class="bg-primary rounded p-3" style="width:80px;height:80px">
+                                                        PDF</div>
+                                                </div>
+                                                <div class="col-6">
+                                                    <p class="fw-bold"> {{ f.name }} </p>
+                                                    <p> ขนาดไฟล์ {{ f.size }} {{ f.unit }} </p>
+                                                </div>
+                                                <div class="col-3">
+                                                    <p-dropdown [options]="doctype" optionLabel="name"
+                                                        class="w-100" placeholder="{{f.typeName}}" (onChange)="changeType($event,f)"></p-dropdown>
+                                                </div>
+                                                <div class="col-1 py-3">
+                                                    <p-button icon="pi pi-trash" styleClass="p-button-rounded p-button-text" (click)="removeOldAttachFile(f)"></p-button>
+                                                </div>
+                                            </div>
+                                        </div>
                                         <ngx-dropzone-preview *ngFor="let f of files;  index as i" [removable]="true"
                                             (removed)="onRemoveFileUpload(f,i)"
                                             class="mw-100 mx-0  justify-content-start d-block" style="min-height:auto;">
                                             <ngx-dropzone-label class="row pt-3">
-
                                                 <div class="col-2">
                                                     <div class="bg-primary rounded p-3" style="width:80px;height:80px">
                                                         PDF</div>
@@ -106,29 +124,24 @@
                             <div class="col-sm-12 col-md-8">
                                 <div class="row my-3 justify-content-between">
                                     <div class="col-md-6">
-                                        <p class="fw-bold">จำนวนอุปกรณ์ที่ต้องการส่งมอบ ({{itemDetial ? itemDetial.unit : ''}})</p>
+                                        <p class="fw-bold">จำนวนอุปกรณ์ที่ต้องการส่งมอบ ({{report ? report.itemUnit : ''}})</p>
                                         <input type="number" pInputText class="form-control"
                                             placeholder="กรุณากรอกจำนวนอุปกรณ์ที่ต้องการส่งมอบ"
-                                            formControlName="quantity"
-                                            value="{{itemDetial ? itemDetial.quantity : ''}}" >
+                                            formControlName="quantity">
                                     </div>
                                     <div class="col-md-6">
                                         <p class="fw-bold">ประเทศผู้ผลิต</p>
                                         <p-autoComplete formControlName="country" [suggestions]="filteredCountries"
-                                            (completeMethod)="filterCountries($event)" [minLength]="1">
+                                            (completeMethod)="filterCountries($event)" [minLength]="1" 
+                                            placeholder="กรุณากรอกประเทศผู้ผลิต" field="name">
                                         </p-autoComplete>
-                                        <!-- <input type="text" pInputText
-                                           class="form-control"
-                                           placeholder="กรุณากรอกประเทศผู้ผลิต"
-                                           formControlName="country"
-                                           > -->
                                     </div>
                                 </div>
                                 <div class="row my-3 justify-content-between">
                                     <div class="col-md-6">
                                         <p class="fw-bold">ยี่ห้อ (Brand)</p>
                                         <input type="text" pInputText class="form-control" placeholder="ยี่ห้อ"
-                                            formControlName="manufacturer">
+                                            formControlName="brand">
                                     </div>
                                     <div class="col-md-6">
                                         <p class="fw-bold">รุ่น</p>

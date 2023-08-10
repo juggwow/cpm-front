@@ -14,23 +14,23 @@ import { ToastModule } from 'primeng/toast';
 import { take, tap } from 'rxjs';
 import { Country } from 'src/app/models/country.model';
 import { DocType } from 'src/app/models/doc.model';
-import { ReportView } from 'src/app/models/form.model';
+import { AttachFile, ReportView } from 'src/app/models/form.model';
 import { Item } from 'src/app/models/response-page.model';
 import { BoqService } from 'src/app/services/boq.service';
 import { FormService } from 'src/app/services/form.service';
 import { ReportService } from 'src/app/services/report.service';
 
 @Component({
-  providers: [FormService, ConfirmationService, BoqService, ReportService,MessageService],
-  imports: [ToastModule,BreadcrumbModule, DropdownModule, CommonModule, InputTextModule, 
-    ButtonModule, ConfirmDialogModule, RouterModule, NgxDropzoneModule, FormsModule, 
+  providers: [FormService, ConfirmationService, BoqService, ReportService, MessageService],
+  imports: [ToastModule, BreadcrumbModule, DropdownModule, CommonModule, InputTextModule,
+    ButtonModule, ConfirmDialogModule, RouterModule, NgxDropzoneModule, FormsModule,
     ReactiveFormsModule, AutoCompleteModule],
   selector: 'app-form-edit',
   standalone: true,
   templateUrl: './form-edit.component.html',
   styleUrls: ['./form-edit.component.scss']
 })
-export class FormEditComponent implements OnInit{
+export class FormEditComponent implements OnInit {
   public fg!: FormGroup;
 
   contractId!: number;
@@ -38,16 +38,15 @@ export class FormEditComponent implements OnInit{
   projectName: string = "...";
 
   itemId!: number;
-  itemDetial !: Item;
-
   reportId!: number;
 
   files: File[] = [];
   doctype!: DocType[];
 
-  filteredCountries!: String[];
+  filteredCountries!: Country[];
   countries!: Country[];
-  // selectedDocType!: DocType;
+  country?: string;
+
   filesAttach!: Number[];
   filesAttachType: Number[] = [];
   report: ReportView = {
@@ -68,6 +67,9 @@ export class FormEditComponent implements OnInit{
     attachFiles: []
   };
 
+  delAttachFiles: Number[] = [];
+  changeAttachFilesType: { fileId: number; typeId: number; }[] = [];
+
   constructor(
     private FormService: FormService,
     private confirmationService: ConfirmationService,
@@ -80,41 +82,50 @@ export class FormEditComponent implements OnInit{
   ) { }
 
   ngOnInit(): void {
-    console.log(this.route.snapshot)
+
     this.contractId = Number(this.route.snapshot.parent?.paramMap.get('id'));
     this.itemId = Number(this.route.snapshot.paramMap.get('itemID'));
     this.reportId = Number(this.route.snapshot.paramMap.get('reportID'));
+    this.getDocType();
+    this.getCountries();
     if (this.reportId) {
       this.form.reportView<ReportView>(this.reportId)
-        .subscribe((res) => { this.report = { ...this.report, ...res } });
+        .subscribe((res) => {
+          this.report = { ...this.report, ...res };
+          this.fg.patchValue(this.report);
+          this.countries?.map((o) => {
+            if (o.code == this.report.country) {
+              this.fg.patchValue({ country: o });
+            }
+          });
+
+          this.boqService.getProjectDetail(this.contractId)
+            .subscribe((res) => {
+              this.items = [
+                { label: 'บริหารจัดการสัญญา' },
+                { label: 'บริหารสัญญา' },
+                { label: res.name },
+                { label: 'Receive and Damage' },
+                { label: `${this.report.itemName.slice(0, 25)}...` }
+              ];
+            });
+          // this.files.push(this.report.attachFiles);
+        });
     }
 
-    // this.boqService.getBoqItemDetail(this.itemId)
-    //   .subscribe((res) => {
-    //     this.itemDetial = res;
-    //   });
-    this.boqService.getProjectDetail(this.contractId)
-      .subscribe((res) => {
-        this.projectName = res.name;
-        this.items = [
-          { label: 'บริหารจัดการสัญญา' },
-          { label: 'บริหารสัญญา' },
-          { label: this.projectName },
-          { label: 'Receive and Damage' },
-          { label: `${this.itemDetial.name.slice(0,25)}...` }
-        ];
-      });
-    this.getDocType()
-    this.getCountries()
+    this.getDocType();
+    this.getCountries();
+
+
     this.fg = this.fb.group({
-      // itemID: [''],
+      // itemName: [''],
       arrival: [''],
       inspection: [''],
       taskMaster: [''],
       invoice: [''],
       quantity: [''],
       country: [''],
-      manufacturer: [''],
+      brand: [''],
       model: [''],
       serial: [''],
       peano: [''],
@@ -123,6 +134,7 @@ export class FormEditComponent implements OnInit{
       // filesAttach: new FormControl([] as Upload[])
       // docType: new FormControl([] as Upload[])
     })
+
   }
 
   getDocType() {
@@ -149,7 +161,7 @@ export class FormEditComponent implements OnInit{
         filtered.push(country);
       }
     }
-    this.filteredCountries = filtered.map((e) => e.name);
+    this.filteredCountries = filtered;
   }
 
   selectType(event: any, index: number) {
@@ -164,7 +176,7 @@ export class FormEditComponent implements OnInit{
       acceptLabel: "ยืนยัน",
       rejectLabel: "ยกเลิก",
       accept: () => {
-        this.router.navigate(['/contract', this.contractId, 'item', this.itemId,'report']);
+        this.router.navigate(['/contract', this.contractId, 'item', this.itemId, 'report']);
       }
     });
   }
@@ -182,30 +194,14 @@ export class FormEditComponent implements OnInit{
   }
 
   onDraft() {
-    let formvalue = this.fg.value as Form
+    // let formvalue = this.fg.value as Form
     this.submitData("1");
-    // this.FormService.addNewForm(
-    //   { ...formvalue, ...{ status: 0, createby: "ทดสอบ" } }
-    // ).pipe(
-    //   take(1),
-    //   tap(() => {
-    //     console.log('..')
-    //     // this.appToastService.successToast();
-    //     // this.router.navigate(['/']);
-    //   })
-    // )
-    //   .subscribe({
-    //     error: () => console.log('error')//this.appToastService.errorToast(),
-    //   });
   }
 
 
 
   onSelectFileUpload(event: NgxDropzoneChangeEvent) {
-    console.log(event);
     this.files.push(...event.addedFiles);
-    console.log(this.files)
-    console.log(event.addedFiles)
     //check file type and size
 
     // this.FormService.upload("upload", "9551", event.addedFiles).subscribe(
@@ -230,63 +226,69 @@ export class FormEditComponent implements OnInit{
     console.log(event);
     this.files.splice(this.files.indexOf(event), 1);
     this.filesAttachType.splice(index, 1);
-
   }
 
-
-
-  // SendToPEA() {
-  //   let formvalue = this.fg.value as Form
-  //   this.FormService.addNewForm(
-  //     { ...formvalue, ...{ status: 1, createby: "ทดสอบ" } }
-  //   ).pipe(
-  //     take(1),
-  //     tap(() => {
-  //       console.log('..')
-  //       // this.appToastService.successToast();
-  //       // this.router.navigate(['/']);
-  //     })
-  //   )
-  //     .subscribe({
-  //       error: () => console.log('error')//this.appToastService.errorToast(),
-  //     });
-  // }
+  removeOldAttachFile(f: AttachFile) {
+    this.report.attachFiles.splice(this.report.attachFiles.indexOf(f), 1);
+    this.delAttachFiles.push(f.id);
+  }
+  changeType(e: any, f: AttachFile) {
+    console.log(`filenewid=${f.id}`);
+    this.changeAttachFilesType.map((o) => {
+      if (o.fileId == f.id) {
+        this.changeAttachFilesType.splice(this.changeAttachFilesType.indexOf(o), 1);
+      }
+    })
+    this.changeAttachFilesType.push({ fileId: f.id, typeId: e.value.id })
+  }
 
   submitData(status: string) {
     let formData = new FormData();
     formData.append("itemID", this.itemId.toString());
     Object.keys(this.fg.controls).forEach(formControlName => {
-      formData.append(formControlName, this.fg.get(formControlName)?.value);
+      if (formControlName == 'country') {
+        formData.append(formControlName, this.fg.get(formControlName)?.value.code);
+      } else {
+        formData.append(formControlName, this.fg.get(formControlName)?.value);
+      }
     });
     formData.append("status", status);
     this.files.forEach(file => {
       formData.append("filesAttach", file);
     });
     formData.append("docType", this.filesAttachType.toString());
-    this.form.addNewReport(formData).pipe(
+    formData.append("changeFileType", JSON.stringify(this.changeAttachFilesType));
+    formData.append("removeFile", this.delAttachFiles.toString());
+
+
+    this.form.editReport(formData, this.reportId).pipe(
       take(1),
       tap(() => {
-        console.log('..');   
+        console.log('..');
         // this.show(status);        
         // // this.appToastService.successToast();
         // this.router.navigate(['/']);     
       })
     )
       .subscribe({
-        error: () => console.log('error'),
+        error: () => {
+          console.log('error');
+          this.show(status);
+          // this.messageService.add({ severity: 'error', summary: 'Error', detail: 'บันทึกไม่สำเร็จ' });
+        },
         complete: () => {
           this.show(status);
           setTimeout(() => {
-            this.router.navigate(['/contract',this.contractId,'report','item',this.itemId]);
-         }, 1000);
+            this.router.navigate(['/contract', this.contractId, 'item', this.itemId, 'report']);
+          }, 1000);
         }
       });
   }
 
   show(status: string) {
-    if(status==="1"){
+    if (status === "1") {
       this.messageService.add({ severity: 'success', summary: 'Success', detail: 'บันทึกร่างสำเร็จ' });
-    }else{
+    } else {
       this.messageService.add({ severity: 'success', summary: 'Success', detail: 'ส่งให้ กฟภ.สำเร็จ' });
     }
   }
