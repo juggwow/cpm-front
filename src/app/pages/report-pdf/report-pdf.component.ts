@@ -27,7 +27,7 @@ export class ReportPdfComponent implements OnInit {
     // console.log(this.route.snapshot)
     this.fileId = Number(this.route.snapshot.paramMap.get('id'));
 
-    this.r.getFileAttachDownload(this.fileId).subscribe((response) => {
+    this.r.getFileAttach<Blob>(this.fileId).subscribe((response) => {
       // let file = new Blob([response], { type: 'application/pdf' });
       // var fileURL = URL.createObjectURL(file);
       // (window as Window).location = fileURL;

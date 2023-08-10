@@ -1,69 +1,40 @@
-<!-- 
-
-        <p-dialog header="Title" [(visible)]="is_preview"
-        [closeOnEscape]="true"
-        [dismissableMask]="true"
-        >
-            <pdf-viewer [src]="pdfSrc"
-            [render-text]="true"
-            [original-size]="false"
-     
-            style="width:600px;height:600px"
-
-    ></pdf-viewer>
-        </p-dialog>
-  
-
-     <p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog> 
-
-
-    </div>
-</div> -->
-
 <div class="container">
   <div class="my-5">
     <div class="neutral-08 fw-bold fs-4 my-3">บริหารสัญญา</div>
-    <p-breadcrumb
-      class="max-w-full"
-      [model]="items"
-      [style]="{ background: 'none', border: 'none', padding: '0' }"
-    ></p-breadcrumb>
+    <p-breadcrumb class="max-w-full" [model]="items"
+      [style]="{ background: 'none', border: 'none', padding: '0' }"></p-breadcrumb>
   </div>
   <div class="container">
     <div class="row my-5">
       <div class="card">
         <div class="d-flex justify-content-between">
-            <div class="my-1">
-                <span class="h4 fw-bold">รายการใบ Receive and Damage</span>
-            </div>
-            <div class="my-1">
-                <button class="btn btn-lg btn-primary  px-5 mx-3 p-button-outlined" pButton [routerLink]="['create']"  >สร้างเอกสาร</button>
-            </div>    
+          <div class="my-1">
+            <span class="h4 fw-bold">รายการใบ Receive and Damage</span>
+          </div>
+          <div class="my-1">
+            <button class="btn btn-lg btn-primary  px-5 mx-3 p-button-outlined" pButton
+              [routerLink]="['create']">สร้างเอกสาร</button>
+          </div>
         </div>
         <div class="card justify-content-center" style="background-color:#fafafa">
-            <div class="row my-5" >
-                <div class="col-6">
-                <p class="fw-bold h5 mb-3">อุปกรณ์ที่ส่งมอบ</p>
-                <p class="my-3 h6">{{itemDetail.name}}</p>
+          <div class="row my-5">
+            <div class="col-6">
+              <p class="fw-bold h5 mb-3">อุปกรณ์ที่ส่งมอบ</p>
+              <p class="my-3 h6">{{itemDetail.name}}</p>
             </div>
             <div class="col-3">
-                <p class="fw-bold h5 mb-3">จำนวนตามสัญญา</p>
-                <p class="my-3 h6">{{itemDetail.contractQTY}}</p>
+              <p class="fw-bold h5 mb-3">จำนวนตามสัญญา</p>
+              <p class="my-3 h6">{{itemDetail.contractQTY}}</p>
             </div>
             <div class="col-3">
-                <p class="fw-bold h5 mb-3">จำนวนที่ส่งมอบแล้ว</p>
-                <p class="my-3 h6">{{itemDetail.deliveredQTY}}</p>
+              <p class="fw-bold h5 mb-3">จำนวนที่ส่งมอบแล้ว</p>
+              <p class="my-3 h6">{{itemDetail.deliveredQTY}}</p>
             </div>
-            </div>
+          </div>
         </div>
-        
-        <p-table
-          [value]="data"
-          [rowHover]="true"
-          [loading]="loading"
-          [lazy]="true"
-          (onSort)="onSortColumn($event, contractId)"
-        >
+
+        <p-table [value]="data" [rowHover]="true" [loading]="loading" [lazy]="true"
+          (onSort)="onSortColumn($event, contractId)">
           <ng-template pTemplate="header">
             <tr>
               <th pSortableColumn="sequencesNo">
@@ -114,135 +85,59 @@
             <tr>
               <th>
                 <div class="flex align-items-center gap-2">
-                  <input
-                    class="w-10"
-                    pInputText
-                    name="sequencesNo"
-                    (keyup)="onFilterColumn('sequencesNo', $event)"
-                    placeholder="ค้นหาด้วย ลำดับ"
-                  />
-                  <button
-                    pButton
-                    pRipple
-                    type="button"
-                    icon="pi pi-times"
+                  <input class="w-10" pInputText name="sequencesNo" (keyup)="onFilterColumn('sequencesNo', $event)"
+                    placeholder="ค้นหาด้วย ลำดับ" />
+                  <button pButton pRipple type="button" icon="pi pi-times"
                     class="p-button-rounded p-button-text p-button-plain"
-                    (click)="onClearFilter('sequencesNo')"
-                  ></button>
+                    (click)="onClearFilter('sequencesNo')"></button>
                 </div>
               </th>
               <th>
                 <div class="flex align-items-center gap-2">
-                  <input
-                    class="w-10"
-                    type="text"
-                    pInputText
-                    (keyup)="onFilterColumn('ItemNo', $event)"
-                    placeholder="ค้นหาด้วย เลขที่ใบส่ง"
-                  />
-                  <button
-                    pButton
-                    pRipple
-                    type="button"
-                    icon="pi pi-times"
-                    class="p-button-rounded p-button-text p-button-plain"
-                    (click)="onClearFilter('ItemNo')"
-                  ></button>
+                  <input class="w-10" type="text" pInputText (keyup)="onFilterColumn('ItemNo', $event)"
+                    placeholder="ค้นหาด้วย เลขที่ใบส่ง" />
+                  <button pButton pRipple type="button" icon="pi pi-times"
+                    class="p-button-rounded p-button-text p-button-plain" (click)="onClearFilter('ItemNo')"></button>
                 </div>
               </th>
               <th>
                 <div class="flex align-items-center gap-2">
-                  <input
-                    class="w-10"
-                    type="text"
-                    pInputText
-                    (keyup)="onFilterColumn('name', $event)"
-                    placeholder="ค้นหาด้วย จำนวนรายการ"
-                  />
-                  <button
-                    pButton
-                    pRipple
-                    type="button"
-                    icon="pi pi-times"
-                    class="p-button-rounded p-button-text p-button-plain"
-                    (click)="onClearFilter('name')"
-                  ></button>
+                  <input class="w-10" type="text" pInputText (keyup)="onFilterColumn('name', $event)"
+                    placeholder="ค้นหาด้วย จำนวนรายการ" />
+                  <button pButton pRipple type="button" icon="pi pi-times"
+                    class="p-button-rounded p-button-text p-button-plain" (click)="onClearFilter('name')"></button>
                 </div>
               </th>
               <th>
                 <div class="flex align-items-center gap-2">
-                  <input
-                    class="w-10"
-                    type="text"
-                    pInputText
-                    (keyup)="onFilterColumn('group', $event)"
-                    placeholder="ค้นหาด้วย วันที่ส่งถึงหน้างาน"
-                  />
-                  <button
-                    pButton
-                    pRipple
-                    type="button"
-                    icon="pi pi-times"
-                    class="p-button-rounded p-button-text p-button-plain"
-                    (click)="onClearFilter('group')"
-                  ></button>
+                  <input class="w-10" type="text" pInputText (keyup)="onFilterColumn('group', $event)"
+                    placeholder="ค้นหาด้วย วันที่ส่งถึงหน้างาน" />
+                  <button pButton pRipple type="button" icon="pi pi-times"
+                    class="p-button-rounded p-button-text p-button-plain" (click)="onClearFilter('group')"></button>
                 </div>
               </th>
               <th>
                 <div class="flex align-items-center gap-2">
-                  <input
-                    class="w-10"
-                    type="text"
-                    pInputText
-                    (keyup)="onFilterColumn('quantity', $event)"
-                    placeholder="ค้นหาด้วย วันที่ตรวจสอบ"
-                  />
-                  <button
-                    pButton
-                    pRipple
-                    type="button"
-                    icon="pi pi-times"
-                    class="p-button-rounded p-button-text p-button-plain"
-                    (click)="onClearFilter('quantity')"
-                  ></button>
+                  <input class="w-10" type="text" pInputText (keyup)="onFilterColumn('quantity', $event)"
+                    placeholder="ค้นหาด้วย วันที่ตรวจสอบ" />
+                  <button pButton pRipple type="button" icon="pi pi-times"
+                    class="p-button-rounded p-button-text p-button-plain" (click)="onClearFilter('quantity')"></button>
                 </div>
               </th>
               <th>
                 <div class="flex align-items-center gap-2">
-                  <input
-                    class="w-10"
-                    type="text"
-                    pInputText
-                    (keyup)="onFilterColumn('delivery', $event)"
-                    placeholder="ค้นหาด้วย ผู้สร้างเอกสาร"
-                  />
-                  <button
-                    pButton
-                    pRipple
-                    type="button"
-                    icon="pi pi-times"
-                    class="p-button-rounded p-button-text p-button-plain"
-                    (click)="onClearFilter('delivery')"
-                  ></button>
+                  <input class="w-10" type="text" pInputText (keyup)="onFilterColumn('delivery', $event)"
+                    placeholder="ค้นหาด้วย ผู้สร้างเอกสาร" />
+                  <button pButton pRipple type="button" icon="pi pi-times"
+                    class="p-button-rounded p-button-text p-button-plain" (click)="onClearFilter('delivery')"></button>
                 </div>
               </th>
               <th>
                 <div class="flex align-items-center gap-2">
-                  <input
-                    class="w-10"
-                    type="text"
-                    pInputText
-                    (keyup)="onFilterColumn('good', $event)"
-                    placeholder="ค้นหาด้วย สถานะ"
-                  />
-                  <button
-                    pButton
-                    pRipple
-                    type="button"
-                    icon="pi pi-times"
-                    class="p-button-rounded p-button-text p-button-plain"
-                    (click)="onClearFilter('good')"
-                  ></button>
+                  <input class="w-10" type="text" pInputText (keyup)="onFilterColumn('good', $event)"
+                    placeholder="ค้นหาด้วย สถานะ" />
+                  <button pButton pRipple type="button" icon="pi pi-times"
+                    class="p-button-rounded p-button-text p-button-plain" (click)="onClearFilter('good')"></button>
                 </div>
               </th>
 
@@ -269,17 +164,14 @@
                 {{ report.createBy }}
               </td>
               <td>
-                <p-button
-                  label="{{ report.stateName }}"
-                  styleClass="p-button-warning text-sm mr-2"
-                ></p-button>
+                <p-button label="{{ report.stateName }}" styleClass="p-button-warning text-sm mr-2"></p-button>
               </td>
               <td>
-                <div class="flex gap-1"  >
-                    <button pButton class="p-button-text" (click)="setReportManageMenu(report);menu.toggle($event)">
-                      <i class="pi pi-ellipsis-v"></i>
-                    </button>
-                    <p-menu #menu [model]="reportManageMenu" [popup]="true" appendTo="body"></p-menu>
+                <div class="flex gap-1">
+                  <button pButton class="p-button-text" (click)="setReportManageMenu(report);menu.toggle($event)">
+                    <i class="pi pi-ellipsis-v"></i>
+                  </button>
+                  <p-menu #menu [model]="reportManageMenu" [popup]="true" appendTo="body"></p-menu>
                 </div>
               </td>
             </tr>
@@ -296,21 +188,25 @@
           </ng-template>
         </p-table>
         <div class="d-flex justify-content-center">
-          <p-paginator
-            (onPageChange)="onPageChange($event, itemId)"
-            [first]="first"
-            [rows]="rows"
-            [totalRecords]="totalRecords"
-            [rowsPerPageOptions]="[5, 10, 50]"
-          ></p-paginator>
+          <p-paginator (onPageChange)="onPageChange($event, itemId)" [first]="first" [rows]="rows"
+            [totalRecords]="totalRecords" [rowsPerPageOptions]="[5, 10, 50]"></p-paginator>
         </div>
       </div>
-      <div class="d-flex justify-content-center">    
+      <div class="d-flex justify-content-center">
         <div class="col text-center">
-            <button class="btn btn-lg btn-primary  px-5 mx-3 p-button-outlined" pButton [routerLink]="['/contract',contractId]" >กลับสู่หน้าหลัก</button>
+          <button class="btn btn-lg btn-primary  px-5 mx-3 p-button-outlined" pButton
+            [routerLink]="['/contract',contractId]">กลับสู่หน้าหลัก</button>
         </div>
-        
-    </div>
+      </div>
     </div>
   </div>
 </div>
+<p-dialog [(visible)]="display" [modal]="true" [style]="{width: '80vw'}" [maximizable]="false" [draggable]="false"
+  [resizable]="false" (onHide)="onHide()">
+  <!-- <div id="outerContainer"> -->
+  <div class="pdf-container">
+    <pdf-viewer [src]="src" [rotation]="0" [original-size]="false" [show-all]="true"
+      style="width: 100%; height: 600px;"></pdf-viewer>
+  </div>
+  <!-- </div> -->
+</p-dialog>

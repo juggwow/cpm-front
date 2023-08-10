@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ListDocumentService } from 'src/app/services/rad-listofdoc';
 import { ConfirmationService, MenuItem, PrimeIcons, SortEvent } from 'primeng/api';
 import { HttpParams } from '@angular/common/http';
@@ -9,18 +9,16 @@ import { RippleModule } from 'primeng/ripple';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { BadgeModule } from 'primeng/badge';
 import { ContextMenuModule } from 'primeng/contextmenu';
-import { PdfViewerModule } from 'ng2-pdf-viewer';
+import { PdfViewerComponent, PdfViewerModule } from 'ng2-pdf-viewer';
 import { DialogModule } from 'primeng/dialog';
 import { SplitButtonModule } from 'primeng/splitbutton';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { Router } from '@angular/router';
 import { ReportItem, ReportProgress } from 'src/app/models/report.model';
 import { BoqService } from 'src/app/services/boq.service';
 import { ReportService } from 'src/app/services/report.service';
 import { PageEvent } from 'src/app/models/paginator.model';
 import { Item, ResponsePage } from 'src/app/models/response-page.model';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
-import { CardComponent } from 'src/app/components/card/card.component';
 import { CommonModule } from '@angular/common';
 import { MenuModule } from 'primeng/menu';
 import { PaginatorModule } from 'primeng/paginator';
@@ -50,7 +48,13 @@ import { ToastModule } from 'primeng/toast';
   templateUrl: './report.component.html',
   styleUrls: ['./report.component.scss']
 })
+
+
+
 export class ReportComponent implements OnInit {
+  
+  @ViewChild(PdfViewerComponent)
+  private pdfComponent!: PdfViewerComponent;
 
   is_preview: boolean = false;
 
@@ -89,12 +93,12 @@ export class ReportComponent implements OnInit {
   reportManageMenu: MenuItem[] = [];
 
   private user_keyup_timeout: any;
-  pdfSrc = "https://vadimdez.github.io/ng2-pdf-viewer/assets/pdf-test.pdf";
+  src: string = "";
+  display: boolean = false;
 
   constructor(
     private confirmationService: ConfirmationService,
     private ListDocumentService: ListDocumentService,
-    private router: Router,
     private boqService: BoqService,
     private route: ActivatedRoute,
     private report: ReportService
@@ -282,7 +286,7 @@ export class ReportComponent implements OnInit {
         label: 'Preview เอกสาร',
         icon: PrimeIcons.EYE,
         command: () => {
-          this.pdf(report.id)
+          this.reportPreview(report.id)
         }
       },
       {
@@ -305,7 +309,7 @@ export class ReportComponent implements OnInit {
         label: 'Preview เอกสาร',
         icon: PrimeIcons.EYE,
         command: () => {
-          this.pdf(report.id)
+          this.reportPreview(report.id)
         }
       }
     ];
@@ -319,12 +323,20 @@ export class ReportComponent implements OnInit {
     }
   }
 
-  pdf(id: number) {
-    this.report.getPdfReport(id).subscribe((response) => {
-      let file = new Blob([response], { type: 'application/pdf' });
-      var fileURL = URL.createObjectURL(file);
-      window.open(fileURL);
+  reportPreview(id:number) {
+    this.display = true;
+    this.report.getPdfReport<Blob>(id).subscribe((response) => {
+      // let file = new Blob([response], { type: 'application/pdf' });
+      // var fileURL = URL.createObjectURL(file);
+      this.src = URL.createObjectURL(response);
     })
+  }
+
+  onHide() {
+    // this.display = false;
+    // URL.revokeObjectURL(this.src);
+    this.pdfComponent.clear();
+    // console.log(this.pdfComponent.src);
   }
 
 

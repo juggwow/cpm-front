@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { MenuItem, PrimeIcons } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
@@ -9,7 +9,7 @@ import { ReportView, AttachFile } from 'src/app/models/form.model';
 import { FormService } from 'src/app/services/form.service';
 import { ReportService } from 'src/app/services/report.service';
 import { DialogModule } from 'primeng/dialog';
-import { PdfViewerModule } from 'ng2-pdf-viewer';
+import { PdfViewerComponent, PdfViewerModule } from 'ng2-pdf-viewer';
 
 @Component({
   selector: 'app-report-view',
@@ -29,6 +29,9 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
 })
 export class ReportViewComponent implements OnInit {
 
+  @ViewChild(PdfViewerComponent)
+  private pdfComponent!: PdfViewerComponent;
+  
   display: boolean = false;
 
   contractId!: number;
@@ -58,13 +61,21 @@ export class ReportViewComponent implements OnInit {
   file!: AttachFile[];
 
   src: string = "";
-  fileSrc: string = "";
 
   constructor(
     private route: ActivatedRoute,
     private form: FormService,
     private r: ReportService
-  ) { }
+  ) { }  
+
+  blob2Base64 = (blob: Blob): Promise<string> => {
+    return new Promise<string>((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(blob);
+      reader.onload = () => resolve(reader.result!.toString());
+      reader.onerror = error => reject(error);
+    })
+  }
 
   ngOnInit(): void {
     this.contractId = Number(this.route.snapshot.parent?.paramMap.get('id'));
@@ -79,7 +90,7 @@ export class ReportViewComponent implements OnInit {
     }
   }
 
-  ShowMenuManage(id: number) {
+  ShowMenuManage(id: number, filename: string) {
     this.manageMenu = [
       {
         label: 'Download เอกสาร',
@@ -87,7 +98,7 @@ export class ReportViewComponent implements OnInit {
         // url: `https://cpm-rad-api-ing-dev.pea.co.th/api/v1/download/${id}`
         // routerLink: ['/file',id]
         command: () => {
-          this.fileDownload(id)
+          this.fileDownload(id, filename)
           // console.log("report.id");
         }
       },
@@ -115,42 +126,41 @@ export class ReportViewComponent implements OnInit {
     return this.report.attachFiles;
   }
 
-  clickEvent() {
+  reportPreview() {
     this.display = true;
-    this.r.getPdfReport(this.reportId).subscribe((response) => {
-      let file = new Blob([response], { type: 'application/pdf' });
-      var fileURL = URL.createObjectURL(file);
-      this.src = fileURL;
-      // window.open(fileURL);
-      // URL.revokeObjectURL(fileURL);
+    this.r.getPdfReport<Blob>(this.reportId).subscribe((response) => {
+      // let file = new Blob([response], { type: 'application/pdf' });
+      // var fileURL = URL.createObjectURL(file);
+      this.src = URL.createObjectURL(response);
     })
   }
 
   filePreview(id: number) {
     this.display = true;
-    this.r.getFileAttach(id).subscribe((response) => {
-      let file = new Blob([response], { type: 'application/pdf' });
-      var fileURL = URL.createObjectURL(file);
-      this.src = fileURL;
-      // window.open(fileURL);
-      // URL.revokeObjectURL(fileURL);
+    this.r.getFileAttach<Blob>(id).subscribe((response) => {
+      this.src = URL.createObjectURL(response);
     })
   }
 
-  fileDownload(id: number) {
-    this.r.getFileAttach(id).subscribe((response) => {
-      let file = new Blob([response], { type: 'application/pdf' });
-      var fileURL = URL.createObjectURL(file);
-      window.open(fileURL);
-      // URL.revokeObjectURL(fileURL);
+  fileDownload(id: number, fileName: string) {
+    this.r.getFileAttach<Blob>(id).subscribe((response) => {
+      this.blob2Base64(response).then(res => this.downloadPDF(res, `${fileName}`))
     })
+  }
+
+  downloadPDF(pdfBase64: string, fileName: string) {
+    const linkSource = pdfBase64;
+    const downloadLink = document.createElement("a");
+
+    downloadLink.href = linkSource;
+    downloadLink.download = fileName;
+    downloadLink.click();
   }
 
   onHide() {
-    this.display = false;
-    URL.revokeObjectURL(this.src);
-    this.src = "";
-    console.log(this.src);
+    // this.display = false;
+    // URL.revokeObjectURL(this.src);
+    this.pdfComponent.clear();
   }
 
 }
