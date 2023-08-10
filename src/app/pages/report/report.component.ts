@@ -23,6 +23,7 @@ import { CommonModule } from '@angular/common';
 import { MenuModule } from 'primeng/menu';
 import { PaginatorModule } from 'primeng/paginator';
 import { ToastModule } from 'primeng/toast';
+import { take, tap } from 'rxjs';
 
 @Component({
   selector: 'app-report',
@@ -293,7 +294,7 @@ export class ReportComponent implements OnInit {
         label: 'ลบเอกสาร',
         icon: PrimeIcons.TRASH,
         command: () => {
-          console.log(report.id)
+          this.ReportDelete(report.id);
         }
       }
     ];
@@ -337,6 +338,33 @@ export class ReportComponent implements OnInit {
     // URL.revokeObjectURL(this.src);
     this.pdfComponent.clear();
     // console.log(this.pdfComponent.src);
+  }
+
+  ReportDelete(id: number) {
+    this.confirmationService.confirm({
+      message: '`คุณต้องการลบรายการนี้หรือไม่',
+      header: "เลือก ตกลง เพื่อลบ หรือ ย้อนกลับ เพื่อกลับไปหน้าเดิม",
+      acceptLabel: "ตกลง",
+      rejectLabel: "ย้อนกลับ",
+      accept: () => {
+        this.report.deleteReport(id).pipe(
+          take(1),
+          tap(() => {
+            console.log('..');
+            // this.show(status);        
+            // // this.appToastService.successToast();
+            // this.router.navigate(['/']);     
+          })
+        )
+          .subscribe({
+            error: () => console.log('error'),
+            complete: () => {
+              console.log('complete')
+              this.fetchData(this.itemId);
+            }
+          });
+      }
+    });
   }
 
 
