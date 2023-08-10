@@ -8,6 +8,7 @@ export class ReportService {
 
   readonly url = 'https://cpm-rad-api-ing-dev.pea.co.th/api/v1/listofdoc';
   readonly apiUrl = 'https://cpm-rad-api-ing-dev.pea.co.th/api/v1'
+  // readonly apiUrl = 'http://localhost:8000/api/v1'
 
   constructor(private http: HttpClient) { }
 
@@ -35,40 +36,52 @@ export class ReportService {
     return this.http.delete<T>(`${this.apiUrl}/form/${id}`, options);
   }
 
-  // getPdfReport<T>(id: number, params?: HttpParams): Observable<T> {
-  //   const options = { params: params };
-  //   return this.http.get<T>(`${this.apiUrl}/report/${id}/pdf`, options);
+  getPdfReport<T>(id: number): Observable<T> {
+    const options = { 
+      // 'responseType': 'arraybuffer' as 'json'
+      'responseType'  : 'blob' as 'json' 
+    };
+    return this.http.get<T>(`${this.apiUrl}/report/${id}/pdf`, options);
+  }
+
+  getFileAttach<T>(id: number): Observable<T> {
+    const options = { 
+      // 'responseType': 'arraybuffer' as 'json'
+      'responseType'  : 'blob' as 'json' 
+    };
+    return this.http.get<T>(`${this.apiUrl}/download/${id}`, options);
+  }
+
+  // getPdfReport(id: number) {
+  //   const httpOptions = {
+  //     // 'responseType': 'arraybuffer' as 'json'
+  //     'responseType'  : 'blob' as 'json'        //This also worked
+  //   };
+  //   return this.http.get<any>(`${this.apiUrl}/report/${id}/pdf`, httpOptions);
+  //   // return this.http.get<any>(`http://localhost:8000/api/v1/report/${id}/pdf`, httpOptions);
+
   // }
-  getPdfReport(id: number) {
-    const httpOptions = {
-      'responseType': 'arraybuffer' as 'json'
-      //'responseType'  : 'blob' as 'json'        //This also worked
-    };
-    return this.http.get<any>(`${this.apiUrl}/report/${id}/pdf`, httpOptions);
-    // return this.http.get<any>(`http://localhost:8000/api/v1/report/${id}/pdf`, httpOptions);
+  // getFileAttach(id: number) {
+  //   const httpOptions = {
+  //     // 'responseType': 'arraybuffer' as 'json'
+  //     'responseType'  : 'blob' as 'json'        //This also worked
+  //   };
+  //   return this.http.get<any>(`${this.apiUrl}/download/${id}`, httpOptions);
+  //   // return this.http.get<any>(`http://localhost:8000/api/v1/download/${id}`, httpOptions);
 
-  }
-  getFileAttach(id: number) {
-    const httpOptions = {
-      // 'responseType': 'arraybuffer' as 'json'
-      'responseType'  : 'blob' as 'json'        //This also worked
-    };
-    return this.http.get<any>(`${this.apiUrl}/download/${id}`, httpOptions);
-    // return this.http.get<any>(`http://localhost:8000/api/v1/download/${id}`, httpOptions);
+  // }
 
-  }
+  // getFileAttachDownload(id: number) {
+  //   const httpOptions = {
+  //     // 'observe' : 'response',
+  //     // 'responseType': 'arraybuffer' as 'json'
+  //     'responseType'  : 'blob' as 'json',        //This also worked
+  //     // 'headers' : {"Content-Disposition" : `attachment; filename="123.pdf"`}
+  //   };
+  //   return this.http.get<any>(`${this.apiUrl}/download/${id}`, httpOptions);
+  //   // return this.http.get<any>(`http://localhost:8000/api/v1/download/${id}`, httpOptions);
 
-  getFileAttachDownload(id: number) {
-    const httpOptions = {
-      // 'observe' : 'response',
-      // 'responseType': 'arraybuffer' as 'json'
-      'responseType'  : 'blob' as 'json',        //This also worked
-      // 'headers' : {"Content-Disposition" : `attachment; filename="123.pdf"`}
-    };
-    return this.http.get<any>(`${this.apiUrl}/download/${id}`, httpOptions);
-    // return this.http.get<any>(`http://localhost:8000/api/v1/download/${id}`, httpOptions);
-
-  }
+  // }
 
   //   get<T>(path: string): Observable<T> {
   //     let httpParams = new HttpParams();
