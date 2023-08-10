@@ -65,7 +65,7 @@ export class ReportComponent implements OnInit {
     id: 0,
     name: '',
     contractQTY: '',
-    deliveredQTY: '',
+    receiveQTY: '',
     quantity: 0,
     unit: ''
   };
