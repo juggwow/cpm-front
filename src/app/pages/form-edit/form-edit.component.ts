@@ -86,18 +86,21 @@ export class FormEditComponent implements OnInit {
     this.contractId = Number(this.route.snapshot.parent?.paramMap.get('id'));
     this.itemId = Number(this.route.snapshot.paramMap.get('itemID'));
     this.reportId = Number(this.route.snapshot.paramMap.get('reportID'));
-    this.getDocType();
-    this.getCountries();
+    // this.getDocType();
+    // this.getCountries();
     if (this.reportId) {
       this.form.reportView<ReportView>(this.reportId)
         .subscribe((res) => {
           this.report = { ...this.report, ...res };
           this.fg.patchValue(this.report);
-          this.countries?.map((o) => {
-            if (o.code == this.report.country) {
-              this.fg.patchValue({ country: o });
-            }
-          });
+          this.getDocType();
+          this.getCountries();
+          // this.countries?.map((o) => {
+          //   if (o.code == this.report.country) {
+          //     this.fg.patchValue({ country: o });
+          //     console.log(this.fg.get(`country`)?.value)
+          //   }
+          // });
 
           this.boqService.getProjectDetail(this.contractId)
             .subscribe((res) => {
@@ -113,8 +116,8 @@ export class FormEditComponent implements OnInit {
         });
     }
 
-    this.getDocType();
-    this.getCountries();
+    // this.getDocType();
+    // this.getCountries();
 
 
     this.fg = this.fb.group({
@@ -148,6 +151,13 @@ export class FormEditComponent implements OnInit {
     this.form.getCountryList<Country[]>()
       .subscribe((res) => {
         this.countries = res;
+        console.log(`country=>>${this.report.country}`)
+        this.countries?.map((o) => {
+          if (o.code == this.report.country) {
+            this.fg.patchValue({ country: o });
+            console.log(this.fg.get(`country`)?.value)
+          }
+        });
       });
   }
 
@@ -272,9 +282,7 @@ export class FormEditComponent implements OnInit {
     )
       .subscribe({
         error: () => {
-          console.log('error');
-          this.show(status);
-          // this.messageService.add({ severity: 'error', summary: 'Error', detail: 'บันทึกไม่สำเร็จ' });
+          this.messageService.add({ severity: 'error', summary: 'Error', detail: 'บันทึกไม่สำเร็จ' });
         },
         complete: () => {
           this.show(status);

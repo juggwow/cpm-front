@@ -48,7 +48,7 @@ export class FormService {
   }
 
   editReport<T>(formData: FormData, id: number): Observable<T> {
-    return this.http.put<T>(`${this.apiUrl}/report2/${id}`, formData);
+    return this.http.put<T>(`${this.apiUrl}/report/${id}`, formData);
   }
 
 }
