@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  apiUrl : 'http://127.0.0.1',
-  authApiUrl: 'http://127.0.0.1',
+  apiUrl : 'http://127.0.0.1:8000/api',
+  authApiUrl: 'http://127.0.0.1:8000/auth',
 };
 
 /*
