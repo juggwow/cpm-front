@@ -14,6 +14,7 @@ import { LoginCallbackService } from './services/login-callback.service';
                     children: [
                         {
                             path: '',
+                            canActivate: [LoginCallbackService],
                             loadComponent: () =>
                                 import(
                                     './pages/boq-item/boq-item.component'

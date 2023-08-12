@@ -8,7 +8,8 @@ import { CardDetail, Boq, Project } from '../models/boq.model';
 @Injectable()
 export class BoqService {
 
-    readonly url = 'https://cpm-rad-api-ing-dev.pea.co.th/api/v1';
+    // readonly url = 'https://cpm-rad-api-ing-dev.pea.co.th/api/v1';
+    readonly url = 'http://localhost:8000/api/v1';
 
     constructor(private http: HttpClient) { }
 
