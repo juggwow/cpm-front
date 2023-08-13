@@ -12,29 +12,26 @@ export class FormService {
   // readonly apiUrl = 'https://cpm-rad-api-ing-dev.pea.co.th/api/v1'
 
   addNewForm(form: Form) {
-    return this.http.post<Form>(
-      `https://cpm-rad-api-ing-dev.pea.co.th/api/v1/form`, form
-
-    );
+    return this.http.post<Form>(`${environment.apiUrl}/form`, form);
   }
 
   reportView<T>(id: number): Observable<T> {
     return this.http.get<T>(`${environment.apiUrl}/report/${id}`)
   }
 
-  upload(field: String, itemid: String, files: any) {
-    const formData = new FormData();
-    console.log("file", files)
-    formData.append("upload", files[0]);
+  // upload(field: String, itemid: String, files: any) {
+  //   const formData = new FormData();
+  //   console.log("file", files)
+  //   formData.append("upload", files[0]);
 
-    const headers = new HttpHeaders().set('Access-Control-Allow-Origin', '*');
+  //   const headers = new HttpHeaders().set('Access-Control-Allow-Origin', '*');
 
 
-    return this.http.post<Upload>(
-      `https://cpm-rad-api-ing-dev.pea.co.th/api/v1/upload/${field}/${itemid}`, formData, { 'headers': headers }
+  //   return this.http.post<Upload>(
+  //     `${environment.apiUrl}/upload/${field}/${itemid}`, formData, { 'headers': headers }
 
-    );
-  }
+  //   );
+  // }
 
   getListOfDocTypes<T>(): Observable<T> {
     return this.http.get<T>(`${environment.apiUrl}/doctype`)
