@@ -10,11 +10,11 @@ import { LoginCallbackService } from './services/login-callback.service';
             [
                 {
                     path: 'contract/:id',
+                    canActivate: [LoginCallbackService],
                     component: AppLayoutComponent,
                     children: [
                         {
                             path: '',
-                            canActivate: [LoginCallbackService],
                             loadComponent: () =>
                                 import(
                                     './pages/boq-item/boq-item.component'
@@ -80,6 +80,7 @@ import { LoginCallbackService } from './services/login-callback.service';
                 },
                 {
                     path: 'file/:id',
+                    canActivate: [LoginCallbackService],
                     loadComponent: () =>
                         import(
                             './pages/report-pdf/report-pdf.component'
