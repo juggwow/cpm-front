@@ -83,7 +83,7 @@ export class FormComponent implements OnInit {
 
       });
 
-    this.getDocType()
+    // this.getDocType()
     this.getCountries()
     this.fg = this.fb.group({
       // itemID: [''],
