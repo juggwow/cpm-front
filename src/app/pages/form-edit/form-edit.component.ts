@@ -176,7 +176,7 @@ export class FormEditComponent implements OnInit {
 
   selectType(event: any, index: number) {
     this.filesAttachType[index] = event.value.id
-    console.log(this.filesAttachType.toString());
+    // console.log(this.filesAttachType.toString());
   }
 
   onBack() {

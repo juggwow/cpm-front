@@ -129,8 +129,8 @@ export class FormComponent implements OnInit {
   }
 
   selectType(event: any, index: number) {
-    // this.filesAttachType[index] = event.value.id
-    console.log(this.filesAttachType.toString());
+    this.filesAttachType[index] = event.value.id
+    // console.log(this.filesAttachType.toString());
   }
 
   onBack() {
