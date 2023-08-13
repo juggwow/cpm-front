@@ -57,7 +57,8 @@
                                         <input type="text" pInputText class="form-control" placeholder="เลขที่ใบส่ง"
                                             formControlName="invoice">
                                     </div>
-
+                                    <p-dropdown [options]="cities" placeholder="Select a City" optionLabel="name"
+                                    [showClear]="true"></p-dropdown>
                                     <div class="col-md-12">
 
                                         <p class="fw-bold">เอกสารแนบ (Packing List, ใบออกของ, ใบ Shipping, Factory Test
@@ -84,8 +85,7 @@
                                                     <p> ขนาดไฟล์ {{ f.size }} KB </p>
                                                 </div>
                                                 <div class="col-3">
-                                                    <p-dropdown [options]="doctype" optionLabel="name"
-                                                        class="w-100" placeholder="เลือกประเภทเอกสาร" ></p-dropdown>
+                                                    
                                                 </div>
                                                 <div class="col-1 py-3">
                                                     <p-button icon="pi pi-trash" styleClass="p-button-rounded p-button-text" (click)="onRemoveFileUpload(f,i)"></p-button>

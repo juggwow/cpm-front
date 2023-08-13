@@ -21,6 +21,11 @@ import { ReportService } from 'src/app/services/report.service';
 import { FormService } from 'src/app/services/form.service';
 import { ToastModule } from 'primeng/toast';
 
+interface City {
+  name: string,
+  code: string
+}
+
 @Component({
   providers: [FormService, ConfirmationService, BoqService, ReportService, MessageService],
   imports: [ToastModule, BreadcrumbModule, DropdownModule, CommonModule, InputTextModule, ButtonModule, ConfirmDialogModule, RouterModule, NgxDropzoneModule, FormsModule, ReactiveFormsModule, AutoCompleteModule],
@@ -50,6 +55,8 @@ export class FormComponent implements OnInit {
   filesAttach!: Number[];
   filesAttachType: Number[] = [];
 
+  cities!: City[];
+
   constructor(
     private FormService: FormService,
     private confirmationService: ConfirmationService,
@@ -59,7 +66,17 @@ export class FormComponent implements OnInit {
     private form: FormService,
     public fb: FormBuilder,
     private messageService: MessageService
-  ) { }
+    
+
+  ) {
+    this.cities = [
+    {name: 'New York', code: 'NY'},
+    {name: 'Rome', code: 'RM'},
+    {name: 'London', code: 'LDN'},
+    {name: 'Istanbul', code: 'IST'},
+    {name: 'Paris', code: 'PRS'},
+  ];
+  }
 
   ngOnInit(): void {
     this.contractId = Number(this.route.snapshot.parent?.paramMap.get('id'));
