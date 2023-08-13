@@ -1,14 +1,11 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { DocType } from '../models/doc.model';
 
 @Injectable()
 export class ReportService {
-
-  readonly url = 'https://cpm-rad-api-ing-dev.pea.co.th/api/v1/listofdoc';
-  readonly apiUrl = 'https://cpm-rad-api-ing-dev.pea.co.th/api/v1'
-  // readonly apiUrl = 'http://localhost:8000/api/v1'
 
   constructor(private http: HttpClient) { }
 
@@ -18,22 +15,22 @@ export class ReportService {
 
   getProgressByContractId<T>(id: number, params?: HttpParams): Observable<T> {
     const options = { params: params };
-    return this.http.get<T>(`${this.url}/progress/contract/${id}`, options);
+    return this.http.get<T>(`${environment.apiUrl}/listofdoc/progress/contract/${id}`, options);
   }
 
   getApproveByContractId<T>(id: number, params?: HttpParams): Observable<T> {
     const options = { params: params };
-    return this.http.get<T>(`${this.url}/check/contract/${id}`, options);
+    return this.http.get<T>(`${environment.apiUrl}/listofdoc/check/contract/${id}`, options);
   }
 
   getReportByItem<T>(id: number, params?: HttpParams): Observable<T> {
     const options = { params: params };
-    return this.http.get<T>(`${this.url}/${id}`, options);
+    return this.http.get<T>(`${environment.apiUrl}/listofdoc/${id}`, options);
   }
 
   deleteReport<T>(id: number, params?: HttpParams): Observable<T> {
     const options = { params: params };
-    return this.http.delete<T>(`${this.apiUrl}/form/${id}`, options);
+    return this.http.delete<T>(`${environment.apiUrl}/form/${id}`, options);
   }
 
   getPdfReport<T>(id: number): Observable<T> {
@@ -41,7 +38,7 @@ export class ReportService {
       // 'responseType': 'arraybuffer' as 'json'
       'responseType'  : 'blob' as 'json' 
     };
-    return this.http.get<T>(`${this.apiUrl}/report/${id}/pdf`, options);
+    return this.http.get<T>(`${environment.apiUrl}/report/${id}/pdf`, options);
   }
 
   getFileAttach<T>(id: number): Observable<T> {
@@ -49,7 +46,7 @@ export class ReportService {
       // 'responseType': 'arraybuffer' as 'json'
       'responseType'  : 'blob' as 'json' 
     };
-    return this.http.get<T>(`${this.apiUrl}/download/${id}`, options);
+    return this.http.get<T>(`${environment.apiUrl}/download/${id}`, options);
   }
 
   // getPdfReport(id: number) {
@@ -58,7 +55,7 @@ export class ReportService {
   //     'responseType'  : 'blob' as 'json'        //This also worked
   //   };
   //   return this.http.get<any>(`${this.apiUrl}/report/${id}/pdf`, httpOptions);
-  //   // return this.http.get<any>(`http://localhost:8000/api/v1/report/${id}/pdf`, httpOptions);
+  //   // return this.http.get<any>(`${environment.apiUrl}/report/${id}/pdf`, httpOptions);
 
   // }
   // getFileAttach(id: number) {
@@ -67,7 +64,7 @@ export class ReportService {
   //     'responseType'  : 'blob' as 'json'        //This also worked
   //   };
   //   return this.http.get<any>(`${this.apiUrl}/download/${id}`, httpOptions);
-  //   // return this.http.get<any>(`http://localhost:8000/api/v1/download/${id}`, httpOptions);
+  //   // return this.http.get<any>(`${environment.apiUrl}/download/${id}`, httpOptions);
 
   // }
 
@@ -79,7 +76,7 @@ export class ReportService {
   //     // 'headers' : {"Content-Disposition" : `attachment; filename="123.pdf"`}
   //   };
   //   return this.http.get<any>(`${this.apiUrl}/download/${id}`, httpOptions);
-  //   // return this.http.get<any>(`http://localhost:8000/api/v1/download/${id}`, httpOptions);
+  //   // return this.http.get<any>(`${environment.apiUrl}/download/${id}`, httpOptions);
 
   // }
 
