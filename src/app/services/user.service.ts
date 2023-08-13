@@ -21,6 +21,7 @@ export class UserService {
     // }
 
     getUserInfo$(): Observable<Employee> {
+        console.log(`${environment.apiUrl}/employees/me`)
         return this.http.get<Employee>(`${environment.apiUrl}/employees/me`);
     }
 

@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { Form } from '../models/form.model';
 import { Upload } from '../models/upload.model'
 
@@ -8,7 +9,7 @@ import { Upload } from '../models/upload.model'
 export class FormService {
   constructor(private http: HttpClient) { }
 
-  readonly apiUrl = 'https://cpm-rad-api-ing-dev.pea.co.th/api/v1'
+  // readonly apiUrl = 'https://cpm-rad-api-ing-dev.pea.co.th/api/v1'
 
   addNewForm(form: Form) {
     return this.http.post<Form>(
@@ -18,7 +19,7 @@ export class FormService {
   }
 
   reportView<T>(id: number): Observable<T> {
-    return this.http.get<T>(`${this.apiUrl}/report/${id}`)
+    return this.http.get<T>(`${environment.apiUrl}/report/${id}`)
   }
 
   upload(field: String, itemid: String, files: any) {
@@ -36,19 +37,19 @@ export class FormService {
   }
 
   getListOfDocTypes<T>(): Observable<T> {
-    return this.http.get<T>(`${this.apiUrl}/doctype`)
+    return this.http.get<T>(`${environment.apiUrl}/doctype`)
   }
 
   getCountryList<T>(): Observable<T> {
-    return this.http.get<T>(`${this.apiUrl}/country`);
+    return this.http.get<T>(`${environment.apiUrl}/country`);
   }
 
   addNewReport<T>(formData: FormData): Observable<T> {
-    return this.http.post<T>(`${this.apiUrl}/report`, formData);
+    return this.http.post<T>(`${environment.apiUrl}/report`, formData);
   }
 
   editReport<T>(formData: FormData, id: number): Observable<T> {
-    return this.http.put<T>(`${this.apiUrl}/report/${id}`, formData);
+    return this.http.put<T>(`${environment.apiUrl}/report/${id}`, formData);
   }
 
 }
