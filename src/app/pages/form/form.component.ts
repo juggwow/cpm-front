@@ -5,7 +5,7 @@ import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
 import { RouterModule, ActivatedRoute, Router } from '@angular/router';
-import { FormGroup, FormsModule, ReactiveFormsModule, FormBuilder } from '@angular/forms';
+import { FormGroup, FormsModule, ReactiveFormsModule, FormBuilder, FormControl } from '@angular/forms';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { tap, take, } from 'rxjs/operators';
 import { AutoCompleteModule } from 'primeng/autocomplete';
@@ -66,17 +66,9 @@ export class FormComponent implements OnInit {
     private form: FormService,
     public fb: FormBuilder,
     private messageService: MessageService
-    
 
-  ) {
-    this.cities = [
-    {name: 'New York', code: 'NY'},
-    {name: 'Rome', code: 'RM'},
-    {name: 'London', code: 'LDN'},
-    {name: 'Istanbul', code: 'IST'},
-    {name: 'Paris', code: 'PRS'},
-  ];
-  }
+
+  ) { }
 
   ngOnInit(): void {
     this.contractId = Number(this.route.snapshot.parent?.paramMap.get('id'));
@@ -99,7 +91,13 @@ export class FormComponent implements OnInit {
           });
 
       });
-
+    this.cities = [
+      { name: 'New York', code: 'NY' },
+      { name: 'Rome', code: 'RM' },
+      { name: 'London', code: 'LDN' },
+      { name: 'Istanbul', code: 'IST' },
+      { name: 'Paris', code: 'PRS' }
+    ];
     // this.getDocType()
     this.getCountries()
     this.fg = this.fb.group({
@@ -114,10 +112,11 @@ export class FormComponent implements OnInit {
       model: [''],
       serial: [''],
       peano: [''],
-      createby: ['']
+      createby: [''],
       // status: ['']
       // filesAttach: new FormControl([] as Upload[])
       // docType: new FormControl([] as Upload[])
+      selectedCity: new FormControl<City | null>(null)
     })
   }
 
