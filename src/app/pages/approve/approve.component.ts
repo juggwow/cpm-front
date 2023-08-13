@@ -65,6 +65,8 @@ export class ApproveComponent implements OnInit {
 
   private user_keyup_timeout: any;
 
+  selectedReports!: ReportApprove[] | null;
+
   constructor(
     private boqService: BoqService,
     private route: ActivatedRoute,
@@ -160,6 +162,19 @@ export class ApproveComponent implements OnInit {
   onClearFilter(key: string) {
     console.log("clear", key)
   }
+
+  printSelectedReports() {
+    // this.confirmationService.confirm({
+    //     message: 'Are you sure you want to delete the selected products?',
+    //     header: 'Confirm',
+    //     icon: 'pi pi-exclamation-triangle',
+    //     accept: () => {
+    //         this.products = this.products.filter((val) => !this.selectedProducts?.includes(val));
+            this.selectedReports = null;
+    //         this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Products Deleted', life: 3000 });
+    //     }
+    // });
+}
 
 
 }

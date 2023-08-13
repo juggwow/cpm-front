@@ -20,6 +20,8 @@ import { AppLayoutComponent } from './app.layout.component';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { AppToastService } from '../services/app-toast.service';
+import {AvatarModule} from 'primeng/avatar';
+import {AvatarGroupModule} from 'primeng/avatargroup';
 
 @NgModule({
     declarations: [
@@ -44,6 +46,8 @@ import { AppToastService } from '../services/app-toast.service';
         RouterModule,
         AppConfigModule,
         ToastModule,
+        AvatarModule,
+        AvatarGroupModule
     ],
     exports: [AppLayoutComponent],
     providers: [MessageService, AppToastService],
