@@ -71,8 +71,8 @@
                                             </ngx-dropzone-label>
                                         </ngx-dropzone>
 
-                                        <ngx-dropzone-preview *ngFor="let f of files;  index as i" [removable]="true"
-                                            (removed)="onRemoveFileUpload(f,i)" class="mw-100 mx-0  justify-content-start d-block" style="min-height:auto;">
+                                        <ngx-dropzone-preview *ngFor="let f of files;  index as i" 
+                                            class="mw-100 mx-0  justify-content-start d-block" style="min-height:auto;">
                                             <ngx-dropzone-label class="row pt-3">
 
                                                 <div class="col-2">
@@ -85,7 +85,7 @@
                                                 </div>
                                                 <div class="col-3">
                                                     <p-dropdown [options]="doctype" optionLabel="name"
-                                                        class="w-100" placeholder="เลือกประเภทเอกสาร" (onChange)="selectType($event,i)"></p-dropdown>
+                                                        class="w-100" placeholder="เลือกประเภทเอกสาร" ></p-dropdown>
                                                 </div>
                                                 <div class="col-1 py-3">
                                                     <p-button icon="pi pi-trash" styleClass="p-button-rounded p-button-text" (click)="onRemoveFileUpload(f,i)"></p-button>
