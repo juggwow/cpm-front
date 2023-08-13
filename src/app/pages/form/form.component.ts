@@ -3,7 +3,6 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
-import { DropdownModule } from 'primeng/dropdown';
 import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
 import { RouterModule, ActivatedRoute, Router } from '@angular/router';
 import { FormGroup, FormsModule, ReactiveFormsModule, FormBuilder } from '@angular/forms';
@@ -20,6 +19,7 @@ import { Item } from 'src/app/models/response-page.model';
 import { ReportService } from 'src/app/services/report.service';
 import { FormService } from 'src/app/services/form.service';
 import { ToastModule } from 'primeng/toast';
+import { DropdownModule } from 'primeng/dropdown';
 
 interface City {
   name: string,
