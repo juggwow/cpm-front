@@ -68,18 +68,21 @@ export class FormComponent implements OnInit {
       .subscribe((res) => {
         this.itemDetial = { ...this.itemDetial, ...res };
         this.fg.patchValue({ quantity: `${this.itemDetial.quantity}` });
+
+        this.boqService.getProjectDetail(this.contractId)
+          .subscribe((res) => {
+            this.projectName = res.name;
+            this.items = [
+              { label: 'บริหารจัดการสัญญา' },
+              { label: 'บริหารสัญญา' },
+              { label: this.projectName },
+              { label: 'Receive and Damage' },
+              { label: `${this.itemDetial.name.slice(0, 25)}...` }
+            ];
+          });
+
       });
-    this.boqService.getProjectDetail(this.contractId)
-      .subscribe((res) => {
-        this.projectName = res.name;
-        this.items = [
-          { label: 'บริหารจัดการสัญญา' },
-          { label: 'บริหารสัญญา' },
-          { label: this.projectName },
-          { label: 'Receive and Damage' },
-          { label: `${this.itemDetial.name.slice(0, 25)}...` }
-        ];
-      });
+
     this.getDocType()
     this.getCountries()
     this.fg = this.fb.group({
