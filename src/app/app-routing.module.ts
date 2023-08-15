@@ -75,6 +75,13 @@ import { LoginCallbackService } from './services/login-callback.service';
                                 import(
                                     './pages/report-view/report-view.component'
                                 ).then((m) => m.ReportViewComponent),
+                        },
+                        {
+                            path: 'dd',
+                            loadComponent: () =>
+                                import(
+                                    './pages/test-dropdown/test-dropdown.component'
+                                ).then((m) => m.TestDropdownComponent),
                         }
                     ],
                 },
