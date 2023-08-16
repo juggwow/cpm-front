@@ -145,7 +145,7 @@ export class BoqItemComponent implements OnInit {
     console.log("clear", key)
   }
 
-  onPageChange(event: PageEvent, id: number | null = null) {
+  onPageChange(event: any, id: number | null = null) {
     this.loading = true;
     // this.contractId = Number(this.route.snapshot.paramMap.get('id'));
     this.first = event.first;

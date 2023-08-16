@@ -1,4 +1,3 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
 import { ListDocumentService } from 'src/app/services/rad-listofdoc';
 import { ConfirmationService, MenuItem, PrimeIcons, SortEvent } from 'primeng/api';
 import { HttpParams } from '@angular/common/http';
@@ -6,10 +5,8 @@ import { TableModule, } from 'primeng/table';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { RippleModule } from 'primeng/ripple';
-import { ActivatedRoute, RouterModule } from '@angular/router';
 import { BadgeModule } from 'primeng/badge';
 import { ContextMenuModule } from 'primeng/contextmenu';
-import { PdfViewerComponent, PdfViewerModule } from 'ng2-pdf-viewer';
 import { DialogModule } from 'primeng/dialog';
 import { SplitButtonModule } from 'primeng/splitbutton';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
@@ -24,6 +21,9 @@ import { MenuModule } from 'primeng/menu';
 import { PaginatorModule } from 'primeng/paginator';
 import { ToastModule } from 'primeng/toast';
 import { take, tap } from 'rxjs';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { RouterModule, ActivatedRoute } from '@angular/router';
+import { PdfViewerModule, PdfViewerComponent } from 'ng2-pdf-viewer';
 
 @Component({
   selector: 'app-report',
@@ -69,7 +69,7 @@ export class ReportComponent implements OnInit {
     quantity: 0,
     unit: ''
   };
-  items: MenuItem[] = [];
+  items: MenuItem[] | undefined;
   projectName: string = "...";
 
   allAmount: number = 0;
@@ -204,7 +204,7 @@ export class ReportComponent implements OnInit {
     return params;
   }
 
-  onPageChange(event: PageEvent, id: number) {
+  onPageChange(event: any, id: number) {
     this.loading = true;
     this.first = event.first;
     this.rows = event.rows;

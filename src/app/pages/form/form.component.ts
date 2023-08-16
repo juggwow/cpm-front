@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
@@ -27,11 +27,14 @@ interface City {
 
 @Component({
   providers: [FormService, ConfirmationService, BoqService, ReportService, MessageService],
-  imports: [ToastModule, BreadcrumbModule, DropdownModule, CommonModule, InputTextModule, ButtonModule, ConfirmDialogModule, RouterModule, NgxDropzoneModule, FormsModule, ReactiveFormsModule, AutoCompleteModule],
+  imports: [ToastModule, BreadcrumbModule, DropdownModule, CommonModule, InputTextModule, 
+    ButtonModule, ConfirmDialogModule, RouterModule, NgxDropzoneModule, FormsModule, 
+    AutoCompleteModule,ReactiveFormsModule],
   selector: 'app-form',
   standalone: true,
   templateUrl: './form.component.html',
-  styleUrls: ['./form.component.scss']
+  styleUrls: ['./form.component.scss'],
+  schemas: [ CUSTOM_ELEMENTS_SCHEMA ,NO_ERRORS_SCHEMA],
 })
 
 export class FormComponent implements OnInit {

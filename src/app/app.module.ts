@@ -1,16 +1,12 @@
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { NgModule ,CUSTOM_ELEMENTS_SCHEMA,NO_ERRORS_SCHEMA} from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import {
-    LocationStrategy,
-    Location,
-    PathLocationStrategy,
-} from '@angular/common';
-import { AppComponent } from './app.component';
-import { AppRoutingModule } from './app-routing.module';
-import { AppLayoutModule } from './layout/app.layout.module';
-import { NotfoundComponent } from './components/notfound/notfound.component';
-import { AuthInterceptorService } from './services/auth-interceptor.service';
+import { LocationStrategy, PathLocationStrategy } from "@angular/common";
+import { HTTP_INTERCEPTORS } from "@angular/common/http";
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule, NO_ERRORS_SCHEMA } from "@angular/core";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { AppRoutingModule } from "./app-routing.module";
+import { AppComponent } from "./app.component";
+import { NotfoundComponent } from "./components/notfound/notfound.component";
+import { AppLayoutModule } from "./layout/app.layout.module";
+import { AuthInterceptorService } from "./services/auth-interceptor.service";
 
 @NgModule({
     imports: [

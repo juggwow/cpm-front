@@ -143,7 +143,7 @@ export class ProgressComponent implements OnInit {
     this.fetchData(id, this.setParams());
   }
 
-  onPageChange(event: PageEvent, id: number) {
+  onPageChange(event: any, id: number) {
     this.loading = true;
     this.first = event.first;
     this.rows = event.rows;
