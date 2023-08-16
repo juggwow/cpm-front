@@ -57,11 +57,6 @@
                                         <input type="text" pInputText class="form-control" placeholder="เลขที่ใบส่ง"
                                             formControlName="invoice">
                                     </div>
-                                    <div class="card flex justify-content-center">
-                                        <p-dropdown formControlName="city" [options]="cities"
-                                            optionLabel="name"></p-dropdown>
-                                    </div>
-
                                     <p class="fw-bold">เอกสารแนบ (Packing List, ใบออกของ, ใบ Shipping, Factory Test
                                         report)</p>
                                     <ngx-dropzone (change)="onSelectFileUpload($event)">
@@ -86,7 +81,8 @@
                                                 <p> ขนาดไฟล์ {{ f.size }} KB </p>
                                             </div>
                                             <div class="col-3">
-
+                                                <p-dropdown [options]="doctype" optionLabel="name"
+                                                    class="w-100" placeholder="เลือกประเภทเอกสาร" (onChange)="selectType($event,i)"></p-dropdown>
                                             </div>
                                             <div class="col-1 py-3">
                                                 <p-button icon="pi pi-trash" styleClass="p-button-rounded p-button-text"

@@ -1,5 +1,5 @@
 import { HttpParams } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { MenuItem, SortEvent } from 'primeng/api';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
@@ -28,7 +28,8 @@ import { BoqService } from 'src/app/services/boq.service';
   selector: 'app-boq-item',
   standalone: true,
   templateUrl: './boq-item.component.html',
-  styleUrls: ['./boq-item.component.scss']
+  styleUrls: ['./boq-item.component.scss'],
+  schemas: [ CUSTOM_ELEMENTS_SCHEMA ,NO_ERRORS_SCHEMA],
 })
 export class BoqItemComponent implements OnInit {
 

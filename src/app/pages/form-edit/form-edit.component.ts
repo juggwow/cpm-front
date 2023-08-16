@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA, OnInit } from '@angular/core';
 import { Form, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { NgxDropzoneChangeEvent, NgxDropzoneModule } from 'ngx-dropzone';
@@ -28,7 +28,8 @@ import { ReportService } from 'src/app/services/report.service';
   selector: 'app-form-edit',
   standalone: true,
   templateUrl: './form-edit.component.html',
-  styleUrls: ['./form-edit.component.scss']
+  styleUrls: ['./form-edit.component.scss'],
+  schemas: [ CUSTOM_ELEMENTS_SCHEMA ,NO_ERRORS_SCHEMA],
 })
 export class FormEditComponent implements OnInit {
   public fg!: FormGroup;

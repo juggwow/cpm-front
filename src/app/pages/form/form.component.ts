@@ -20,11 +20,6 @@ import { FormService } from 'src/app/services/form.service';
 import { ToastModule } from 'primeng/toast';
 import { DropdownModule } from 'primeng/dropdown';
 
-interface City {
-  name: string,
-  code: string
-}
-
 @Component({
   providers: [FormService, ConfirmationService, BoqService, ReportService, MessageService],
   imports: [ToastModule, BreadcrumbModule, DropdownModule, CommonModule, InputTextModule, 
@@ -56,8 +51,6 @@ export class FormComponent implements OnInit {
   // selectedDocType!: DocType;
   filesAttach!: Number[];
   filesAttachType: Number[] = [];
-
-  cities!: City[];
 
   constructor(
     private FormService: FormService,
@@ -93,14 +86,8 @@ export class FormComponent implements OnInit {
           });
 
       });
-    this.cities = [
-      { name: 'New York', code: 'NY' },
-      { name: 'Rome', code: 'RM' },
-      { name: 'London', code: 'LDN' },
-      { name: 'Istanbul', code: 'IST' },
-      { name: 'Paris', code: 'PRS' }
-    ];
-    // this.getDocType()
+
+    this.getDocType()
     this.getCountries()
     this.fg = this.fb.group({
       // itemID: [''],
@@ -118,7 +105,7 @@ export class FormComponent implements OnInit {
       // status: ['']
       // filesAttach: new FormControl([] as Upload[])
       // docType: new FormControl([] as Upload[])
-      selectedCity: new FormControl<City | null>(null)
+      // selectedCity: new FormControl<City | null>(null)
     })
   }
 
