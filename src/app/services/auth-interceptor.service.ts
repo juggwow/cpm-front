@@ -18,6 +18,9 @@ export class AuthInterceptorService implements HttpInterceptor {
         next: HttpHandler
     ): Observable<HttpEvent<any>> {
         const token = SessionUtils.getToken();
+        if (!token){
+            window.location.href = `${environment.authApiUrl}?page=${window.location}`;
+        }
 
         const modifiedReq = req.clone({
             headers: new HttpHeaders({
@@ -32,9 +35,9 @@ export class AuthInterceptorService implements HttpInterceptor {
                     x.error.message === 'missing or malformed jwt'
                 ) {
                     SessionUtils.clearSession();
-                    window.location.href = environment.authApiUrl;
+                    window.location.href = `${environment.authApiUrl}?page=${window.location}`;
                 }
-
+                
                 return throwError(() => x);
             })
         );
