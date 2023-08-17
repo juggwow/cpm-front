@@ -1,11 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { HttpParams } from '@angular/common/http';
-import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { PdfViewerComponent, PdfViewerModule } from 'ng2-pdf-viewer';
 import { MenuItem, SortEvent } from 'primeng/api';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { ButtonModule } from 'primeng/button';
 import { ContextMenuModule } from 'primeng/contextmenu';
+import { DialogModule } from 'primeng/dialog';
 import { InputTextModule } from 'primeng/inputtext';
 import { MenuModule } from 'primeng/menu';
 import { PaginatorModule } from 'primeng/paginator';
@@ -21,7 +23,7 @@ import { ReportService } from 'src/app/services/report.service';
 @Component({
   selector: 'app-approve',
   standalone: true,
-  schemas:[CUSTOM_ELEMENTS_SCHEMA],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './approve.component.html',
   styleUrls: ['./approve.component.scss'],
   providers: [BoqService, ReportService],
@@ -36,10 +38,18 @@ import { ReportService } from 'src/app/services/report.service';
     MenuModule,
     ToastModule,
     ContextMenuModule,
-    CommonModule
+    CommonModule,
+    PdfViewerModule,
+    DialogModule
   ]
 })
 export class ApproveComponent implements OnInit {
+  @ViewChild(PdfViewerComponent)
+  private pdfComponent!: PdfViewerComponent;
+
+  src: string = "";
+  display: boolean = false;
+  
   contractId!: number;
   items: MenuItem[] = [];
   projectName: string = "...";
@@ -95,7 +105,7 @@ export class ApproveComponent implements OnInit {
         this.checkWaste = res.check.Waste;
         this.progressAmount = res.progress.Amount;
       });
-      this.fetchData(this.contractId);
+    this.fetchData(this.contractId);
   }
 
   fetchData(id: number, params?: HttpParams) {
@@ -107,7 +117,7 @@ export class ApproveComponent implements OnInit {
         this.rows = res.limit;
         this.first = (res.page - 1) * this.rows;
         this.page = res.page;
-        this.loading = false;        
+        this.loading = false;
       });
   }
 
@@ -158,7 +168,7 @@ export class ApproveComponent implements OnInit {
     }
 
     this.user_keyup_timeout = setTimeout(() => {
-      this.fetchData(this.contractId!,this.setParams());
+      this.fetchData(this.contractId!, this.setParams());
     }, 3000);
   }
 
@@ -187,6 +197,19 @@ export class ApproveComponent implements OnInit {
     return this.data ? this.first === 0 : true;
   }
 
+  reportPreview(id:number) {
+    this.display = true;
+    this.report.getPdfReport<Blob>(id).subscribe((response) => {
+      // let file = new Blob([response], { type: 'application/pdf' });
+      // var fileURL = URL.createObjectURL(file);
+      this.src = URL.createObjectURL(response);
+    })
+  }
+
+  onHide() {
+    this.pdfComponent.clear();
+  }
+
   printSelectedReports() {
     // this.confirmationService.confirm({
     //     message: 'Are you sure you want to delete the selected products?',
@@ -194,11 +217,11 @@ export class ApproveComponent implements OnInit {
     //     icon: 'pi pi-exclamation-triangle',
     //     accept: () => {
     //         this.products = this.products.filter((val) => !this.selectedProducts?.includes(val));
-            this.selectedReports = null;
+    this.selectedReports = null;
     //         this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Products Deleted', life: 3000 });
     //     }
     // });
-}
+  }
 
 
 }

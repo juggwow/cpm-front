@@ -165,7 +165,7 @@
               <td>{{ report.good }}</td>
               <td>{{ report.waste }}</td>
               <td>
-                <p-button icon="pi pi-eye" styleClass="p-button-rounded p-button-text"></p-button>
+                <p-button icon="pi pi-eye" styleClass="p-button-rounded p-button-text" (click)="reportPreview(report.id)"></p-button>
               </td>
             </tr>
           </ng-template>
@@ -188,3 +188,10 @@
     </div>
   </div>
 </div>
+<p-dialog [(visible)]="display" [modal]="true" [style]="{width: '80vw'}" [maximizable]="false" [draggable]="false"
+  [resizable]="false" (onHide)="onHide()">
+  <div class="pdf-container">
+    <pdf-viewer [src]="src" [rotation]="0" [original-size]="false" [show-all]="true"
+      style="width: 100%; height: 600px;"></pdf-viewer>
+  </div>
+</p-dialog>
