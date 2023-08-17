@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { MenuItem, PrimeIcons } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
@@ -16,6 +16,7 @@ import { PdfViewerComponent, PdfViewerModule } from 'ng2-pdf-viewer';
   templateUrl: './report-view.component.html',
   styleUrls: ['./report-view.component.scss'],
   standalone: true,
+  schemas: [ CUSTOM_ELEMENTS_SCHEMA ,NO_ERRORS_SCHEMA],
   imports: [
     ButtonModule,
     RouterModule,

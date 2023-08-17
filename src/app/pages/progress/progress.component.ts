@@ -1,5 +1,5 @@
 import { HttpParams } from '@angular/common/http';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmationService, MenuItem, PrimeIcons, SortEvent } from 'primeng/api';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
@@ -9,7 +9,6 @@ import { PaginatorModule } from 'primeng/paginator';
 import { RippleModule } from 'primeng/ripple';
 import { TableModule } from 'primeng/table';
 import { CardComponent } from 'src/app/components/card/card.component';
-import { PageEvent } from 'src/app/models/paginator.model';
 import { ReportProgress } from 'src/app/models/report.model';
 import { ResponsePage } from 'src/app/models/response-page.model';
 import { BoqService } from 'src/app/services/boq.service';
@@ -28,6 +27,7 @@ import { DialogModule } from 'primeng/dialog';
   standalone: true,
   templateUrl: './progress.component.html',
   styleUrls: ['./progress.component.scss'],
+  schemas:[CUSTOM_ELEMENTS_SCHEMA],
   imports: [
     BreadcrumbModule,
     CardComponent,

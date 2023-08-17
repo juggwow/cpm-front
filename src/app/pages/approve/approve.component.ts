@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { HttpParams } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MenuItem, SortEvent } from 'primeng/api';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
@@ -13,7 +13,6 @@ import { RippleModule } from 'primeng/ripple';
 import { TableModule } from 'primeng/table';
 import { ToastModule } from 'primeng/toast';
 import { CardComponent } from 'src/app/components/card/card.component';
-import { PageEvent } from 'src/app/models/paginator.model';
 import { ReportApprove } from 'src/app/models/report.model';
 import { ResponsePage } from 'src/app/models/response-page.model';
 import { BoqService } from 'src/app/services/boq.service';
@@ -22,6 +21,7 @@ import { ReportService } from 'src/app/services/report.service';
 @Component({
   selector: 'app-approve',
   standalone: true,
+  schemas:[CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './approve.component.html',
   styleUrls: ['./approve.component.scss'],
   providers: [BoqService, ReportService],

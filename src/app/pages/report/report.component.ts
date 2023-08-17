@@ -13,7 +13,6 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ReportItem, ReportProgress } from 'src/app/models/report.model';
 import { BoqService } from 'src/app/services/boq.service';
 import { ReportService } from 'src/app/services/report.service';
-import { PageEvent } from 'src/app/models/paginator.model';
 import { Item, ResponsePage } from 'src/app/models/response-page.model';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { CommonModule } from '@angular/common';
@@ -21,13 +20,14 @@ import { MenuModule } from 'primeng/menu';
 import { PaginatorModule } from 'primeng/paginator';
 import { ToastModule } from 'primeng/toast';
 import { take, tap } from 'rxjs';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA, OnInit, ViewChild } from '@angular/core';
 import { RouterModule, ActivatedRoute } from '@angular/router';
 import { PdfViewerModule, PdfViewerComponent } from 'ng2-pdf-viewer';
 
 @Component({
   selector: 'app-report',
   standalone: true,
+  schemas:[CUSTOM_ELEMENTS_SCHEMA,NO_ERRORS_SCHEMA],
   providers: [ListDocumentService, ConfirmationService, BoqService, ReportService],
   imports: [ConfirmDialogModule,
     TableModule,
