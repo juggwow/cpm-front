@@ -125,7 +125,7 @@ export class BoqItemComponent implements OnInit {
 
     this.user_keyup_timeout = setTimeout(() => {
       this.fetchData(this.contractId!,this.setParams());
-    }, 1000);
+    }, 3000);
   }
 
   onClearFilter(key: string) {

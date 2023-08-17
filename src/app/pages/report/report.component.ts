@@ -27,7 +27,7 @@ import { PdfViewerModule, PdfViewerComponent } from 'ng2-pdf-viewer';
 @Component({
   selector: 'app-report',
   standalone: true,
-  schemas:[CUSTOM_ELEMENTS_SCHEMA,NO_ERRORS_SCHEMA],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
   providers: [ListDocumentService, ConfirmationService, BoqService, ReportService],
   imports: [ConfirmDialogModule,
     TableModule,
@@ -53,7 +53,7 @@ import { PdfViewerModule, PdfViewerComponent } from 'ng2-pdf-viewer';
 
 
 export class ReportComponent implements OnInit {
-  
+
   @ViewChild(PdfViewerComponent)
   private pdfComponent!: PdfViewerComponent;
 
@@ -128,30 +128,9 @@ export class ReportComponent implements OnInit {
         this.checkWaste = res.check.Waste;
         this.progressAmount = res.progress.Amount;
       });
-    this.fetchData(this.itemId);
-
-    // this.items = [
-    //   {
-    //     label: 'แก้ไข', icon: 'pi pi-pencil', command: () => {
-    //       this.router.navigate(['/formupdate']);
-    //     },
-    //   },
-    //   {
-    //     label: 'Preview เอกสาร ', icon: 'pi pi-eye', command: () => {
-    //       this.showPreview();
-    //     },
-    //   },
-    //   {
-    //     label: 'ลบเอกสาร', icon: 'pi pi-trash', command: () => {
-    //       this.confirmDelete()
-    //     }
-    //   },
-
-    // ];
+    this.sort = this.sort.set('sortRowNo', 'desc');
+    this.fetchData(this.itemId, this.setParams());
   }
-
-
-
   confirmDelete() {
     this.confirmationService.confirm({
       message: 'เลือก ตกลง เพื่อลบ หรือ ย้อนกลับ เพื่อกลับไปหน้าเดิม',
@@ -199,82 +178,43 @@ export class ReportComponent implements OnInit {
       params = params.set(key, this.sort.get(key)!)
     }
     for (var key of this.search.keys()) {
-      params = params.set(key, this.sort.get(key)!)
+      params = params.set(key, this.search.get(key)!)
     }
     return params;
   }
 
-  onPageChange(event: any, id: number) {
-    this.loading = true;
-    this.first = event.first;
-    this.rows = event.rows;
-    this.page = event.page + 1;
-    this.fetchData(id, this.setParams());
-  }
-
-  onSortColumn(event: SortEvent, id: number) {
+  onSortColumn(event: SortEvent) {
     let order = (event.order == 1) ? "asc" : "desc";
+    for (var key of this.sort.keys()) {
+      this.sort = this.sort.delete(key)
+    }
     this.sort = this.sort.set(event.field!, order);
-    this.fetchData(id, this.setParams());
+    this.fetchData(this.itemId!, this.setParams());
   }
 
-  // onFilterColumn(key: string, event: Event) {
-  //   let filterValue = (event.target as HTMLInputElement).value;
-
-  //   if (filterValue == "") {
-  //     delete this.queryParams[key]
-  //   } else {
-  //     this.queryParams[key] = filterValue;
-  //   }
-
-  //   this.fetchDataWhenSortOrFilter()
-  // }
+  onClearFilter(key: string) {
+    this.search = this.search.delete(key);
+    this.fetchData(this.itemId!, this.setParams());
+  }
 
   onFilterColumn(key: string, event: Event) {
     if (this.user_keyup_timeout) {
       clearTimeout(this.user_keyup_timeout);
     }
 
-    let filterValue = (event.target as HTMLInputElement).value;
+    let value = (event.target as HTMLInputElement).value;
 
-    if (filterValue == "") {
-      // delete this.queryParams[key]
+    if (value == "") {
+      this.search = this.search.delete(key);
     } else {
-      // this.queryParams[key] = filterValue;
+      this.search = this.search.set(key, value);
     }
 
     this.user_keyup_timeout = setTimeout(() => {
-      this.fetchData(this.contractId);
-    }, 1000);
+      this.fetchData(this.itemId!, this.setParams());
+    }, 3000);
   }
 
-  onClearFilter(key: string) {
-    console.log("clear", key)
-  }
-
-
-
-  // fetchAllData() {
-  //   this.loading = true;
-  //   this.ListDocumentService
-  //     .getListOfDoc$().pipe(take(1))
-  //     .subscribe((res) => {
-  //       this.ListDocument = res.doc;
-  //       console.log('xx', res)
-  //       this.loading = false;
-  //     });
-  // }
-
-
-  // fetchDataWhenSortOrFilter() {
-  //   this.loading = true;
-  //   const params = new HttpParams({ fromObject: this.queryParams })
-  //   this.ListDocumentService.getSortOrFilterListOfDoc$(params)
-  //     .subscribe((res) => {
-  //       this.ListDocument = res.data;
-  //       this.loading = false;
-  //     })
-  // }
 
   setReportDrafMenu(report: ReportProgress) {
     this.reportManageMenu = [
@@ -324,7 +264,7 @@ export class ReportComponent implements OnInit {
     }
   }
 
-  reportPreview(id:number) {
+  reportPreview(id: number) {
     this.display = true;
     this.report.getPdfReport<Blob>(id).subscribe((response) => {
       // let file = new Blob([response], { type: 'application/pdf' });
@@ -365,6 +305,34 @@ export class ReportComponent implements OnInit {
           });
       }
     });
+  }
+
+  onPageChange(event: any) {
+    this.loading = true;
+    this.first = event.first;
+    this.rows = event.rows;
+    this.page = event.page + 1;
+    this.fetchData(this.itemId!, this.setParams());
+  }
+
+  next() {
+    this.first = this.first + this.rows;
+  }
+
+  prev() {
+    this.first = this.first - this.rows;
+  }
+
+  reset() {
+    this.first = 0;
+  }
+
+  isLastPage(): boolean {
+    return this.data ? this.first === (this.data.length - this.rows) : true;
+  }
+
+  isFirstPage(): boolean {
+    return this.data ? this.first === 0 : true;
   }
 
 

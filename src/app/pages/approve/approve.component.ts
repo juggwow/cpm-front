@@ -152,16 +152,14 @@ export class ApproveComponent implements OnInit {
     let value = (event.target as HTMLInputElement).value;
 
     if (value == "") {
-      // delete this.queryParams[key]
       this.search = this.search.delete(key);
     } else {
-      // this.queryParams[key] = filterValue;
       this.search = this.search.set(key, value);
     }
 
     this.user_keyup_timeout = setTimeout(() => {
       this.fetchData(this.contractId!,this.setParams());
-    }, 1000);
+    }, 3000);
   }
 
   onClearFilter(key: string) {

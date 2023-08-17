@@ -16,162 +16,96 @@
             [rowHover]="true"
             [loading]="loading"
             [lazy]="true"
-            (onSort)="onSortColumn($event,contractId)"
+            (onSort)="onSortColumn($event)"
           >
             <ng-template pTemplate="header">
               <tr>
-                <th pSortableColumn="sSeq">
+                <th pSortableColumn="sortRowNo">
                   <div class="flex justify-content-between align-items-center">
                     ลำดับ
-                    <p-sortIcon field="sSeq"></p-sortIcon>
+                    <p-sortIcon field="sortRowNo"></p-sortIcon>
                   </div>
                 </th>
-                <th pSortableColumn="invNo">
+                <th pSortableColumn="sortInvNo">
                   <div class="flex justify-content-between align-items-center">
                     เลขที่ใบส่ง
-                    <p-sortIcon field="invNo"></p-sortIcon>
+                    <p-sortIcon field="sortInvNo"></p-sortIcon>
                   </div>
                 </th>
-                <th pSortableColumn="itemName">
+                <th pSortableColumn="sortItemName">
                   <div class="flex justify-content-between align-items-center">
                     รายการ
-                    <p-sortIcon field="itemName"></p-sortIcon>
+                    <p-sortIcon field="sortItemName"></p-sortIcon>
                   </div>
                 </th>
-                <th pSortableColumn="arrival">
+                <th pSortableColumn="sortArrival">
                   <div class="flex justify-content-between align-items-center">
                     วันที่ส่งถึงหน้างาน
-                    <p-sortIcon field="arrival"></p-sortIcon>
+                    <p-sortIcon field="sortArrival"></p-sortIcon>
                   </div>
                 </th>
-                <th pSortableColumn="inspection">
+                <th pSortableColumn="sortInspection">
                   <div class="flex justify-content-between align-items-center">
                     วันที่ตรวจสอบ
-                    <p-sortIcon field="inspection"></p-sortIcon>
+                    <p-sortIcon field="sortInspection"></p-sortIcon>
                   </div>
                 </th>
-                <th pSortableColumn="stateName">
+                <th pSortableColumn="sortStateName">
                   <div class="flex justify-content-between align-items-center">
                     สถานะ
-                    <p-sortIcon field="stateName"></p-sortIcon>
+                    <p-sortIcon field="sortStateName"></p-sortIcon>
                   </div>
                 </th>
                 <th></th>
               </tr>
               <tr>
                 <th>
-                  <div class="flex align-items-center gap-2">
-                    <input
-                      class="w-10"
-                      pInputText
-                      name="seq"
-                      (keyup)="onFilterColumn('seq', $event)"
-                      placeholder="Search"
-                    />
-                    <button
-                      pButton
-                      pRipple
-                      type="button"
-                      icon="pi pi-times"
-                      class="p-button-rounded p-button-text p-button-plain"
-                      (click)="onClearFilter('seq')"
-                    ></button>
-                  </div>
+                  <span class="p-input-icon-right">
+                    <input #inputRowNo type="text" pInputText (keyup)="onFilterColumn('searchRowNo', $event)"
+                      placeholder="Search" style="width: 5rem" />
+                    <i *ngIf="inputRowNo.value" class="pi pi-times cursor-pointer"
+                      (click)="inputRowNo.value = '';onClearFilter('searchRowNo')"></i>
+                  </span>
                 </th>
                 <th>
-                  <div class="flex align-items-center gap-2">
-                    <input
-                      class="w-10"
-                      type="text"
-                      pInputText
-                      (keyup)="onFilterColumn('invNo', $event)"
-                      placeholder="Search"
-                    />
-                    <button
-                      pButton
-                      pRipple
-                      type="button"
-                      icon="pi pi-times"
-                      class="p-button-rounded p-button-text p-button-plain"
-                      (click)="onClearFilter('invNo')"
-                    ></button>
-                  </div>
+                  <span class="p-input-icon-right">
+                    <input #inputInvNo type="text" pInputText (keyup)="onFilterColumn('searchInvNo', $event)"
+                      placeholder="Search" style="width: 5rem" />
+                    <i *ngIf="inputInvNo.value" class="pi pi-times cursor-pointer"
+                      (click)="inputInvNo.value = '';onClearFilter('searchInvNo')"></i>
+                  </span>
                 </th>
                 <th>
-                  <div class="flex align-items-center gap-2">
-                    <input
-                      class="w-10"
-                      type="text"
-                      pInputText
-                      (keyup)="onFilterColumn('name', $event)"
-                      placeholder="Search"
-                    />
-                    <button
-                      pButton
-                      pRipple
-                      type="button"
-                      icon="pi pi-times"
-                      class="p-button-rounded p-button-text p-button-plain"
-                      (click)="onClearFilter('name')"
-                    ></button>
-                  </div>
+                  <span class="p-input-icon-right">
+                    <input #inputItemName type="text" pInputText (keyup)="onFilterColumn('searchItemName', $event)"
+                      placeholder="Search" style="width: 5rem" />
+                    <i *ngIf="inputItemName.value" class="pi pi-times cursor-pointer"
+                      (click)="inputItemName.value = '';onClearFilter('searchItemName')"></i>
+                  </span>
                 </th>
                 <th>
-                  <div class="flex align-items-center gap-2">
-                    <input
-                      class="w-10"
-                      type="text"
-                      pInputText
-                      (keyup)="onFilterColumn('arrival', $event)"
-                      placeholder="Search"
-                    />
-                    <button
-                      pButton
-                      pRipple
-                      type="button"
-                      icon="pi pi-times"
-                      class="p-button-rounded p-button-text p-button-plain"
-                      (click)="onClearFilter('arrival')"
-                    ></button>
-                  </div>
+                  <span class="p-input-icon-right">
+                    <input #inputArrival type="text" pInputText (keyup)="onFilterColumn('searchArrival', $event)"
+                      placeholder="Search" style="width: 5rem" />
+                    <i *ngIf="inputArrival.value" class="pi pi-times cursor-pointer"
+                      (click)="inputArrival.value = '';onClearFilter('searchArrival')"></i>
+                  </span>
                 </th>
                 <th>
-                  <div class="flex align-items-center gap-2">
-                    <input
-                      class="w-10"
-                      type="text"
-                      pInputText
-                      (keyup)="onFilterColumn('inspection', $event)"
-                      placeholder="Search"
-                    />
-                    <button
-                      pButton
-                      pRipple
-                      type="button"
-                      icon="pi pi-times"
-                      class="p-button-rounded p-button-text p-button-plain"
-                      (click)="onClearFilter('inspection')"
-                    ></button>
-                  </div>
+                  <span class="p-input-icon-right">
+                    <input #inputInspection type="text" pInputText (keyup)="onFilterColumn('searchInspection', $event)"
+                      placeholder="Search" style="width: 5rem" />
+                    <i *ngIf="inputInspection.value" class="pi pi-times cursor-pointer"
+                      (click)="inputInspection.value = '';onClearFilter('searchInspection')"></i>
+                  </span>
                 </th>
                 <th>
-                  <div class="flex align-items-center gap-2">
-                    <input
-                      class="w-10"
-                      type="text"
-                      pInputText
-                      (keyup)="onFilterColumn('stateName', $event)"
-                      placeholder="Search"
-                    />
-                    <button
-                      pButton
-                      pRipple
-                      type="button"
-                      icon="pi pi-times"
-                      class="p-button-rounded p-button-text p-button-plain"
-                      (click)="onClearFilter('stateName')"
-                    ></button>
-                  </div>
+                  <span class="p-input-icon-right">
+                    <input #inputStateName type="text" pInputText (keyup)="onFilterColumn('searchStateName', $event)"
+                      placeholder="Search" style="width: 5rem" />
+                    <i *ngIf="inputStateName.value" class="pi pi-times cursor-pointer"
+                      (click)="inputStateName.value = '';onClearFilter('searchStateName')"></i>
+                  </span>
                 </th>
                 <th></th>
               </tr>
@@ -222,18 +156,18 @@
             </ng-template>
             <ng-template pTemplate="emptymessage">
               <tr>
-                <td colspan="7">No datas found.</td>
+                <td colspan="7">ไม่พบข้อมูล</td>
               </tr>
             </ng-template>
             <ng-template pTemplate="loadingbody">
               <tr>
-                <td colspan="7">Loading datas data. Please wait.</td>
+                <td colspan="7">กำลังโหลดข้อมูล....</td>
               </tr>
             </ng-template>
           </p-table>
           <div class="card flex justify-content-center">
             <p-paginator
-              (onPageChange)="onPageChange($event, contractId)"
+              (onPageChange)="onPageChange($event)"
               [first]="first"
               [rows]="rows"
               [totalRecords]="totalRecords"
@@ -247,11 +181,9 @@
   </div>
   <p-dialog [(visible)]="display" [modal]="true" [style]="{width: '80vw'}" [maximizable]="false" [draggable]="false"
   [resizable]="false" (onHide)="onHide()">
-  <!-- <div id="outerContainer"> -->
   <div class="pdf-container">
     <pdf-viewer [src]="src" [rotation]="0" [original-size]="false" [show-all]="true"
       style="width: 100%; height: 600px;"></pdf-viewer>
   </div>
-  <!-- </div> -->
 </p-dialog>
   
