@@ -14,11 +14,14 @@ import { PaginatorModule } from 'primeng/paginator';
 import { RippleModule } from 'primeng/ripple';
 import { TableModule } from 'primeng/table';
 import { ToastModule } from 'primeng/toast';
+import * as printJS from 'print-js';
 import { CardComponent } from 'src/app/components/card/card.component';
 import { ReportApprove } from 'src/app/models/report.model';
 import { ResponsePage } from 'src/app/models/response-page.model';
 import { BoqService } from 'src/app/services/boq.service';
 import { ReportService } from 'src/app/services/report.service';
+import { BlockUIModule } from 'primeng/blockui';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 @Component({
   selector: 'app-approve',
@@ -40,7 +43,9 @@ import { ReportService } from 'src/app/services/report.service';
     ContextMenuModule,
     CommonModule,
     PdfViewerModule,
-    DialogModule
+    DialogModule,
+    BlockUIModule,
+    ProgressSpinnerModule
   ]
 })
 export class ApproveComponent implements OnInit {
@@ -49,7 +54,7 @@ export class ApproveComponent implements OnInit {
 
   src: string = "";
   display: boolean = false;
-  
+
   contractId!: number;
   items: MenuItem[] = [];
   projectName: string = "...";
@@ -76,6 +81,7 @@ export class ApproveComponent implements OnInit {
   private user_keyup_timeout: any;
 
   selectedReports!: ReportApprove[] | null;
+  blockedDocument: boolean = false;
 
   constructor(
     private boqService: BoqService,
@@ -197,7 +203,7 @@ export class ApproveComponent implements OnInit {
     return this.data ? this.first === 0 : true;
   }
 
-  reportPreview(id:number) {
+  reportPreview(id: number) {
     this.display = true;
     this.report.getPdfReport<Blob>(id).subscribe((response) => {
       // let file = new Blob([response], { type: 'application/pdf' });
@@ -217,11 +223,25 @@ export class ApproveComponent implements OnInit {
     //     icon: 'pi pi-exclamation-triangle',
     //     accept: () => {
     //         this.products = this.products.filter((val) => !this.selectedProducts?.includes(val));
-    this.selectedReports = null;
+
     //         this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Products Deleted', life: 3000 });
     //     }
     // });
-  }
+    this.blockedDocument = true;
+    let id = this.selectedReports![0].id
+    console.log(id)
+    this.selectedReports = null;
+    this.report.getPdfReport<Blob>(id).subscribe((response) => {
+      // let file = new Blob([response], { type: 'application/pdf' });
+      // var fileURL = URL.createObjectURL(file);
+      this.src = URL.createObjectURL(response);
+      printJS({ printable: this.src, type: 'pdf', showModal: true })
+      this.blockedDocument = false;
+    })
 
+    // for (var report of this.selectedReports!) {
+    //   console.log(report.id)
+    // }
+  }
 
 }
