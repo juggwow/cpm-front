@@ -11,13 +11,20 @@ export class BoqService {
 
     constructor(private http: HttpClient) { }
 
-    getBoqByContractId(id: number, page: number = 1, limit: number = 10): Observable<ResponsePage<Boq>> {
-        return this.http.get<ResponsePage<Boq>>(`${environment.apiUrl}/contract/${id}/boq?page=${page}&limit=${limit}`);
-    }
+    // getBoqByContractId(id: number, page: number = 1, limit: number = 10): Observable<ResponsePage<Boq>> {
+    //     // return this.http.get<ResponsePage<Boq>>(`${environment.apiUrl}/contract/${id}/boq?page=${page}&limit=${limit}`);
+    //     return this.http.get<ResponsePage<Boq>>(`${environment.apiUrl}/boq-item/${id}?page=${page}&limit=${limit}`);
+    // }
 
 
-    getSortOrFilterBoq$(param: HttpParams) {
-        return this.http.get<ResponsePage<Boq>>(`${environment.apiUrl}/contract/31/boq`, { params: param });
+    // getSortOrFilterBoq$(id: number, param: HttpParams) {
+    //     // return this.http.get<ResponsePage<Boq>>(`${environment.apiUrl}/contract/31/boq`, { params: param });
+    //     return this.http.get<ResponsePage<Boq>>(`${environment.apiUrl}/boq-item/${id}`, { params: param });
+    // }
+
+    getBoqByContractId<T>(id: number, params?: HttpParams): Observable<T> {
+        const options = { params: params };
+        return this.http.get<T>(`${environment.apiUrl}/boq-item/${id}`, options);
     }
 
     getProjectDetail(id: number): Observable<Project> {
