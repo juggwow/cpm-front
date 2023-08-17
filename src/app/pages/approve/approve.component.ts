@@ -122,23 +122,26 @@ export class ApproveComponent implements OnInit {
       params = params.set(key, this.sort.get(key)!)
     }
     for (var key of this.search.keys()) {
-      params = params.set(key, this.sort.get(key)!)
+      params = params.set(key, this.search.get(key)!)
     }
     return params;
   }
 
-  onPageChange(event: any, id: number) {
+  onPageChange(event: any) {
     this.loading = true;
     this.first = event.first;
     this.rows = event.rows;
     this.page = event.page + 1;
-    this.fetchData(id, this.setParams());
+    this.fetchData(this.contractId!, this.setParams());
   }
 
-  onSortColumn(event: SortEvent, id: number) {
+  onSortColumn(event: SortEvent) {
     let order = (event.order == 1) ? "asc" : "desc";
+    for (var key of this.sort.keys()) {
+      this.sort = this.sort.delete(key)
+    }
     this.sort = this.sort.set(event.field!, order);
-    this.fetchData(id, this.setParams());
+    this.fetchData(this.contractId!, this.setParams());
   }
 
   onFilterColumn(key: string, event: Event) {
@@ -146,21 +149,44 @@ export class ApproveComponent implements OnInit {
       clearTimeout(this.user_keyup_timeout);
     }
 
-    let filterValue = (event.target as HTMLInputElement).value;
+    let value = (event.target as HTMLInputElement).value;
 
-    if (filterValue == "") {
+    if (value == "") {
       // delete this.queryParams[key]
+      this.search = this.search.delete(key);
     } else {
       // this.queryParams[key] = filterValue;
+      this.search = this.search.set(key, value);
     }
 
     this.user_keyup_timeout = setTimeout(() => {
-      this.fetchData(this.contractId);
+      this.fetchData(this.contractId!,this.setParams());
     }, 1000);
   }
 
   onClearFilter(key: string) {
-    console.log("clear", key)
+    this.search = this.search.delete(key);
+    this.fetchData(this.contractId!, this.setParams());
+  }
+
+  next() {
+    this.first = this.first + this.rows;
+  }
+
+  prev() {
+    this.first = this.first - this.rows;
+  }
+
+  reset() {
+    this.first = 0;
+  }
+
+  isLastPage(): boolean {
+    return this.data ? this.first === (this.data.length - this.rows) : true;
+  }
+
+  isFirstPage(): boolean {
+    return this.data ? this.first === 0 : true;
   }
 
   printSelectedReports() {
