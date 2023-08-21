@@ -179,6 +179,7 @@ import { LoginCallbackService } from './services/login-callback.service';
                 },
                 { path: 'pages/notfound', component: NotfoundComponent },
                 { path: '**', redirectTo: 'pages/notfound' },
+                
             ],
             {
                 scrollPositionRestoration: 'enabled',

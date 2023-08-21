@@ -44,7 +44,6 @@ import { CarouselModule } from 'primeng/carousel';
 export class DetailViewComponent implements OnInit {
   @ViewChild(PdfViewerComponent)
   private pdfComponent!: PdfViewerComponent;
-
   // Non Mock
   // display: boolean = false;
 
