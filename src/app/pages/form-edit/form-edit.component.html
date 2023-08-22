@@ -100,7 +100,7 @@
                                                 </div>
                                                 <div class="col-6">
                                                     <p class="fw-bold"> {{ f.name }} </p>
-                                                    <p> ขนาดไฟล์ {{ f.size }} KB </p>
+                                                    <p> ขนาดไฟล์ {{ b2s(f.size) }}</p>
                                                 </div>
                                                 <div class="col-3">
                                                     <p-dropdown [options]="doctype" optionLabel="name"

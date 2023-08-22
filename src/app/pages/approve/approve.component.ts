@@ -1,27 +1,32 @@
 import { CommonModule } from '@angular/common';
 import { HttpParams } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { PdfViewerComponent, PdfViewerModule } from 'ng2-pdf-viewer';
 import { MenuItem, SortEvent } from 'primeng/api';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { ButtonModule } from 'primeng/button';
 import { ContextMenuModule } from 'primeng/contextmenu';
+import { DialogModule } from 'primeng/dialog';
 import { InputTextModule } from 'primeng/inputtext';
 import { MenuModule } from 'primeng/menu';
 import { PaginatorModule } from 'primeng/paginator';
 import { RippleModule } from 'primeng/ripple';
 import { TableModule } from 'primeng/table';
 import { ToastModule } from 'primeng/toast';
+import * as printJS from 'print-js';
 import { CardComponent } from 'src/app/components/card/card.component';
-import { PageEvent } from 'src/app/models/paginator.model';
 import { ReportApprove } from 'src/app/models/report.model';
 import { ResponsePage } from 'src/app/models/response-page.model';
 import { BoqService } from 'src/app/services/boq.service';
 import { ReportService } from 'src/app/services/report.service';
+import { BlockUIModule } from 'primeng/blockui';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 @Component({
   selector: 'app-approve',
   standalone: true,
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './approve.component.html',
   styleUrls: ['./approve.component.scss'],
   providers: [BoqService, ReportService],
@@ -36,10 +41,20 @@ import { ReportService } from 'src/app/services/report.service';
     MenuModule,
     ToastModule,
     ContextMenuModule,
-    CommonModule
+    CommonModule,
+    PdfViewerModule,
+    DialogModule,
+    BlockUIModule,
+    ProgressSpinnerModule
   ]
 })
 export class ApproveComponent implements OnInit {
+  @ViewChild(PdfViewerComponent)
+  private pdfComponent!: PdfViewerComponent;
+
+  src: string = "";
+  display: boolean = false;
+
   contractId!: number;
   items: MenuItem[] = [];
   projectName: string = "...";
@@ -66,6 +81,7 @@ export class ApproveComponent implements OnInit {
   private user_keyup_timeout: any;
 
   selectedReports!: ReportApprove[] | null;
+  blockedDocument: boolean = false;
 
   constructor(
     private boqService: BoqService,
@@ -95,7 +111,7 @@ export class ApproveComponent implements OnInit {
         this.checkWaste = res.check.Waste;
         this.progressAmount = res.progress.Amount;
       });
-      this.fetchData(this.contractId);
+    this.fetchData(this.contractId);
   }
 
   fetchData(id: number, params?: HttpParams) {
@@ -107,7 +123,7 @@ export class ApproveComponent implements OnInit {
         this.rows = res.limit;
         this.first = (res.page - 1) * this.rows;
         this.page = res.page;
-        this.loading = false;        
+        this.loading = false;
       });
   }
 
@@ -122,23 +138,26 @@ export class ApproveComponent implements OnInit {
       params = params.set(key, this.sort.get(key)!)
     }
     for (var key of this.search.keys()) {
-      params = params.set(key, this.sort.get(key)!)
+      params = params.set(key, this.search.get(key)!)
     }
     return params;
   }
 
-  onPageChange(event: any, id: number) {
+  onPageChange(event: any) {
     this.loading = true;
     this.first = event.first;
     this.rows = event.rows;
     this.page = event.page + 1;
-    this.fetchData(id, this.setParams());
+    this.fetchData(this.contractId!, this.setParams());
   }
 
-  onSortColumn(event: SortEvent, id: number) {
+  onSortColumn(event: SortEvent) {
     let order = (event.order == 1) ? "asc" : "desc";
+    for (var key of this.sort.keys()) {
+      this.sort = this.sort.delete(key)
+    }
     this.sort = this.sort.set(event.field!, order);
-    this.fetchData(id, this.setParams());
+    this.fetchData(this.contractId!, this.setParams());
   }
 
   onFilterColumn(key: string, event: Event) {
@@ -146,21 +165,55 @@ export class ApproveComponent implements OnInit {
       clearTimeout(this.user_keyup_timeout);
     }
 
-    let filterValue = (event.target as HTMLInputElement).value;
+    let value = (event.target as HTMLInputElement).value;
 
-    if (filterValue == "") {
-      // delete this.queryParams[key]
+    if (value == "") {
+      this.search = this.search.delete(key);
     } else {
-      // this.queryParams[key] = filterValue;
+      this.search = this.search.set(key, value);
     }
 
     this.user_keyup_timeout = setTimeout(() => {
-      this.fetchData(this.contractId);
-    }, 1000);
+      this.fetchData(this.contractId!, this.setParams());
+    }, 3000);
   }
 
   onClearFilter(key: string) {
-    console.log("clear", key)
+    this.search = this.search.delete(key);
+    this.fetchData(this.contractId!, this.setParams());
+  }
+
+  next() {
+    this.first = this.first + this.rows;
+  }
+
+  prev() {
+    this.first = this.first - this.rows;
+  }
+
+  reset() {
+    this.first = 0;
+  }
+
+  isLastPage(): boolean {
+    return this.data ? this.first === (this.data.length - this.rows) : true;
+  }
+
+  isFirstPage(): boolean {
+    return this.data ? this.first === 0 : true;
+  }
+
+  reportPreview(id: number) {
+    this.display = true;
+    this.report.getPdfReport<Blob>(id).subscribe((response) => {
+      // let file = new Blob([response], { type: 'application/pdf' });
+      // var fileURL = URL.createObjectURL(file);
+      this.src = URL.createObjectURL(response);
+    })
+  }
+
+  onHide() {
+    this.pdfComponent.clear();
   }
 
   printSelectedReports() {
@@ -170,11 +223,25 @@ export class ApproveComponent implements OnInit {
     //     icon: 'pi pi-exclamation-triangle',
     //     accept: () => {
     //         this.products = this.products.filter((val) => !this.selectedProducts?.includes(val));
-            this.selectedReports = null;
+
     //         this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Products Deleted', life: 3000 });
     //     }
     // });
-}
+    this.blockedDocument = true;
+    let id = this.selectedReports![0].id
+    console.log(id)
+    this.selectedReports = null;
+    this.report.getPdfReport<Blob>(id).subscribe((response) => {
+      // let file = new Blob([response], { type: 'application/pdf' });
+      // var fileURL = URL.createObjectURL(file);
+      this.src = URL.createObjectURL(response);
+      printJS({ printable: this.src, type: 'pdf', showModal: true })
+      this.blockedDocument = false;
+    })
 
+    // for (var report of this.selectedReports!) {
+    //   console.log(report.id)
+    // }
+  }
 
 }

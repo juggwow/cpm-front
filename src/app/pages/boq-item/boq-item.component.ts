@@ -10,8 +10,11 @@ import { RippleModule } from 'primeng/ripple';
 import { TableModule } from 'primeng/table';
 import { CardComponent } from 'src/app/components/card/card.component';
 import { Boq } from 'src/app/models/boq.model';
-import { PageEvent } from 'src/app/models/paginator.model';
 import { BoqService } from 'src/app/services/boq.service';
+import { TagModule } from 'primeng/tag';
+import { CommonModule } from '@angular/common';
+import { ResponsePage } from 'src/app/models/response-page.model';
+import { PageEvent } from 'src/app/models/paginator.model';
 
 @Component({
   providers: [BoqService],
@@ -23,7 +26,9 @@ import { BoqService } from 'src/app/services/boq.service';
     RouterModule,
     PaginatorModule,
     BreadcrumbModule,
-    CardComponent
+    CardComponent,
+    TagModule,
+    CommonModule
   ],
   selector: 'app-boq-item',
   standalone: true,
@@ -56,6 +61,10 @@ export class BoqItemComponent implements OnInit {
   checkWaste: number = 0;
   progressAmount: number = 0;
 
+  sort: HttpParams = new HttpParams();
+  search: HttpParams = new HttpParams();
+
+
   constructor(
     private BoqService: BoqService,
     private route: ActivatedRoute
@@ -84,17 +93,19 @@ export class BoqItemComponent implements OnInit {
         this.checkWaste = res.check.Waste;
         this.progressAmount = res.progress.Amount;
       });
-    this.fetchAllData(this.contractId);
+    this.fetchData(this.contractId);
 
     // this.home = { icon: 'pi pi-home', routerLink: '/' };
   }
 
 
-
   onSortColumn(event: SortEvent) {
-    let order = (event.order == 1) ? "asc" : "desc"
-    this.queryParams["s" + event.field!] = order;
-    this.fetchDataWhenSortOrFilter()
+    let order = (event.order == 1) ? "asc" : "desc";
+    for (var key of this.sort.keys()) {
+      this.sort = this.sort.delete(key)
+    }
+    this.sort = this.sort.set(event.field!, order);
+    this.fetchData(this.contractId!, this.setParams());
   }
 
   onFilterColumn(key: string, event: Event) {
@@ -102,66 +113,63 @@ export class BoqItemComponent implements OnInit {
       clearTimeout(this.user_keyup_timeout);
     }
 
-    let filterValue = (event.target as HTMLInputElement).value;
+    let value = (event.target as HTMLInputElement).value;
 
-    if (filterValue == "") {
-      delete this.queryParams[key]
+    if (value == "") {
+      // delete this.queryParams[key]
+      this.search = this.search.delete(key);
     } else {
-      this.queryParams[key] = filterValue;
+      // this.queryParams[key] = filterValue;
+      this.search = this.search.set(key, value);
     }
 
     this.user_keyup_timeout = setTimeout(() => {
-      this.fetchDataWhenSortOrFilter()
-    }, 1000);
-
-
+      this.fetchData(this.contractId!,this.setParams());
+    }, 3000);
   }
 
-  fetchAllData(id: number) {
+  onClearFilter(key: string) {
+    this.search = this.search.delete(key);
+    this.fetchData(this.contractId!, this.setParams());
+  }
+
+  fetchData(id: number, params?: HttpParams) {
     this.loading = true;
-    this.BoqService.getBoqByContractId(id)
+    this.BoqService.getBoqByContractId<ResponsePage<Boq>>(id, params)
       .subscribe((res) => {
         this.Boq = res.data;
         this.totalRecords = res.total;
         this.rows = res.limit;
         this.first = (res.page - 1) * this.rows;
+        this.page = res.page;
         this.loading = false;
+
       });
   }
 
-
-  fetchDataWhenSortOrFilter() {
-    this.loading = true;
-    const params = new HttpParams({ fromObject: this.queryParams })
-    this.BoqService.getSortOrFilterBoq$(params)
-      .subscribe((res) => {
-        this.Boq = res.data;
-        this.loading = false;
-      })
+  setParams(): HttpParams {
+    let params = new HttpParams({
+      fromObject: {
+        'page': this.page,
+        'limit': this.rows
+      }
+    });
+    for (var key of this.sort.keys()) {
+      params = params.set(key, this.sort.get(key)!)
+    }
+    for (var key of this.search.keys()) {
+      params = params.set(key, this.search.get(key)!)
+    }
+    return params;
   }
 
-
-
-  onClearFilter(key: string) {
-    console.log("clear", key)
-  }
-
-  onPageChange(event: any, id: number | null = null) {
+  onPageChange(event: any) {
     this.loading = true;
-    // this.contractId = Number(this.route.snapshot.paramMap.get('id'));
     this.first = event.first;
     this.rows = event.rows;
     this.page = event.page + 1;
-    this.BoqService.getBoqByContractId(Number(id), this.page, this.rows)
-      .subscribe((res) => {
-        this.Boq = res.data;
-        this.totalRecords = res.total;
-        this.rows = res.limit;
-        this.first = (res.page - 1) * this.rows;
-        this.loading = false;
-      });
+    this.fetchData(this.contractId!, this.setParams());
   }
-
 
   next() {
     this.first = this.first + this.rows;

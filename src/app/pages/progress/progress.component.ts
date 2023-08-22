@@ -1,5 +1,5 @@
 import { HttpParams } from '@angular/common/http';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmationService, MenuItem, PrimeIcons, SortEvent } from 'primeng/api';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
@@ -9,7 +9,6 @@ import { PaginatorModule } from 'primeng/paginator';
 import { RippleModule } from 'primeng/ripple';
 import { TableModule } from 'primeng/table';
 import { CardComponent } from 'src/app/components/card/card.component';
-import { PageEvent } from 'src/app/models/paginator.model';
 import { ReportProgress } from 'src/app/models/report.model';
 import { ResponsePage } from 'src/app/models/response-page.model';
 import { BoqService } from 'src/app/services/boq.service';
@@ -28,6 +27,7 @@ import { DialogModule } from 'primeng/dialog';
   standalone: true,
   templateUrl: './progress.component.html',
   styleUrls: ['./progress.component.scss'],
+  schemas:[CUSTOM_ELEMENTS_SCHEMA],
   imports: [
     BreadcrumbModule,
     CardComponent,
@@ -115,56 +115,6 @@ export class ProgressComponent implements OnInit {
     this.fetchData(this.contractId);
   }
 
-  onFilterColumn(key: string, event: Event) {
-    if (this.user_keyup_timeout) {
-      clearTimeout(this.user_keyup_timeout);
-    }
-
-    let filterValue = (event.target as HTMLInputElement).value;
-
-    if (filterValue == "") {
-      // delete this.queryParams[key]
-    } else {
-      // this.queryParams[key] = filterValue;
-    }
-
-    this.user_keyup_timeout = setTimeout(() => {
-      this.fetchData(this.contractId);
-    }, 1000);
-  }
-
-  onClearFilter(key: string) {
-    console.log("clear", key)
-  }
-
-  onSortColumn(event: SortEvent, id: number) {
-    let order = (event.order == 1) ? "asc" : "desc";
-    this.sort = this.sort.set(event.field!, order);
-    this.fetchData(id, this.setParams());
-  }
-
-  onPageChange(event: any, id: number) {
-    this.loading = true;
-    this.first = event.first;
-    this.rows = event.rows;
-    this.page = event.page + 1;
-    this.fetchData(id, this.setParams());
-  }
-
-  fetchData(id: number, params?: HttpParams) {
-    this.loading = true;
-    this.report.getProgressByContractId<ResponsePage<ReportProgress>>(id, params)
-      .subscribe((res) => {
-        this.data = res.data;
-        this.totalRecords = res.total;
-        this.rows = res.limit;
-        this.first = (res.page - 1) * this.rows;
-        this.page = res.page;
-        this.loading = false;
-
-      });
-  }
-
   setParams(): HttpParams {
     let params = new HttpParams({
       fromObject: {
@@ -176,10 +126,43 @@ export class ProgressComponent implements OnInit {
       params = params.set(key, this.sort.get(key)!)
     }
     for (var key of this.search.keys()) {
-      params = params.set(key, this.sort.get(key)!)
+      params = params.set(key, this.search.get(key)!)
     }
     return params;
   }
+
+  onSortColumn(event: SortEvent) {
+    let order = (event.order == 1) ? "asc" : "desc";
+    for (var key of this.sort.keys()) {
+      this.sort = this.sort.delete(key)
+    }
+    this.sort = this.sort.set(event.field!, order);
+    this.fetchData(this.contractId!, this.setParams());
+  }
+
+  onFilterColumn(key: string, event: Event) {
+    if (this.user_keyup_timeout) {
+      clearTimeout(this.user_keyup_timeout);
+    }
+
+    let value = (event.target as HTMLInputElement).value;
+
+    if (value == "") {
+      this.search = this.search.delete(key);
+    } else {
+      this.search = this.search.set(key, value);
+    }
+
+    this.user_keyup_timeout = setTimeout(() => {
+      this.fetchData(this.contractId!,this.setParams());
+    }, 3000);
+  }
+
+  onClearFilter(key: string) {
+    this.search = this.search.delete(key);
+    this.fetchData(this.contractId!, this.setParams());
+  }
+
 
   setReportDrafMenu(report: ReportProgress) {
     this.reportManageMenu = [
@@ -275,6 +258,48 @@ export class ProgressComponent implements OnInit {
     // URL.revokeObjectURL(this.src);
     this.pdfComponent.clear();
     // console.log(this.pdfComponent.src);
+  }
+
+  onPageChange(event: any) {
+    this.loading = true;
+    this.first = event.first;
+    this.rows = event.rows;
+    this.page = event.page + 1;
+    this.fetchData(this.contractId!, this.setParams());
+  }
+
+  next() {
+    this.first = this.first + this.rows;
+  }
+
+  prev() {
+    this.first = this.first - this.rows;
+  }
+
+  reset() {
+    this.first = 0;
+  }
+
+  isLastPage(): boolean {
+    return this.data ? this.first === (this.data.length - this.rows) : true;
+  }
+
+  isFirstPage(): boolean {
+    return this.data ? this.first === 0 : true;
+  }
+
+  fetchData(id: number, params?: HttpParams) {
+    this.loading = true;
+    this.report.getProgressByContractId<ResponsePage<ReportProgress>>(id, params)
+      .subscribe((res) => {
+        this.data = res.data;
+        this.totalRecords = res.total;
+        this.rows = res.limit;
+        this.first = (res.page - 1) * this.rows;
+        this.page = res.page;
+        this.loading = false;
+
+      });
   }
 
 }
