@@ -1,13 +1,14 @@
+
 <div class="layout-topbar">
     <div class="flex align-items-center gap-4">
         <a class="flex" routerLink="">
             <img src="assets/img/CPM.svg" alt="logo" width="50" />
         </a>
         <div class="flex flex-column">
-            <span class="font-bold">
+            <span class="font-bold" >
                 PEA Capital Project Management
             </span>
-            <span class="text-md">
+            <span class="text-md ">
                 ระบบบริหารโครงการก่อสร้างระบบไฟฟ้า กฟภ.
             </span>
             <span class="text-md">
@@ -15,6 +16,10 @@
             </span>
         </div>
     </div>
+    <button #menubutton class="ml-2 p-link layout-menu-button layout-topbar-button"
+   (click)="layoutService.onMenuToggle()" >
+    <i class="pi pi-bars"></i>
+  </button>
 
     <button #topbarmenubutton class="p-link layout-topbar-menu-button layout-topbar-button"
         (click)="layoutService.showProfileSidebar()">
