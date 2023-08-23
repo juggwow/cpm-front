@@ -18,7 +18,7 @@
       [display]="'none'" [routerLink]="['progress']"></app-card>
   </div>
 
-  
+
     <div class="row my-5">
       <div class="card">
         <p-table [value]="Boq" [rowHover]="true" [loading]="loading" [lazy]="true" (onSort)="onSortColumn($event)" [tableStyle]="{ 'min-width': '60rem' }" >
@@ -194,7 +194,7 @@
           <p-paginator (onPageChange)="onPageChange($event)" [first]="first" [rows]="rows" [totalRecords]="totalRecords"
             [rowsPerPageOptions]="[5, 10, 50]"></p-paginator>
         </div>
-        
+
       </div>
     </div>
 </div>

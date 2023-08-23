@@ -6,7 +6,7 @@
     <div style="display: inline-flex; align-items: flex-end; gap: 40px;">
       <app-card [title]="'รายการทั้งหมด'" [amount1]="allAmount" [amount2]="allComplete" [amount3]="allIncomplate" [detail1]="'รับของครบ'" [detail2]="'ยังไม่ครบ'" [icon1]="'assets/svg/check_circle_black.svg'" [icon2]="'assets/svg/error_black.svg'" [routerLink]="['../']"></app-card>
       <app-card [title]="'รายการที่ตรวจสอบแล้ว'" [amount1]="checkAmount" [amount2]="checkGood" [amount3]="checkWaste" [detail1]="'ดี'" [detail2]="'พบปัญหา'" [icon1]="'assets/svg/thumb_up_black.svg'" [icon2]="'assets/svg/assignment_late_black.svg'" [routerLink]="['../approve']"></app-card>
-      <app-card [title]="'รายการอยู่ระหว่างดำเนินการ'" [bgcolor]="'#7718bc'" [textcolor]="'#fcfcfc'" [amount1]="progressAmount" [amount2]="0" [amount3]="0" [display]="'none'"></app-card>  
+      <app-card [title]="'รายการอยู่ระหว่างดำเนินการ'" [bgcolor]="'#7718bc'" [textcolor]="'#fcfcfc'" [amount1]="progressAmount" [amount2]="0" [amount3]="0" [display]="'none'"></app-card>
     </div>
     <div class="container">
       <div class="row my-5">
@@ -186,4 +186,3 @@
       style="width: 100%; height: 600px;"></pdf-viewer>
   </div>
 </p-dialog>
-  
