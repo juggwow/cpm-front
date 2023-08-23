@@ -19,6 +19,7 @@ import { PdfViewerComponent, PdfViewerModule } from 'ng2-pdf-viewer';
 import { ImageModule } from 'primeng/image';
 import { GalleriaModule } from 'primeng/galleria';
 import { NgxDropzoneChangeEvent, NgxDropzoneModule } from 'ngx-dropzone';
+import { CarouselModule } from 'primeng/carousel';
 
 @Component({
   selector: 'app-detail-view',
@@ -35,13 +36,24 @@ import { NgxDropzoneChangeEvent, NgxDropzoneModule } from 'ngx-dropzone';
     PdfViewerModule,
     ImageModule,
     GalleriaModule,
-    NgxDropzoneModule
+    NgxDropzoneModule,
+    CarouselModule
   ],
   providers: [FormService, ReportService],
 })
 export class DetailViewComponent implements OnInit {
   @ViewChild(PdfViewerComponent)
   private pdfComponent!: PdfViewerComponent;
+
+  displayCustom: boolean = false;
+
+  activeIndex: number = 0;
+
+  imageClick(index: number) {
+    this.activeIndex = index;
+    this.displayCustom = true;
+}
+
   // Non Mock
   // display: boolean = false;
 
@@ -104,9 +116,9 @@ export class DetailViewComponent implements OnInit {
       // {
       //   src: 'https://primefaces.org/cdn/primeng/images/galleria/galleria7.jpg'
       // },
-      // {
-      //   src: 'https://primefaces.org/cdn/primeng/images/galleria/galleria8.jpg'
-      // },
+      {
+        src: 'https://images.pexels.com/photos/17486592/pexels-photo-17486592/free-photo-of-hand-holding-ice-cream.jpeg'
+      },
       {
         src: 'https://primefaces.org/cdn/primeng/images/galleria/galleria9.jpg',
       },
