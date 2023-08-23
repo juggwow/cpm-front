@@ -1,252 +1,163 @@
-<div class="container">
-  <div class="my-5">
-    <div class="neutral-08 fw-bold fs-4 my-3">บริหารสัญญา</div>
-    <!-- <p-breadcrumb class="max-w-full" [model]="items"
-            [style]="{background:'none',border:'none',padding:'0'}">
-        </p-breadcrumb> -->
-  </div>
-  <div class="row">
-    <div class="col-12">
-      <div class="card ">
-        <div>
-          <div class="row justify-content-between">
-            <div class="col-sm-12 col-md-8">
-              <p class="fs-5 fw-bold">รายละเอียด Receive and Damage </p>
-            </div>
-            <div class="flex justify-content-between flex-wrap card-container purple-container">
-              <div class="flex align-items-center justify-content-center">
-                <button class="btn btn-lg btn-primary  px-5 mx-3 p-button-outlined" pButton (click)="reportPreview()"
-                  icon="pi pi-eye" label="Preview เอกสาร"></button>
-              </div>
-              <div class="flex align-items-center justify-content-center">
-                <button class="btn btn-lg btn-primary  px-5 mx-3 p-button" pButton (click)="reportPreview()"
-                  label="แจ้งผลครวจสอบ"></button>
-              </div>
-            </div>
+<div class="p-0 mt-3">
+    <p class="font-bold text-2xl text-primary mb-4">บริหารสัญญา</p>
+    <div class="flex flex-row align-items-center gap-1 text-xs md:text-base text-secondary mb-4">
+        <span class="m-0 text-center">รายการอนุมัติเอกสาร</span><i class="pi pi-angle-right" style="font-size: 1rem"></i><span class="m-0">Recieve and Damage</span><i class="pi pi-angle-right" style="font-size: 1rem"></i><span class="m-0 font-bold">{{report.invoice.slice(0,20)}}</span><span *ngIf="report.invoice.length>20">...</span>
+      </div>
+    
+      <div class="card">
+        <div class="flex flex-row justify-content-between align-items-center">
+            <p class="text-lg font-bold text-primary m-0"> รายละเอียด Receive and Damage </p>
+            <button class="px-5 mx-3 p-button-outlined" pButton
+                (click)="reportPreview()" icon="pi pi-eye" label="Preview เอกสาร"></button>
+        </div>
+        
+    <hr class="my-4" />
+    <div class="grid grid-nogutter justify-content-between">
+      <div class="col-12 md:col-4">
+        <p class="font-bold text-lg text-primary">อุปกรณ์ที่ส่งมอบ</p>
+      </div>
+      <div class="col-12 m-0 md:col-8">
+        <p class="font-bold text-primary">{{ report.itemName }}</p>
+      </div>
+    </div>
+    <hr class="my-4" />
+    <div class="grid grid-nogutter justify-content-between">
+      <div class="col-12 md:col-4">
+        <p class="font-bold text-primary mb-3 text-lg">รายละเอียดเบื้องต้น</p>
+      </div>
+      <div class="col-12 md:col-8 md:mt-1">
+        <div class="grid grid-nogutter justify-content-between md:mb-4">
+          <div class="col-12 sm:col-6">
+            <p class="text-secondary text-sm mb-0 md:mb-2">
+              วันที่ส่งของถึงหน้างาน
+            </p>
+            <p class="font-bold text-primary mb-3">{{ report.arrival }}</p>
           </div>
-          <hr class="my-3" />
-          <div class="grid">
-            <div class="col-4">
-              <p class="font-bold">อุปกรณ์ที่ส่งมอบ</p>
-            </div>
-            <div class="col-8">
-              <p class="font-bold">{{report.itemName}}</p>
-            </div>
-            <hr class="my-3" />
+          <div class="col-12 mb-3 sm:col-6">
+            <p class="text-secondary text-sm mb-0 md:mb-2">วันที่ตรวจสอบ</p>
+            <p class="font-bold text-primary ">
+              {{ report.inspection }}
+            </p>
           </div>
-          <div class="grid">
-            <div class="col-4">
-              <p class="font-bold">รายละเอียดเบื้องต้น</p>
-            </div>
-            <div class="col-8">
-              <div class="grid">
-                <div class="col-6">
-                  <p>วันที่ส่งของถึงหน้างาน</p>
-                  <p class="font-bold">{{report.arrival}}</p>
-                </div>
-                <div class="col-6">
-                  <p>วันที่ตรวจสอบ</p>
-                  <p class="font-bold">{{report.inspection}}</p>
-                </div>
-              </div>
-              <div class="grid">
-                <div class="col-6">
-                  <p>ชื่อผู้ควบคุมงานของบริษัท</p>
-                  <p class="font-bold">{{report.taskMaster}}</p>
-                </div>
-              </div>
-            </div>
-            <hr class="my-3" />
+        </div>
+        <div class="grid grid-nogutter my-0 justify-content-between">
+          <div class="col-12 sm:col-6">
+            <p class="text-secondary text-sm mb-0 md:mb-2">
+              ชื่อผู้ควบคุมงานของบริษัท
+            </p>
+            <p class="font-bold text-primary">{{ report.taskMaster }}</p>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+    <hr class="my-4" />
+    <div class="grid grid-nogutter justify-content-between">
+      <div class="col-12 md:col-4">
+        <p class="font-bold text-primary text-lg mb-3">เอกสารการส่ง</p>
+      </div>
+      <div class="col-12 md:col-8 md:mt-1">
+        <div class="grid grid-nogutter justify-content-between">
+          <div class="md:col-12">
+            <p class="text-secondary text-sm mb-0 md:mb-2">เลขที่ใบส่ง</p>
+            <p class="font-bold text-primary">{{ report.invoice }}</p>
           </div>
 
-          <div class="grid">
-            <div class="col-4">
-              <p class="font-bold">เอกสารการส่ง</p>
-            </div>
-            <div class="col-8">
-              <div class="row justify-content-between">
-                <div class="col-md-12">
-                  <p>เลขที่ใบส่ง</p>
-                  <p class="font-bold">{{report.invoice}}</p>
-                </div>
-
-                <div class="col-md-12 my-5">
-                  <div *ngFor="let d of doctype">
-                    <p *ngIf="filteredAttachFiles(d.id)">{{ d.name }}</p>
-                    <div *ngFor="let af of file">
-                      <div class="row bg-light text-dark m-3 p-2">
-                        <div class="flex justify-content-between">
-                          <div class="grid">
-                            <div class="col-md-1">
-                              <div class="flex bg-primary rounded mr-4 justify-content-center font-bold h-4rem" style="width:50px; border-radius: 1.5rem;">
-                                <p class="flex align-items-center" >PDF</p>
-                              </div>
-                            </div>
-                            <div class="col-md-9">
-                              <p class="font-bold"> {{ af.name }} </p>
-                              <p> ขนาดไฟล์ {{ af.size }} {{ af.unit }} </p>
-                            </div>
-                          </div>
-                          <div class="col-md-1">
-                            <p-button icon="pi pi-ellipsis-v" styleClass="p-button-rounded p-button-text"
-                              (click)="ShowMenuManage(af.id,af.name);menu.toggle($event);"></p-button>
-                            <p-menu #menu [model]="manageMenu" [popup]="true" appendTo="body"></p-menu>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+          <div class="col-12 my-5">
+            <div *ngFor="let d of doctype" class="mb-3">
+              <p *ngIf="filteredAttachFiles(d.id)" class="text-secondary text-sm mb-2 ">{{ d.name }}</p>
+              <div *ngFor="let af of file">
+                <div class="grid grid-nogutter border-round-sm bg-light p-3 mb-1">
+                  <div class="col-fixed">
+                    <img class="hidden sm:block" src="./../../../assets/svg/File-pdf-document.svg" width="48px" height="48px" />
+                  </div>
+                  <div class="col ml-3">
+                    <p class="font-bold">{{ af.name }}</p>
+                    <p class="text-xs">ขนาดไฟล์ {{ af.size }} {{ af.unit }}</p>
+                  </div>
+                  <div
+                    class="col-fixed align-self-center"
+                    style="width: 50px"
+                  >
+                    <p-button
+                      icon="pi pi-ellipsis-v"
+                      styleClass="p-button-rounded p-button-text"
+                      (click)="
+                        ShowMenuManage(af.id, af.name);
+                        menu.toggle($event)
+                      "
+                    ></p-button>
+                    <p-menu
+                      #menu
+                      [model]="manageMenu"
+                      [popup]="true"
+                      appendTo="body"
+                    ></p-menu>
                   </div>
                 </div>
               </div>
             </div>
-            <hr class="my-3" />
-          </div>
-
-          <div class="row justify-content-between">
-            <div class="col-sm-12 col-md-4">
-              <p class="fw-bold">รายละเอียดอุปกรณ์ไฟฟ้าที่ส่ง</p>
-            </div>
-
-            <div class="col-sm-12 col-md-8">
-              <div class="row my-3 justify-content-between">
-                <div class="col-md-6">
-                  <p>จำนวนอุปกรณ์ที่ต้องการส่งมอบ</p>
-                  <p class="fw-bold">{{report.quantity}} {{report.itemUnit}}</p>
-                </div>
-                <div class="col-md-6">
-                  <p>ประเทศผู้ผลิต</p>
-                  <p class="fw-bold">{{report.country}}</p>
-                </div>
-              </div>
-              <div class="row my-3 justify-content-between">
-                <div class="col-md-6">
-                  <p>ยี่ห้อ (Brand)</p>
-                  <p class="fw-bold">{{report.brand}}</p>
-                </div>
-                <div class="col-md-6">
-                  <p>รุ่น</p>
-                  <p class="fw-bold">{{report.model}}</p>
-                </div>
-              </div>
-              <div class="row my-3  justify-content-between">
-                <div class="col-md-6">
-                  <p>Serial Number</p>
-                  <p class="fw-bold">{{report.serial}}</p>
-                </div>
-                <div class="col-md-6">
-                  <p>PEA No.</p>
-                  <p class="fw-bold">{{report.peano}}</p>
-                </div>
-              </div>
-
-            </div>
           </div>
         </div>
       </div>
-      <div class="col text-center">
-        <button class="btn btn-lg btn-primary  px-5 mx-3 p-button-outlined" pButton
-          [routerLink]="['/contract',contractId,'item',itemId,'report']">ย้อนกลับ</button>
+    
+    </div>
+    <hr class="mb-4" />
+    <div class="grid grid-nogutter justify-content-between">
+      <div class="col-12 md:col-4 text-lg">
+        <p class="font-bold">รายละเอียดอุปกรณ์ไฟฟ้าที่ส่ง</p>
+      </div>
+
+      <div class="col-12 md:col-8 md:mt-1">
+        <div class="grid grid-nogutter mt-3 md:mt-0 justify-content-between">
+          <div class="col-12 sm:col-6">
+            <p class="mb-0 text-secondary text-sm md:mb-2">จำนวนอุปกรณ์ที่ต้องการส่งมอบ</p>
+            <p class="font-bold mb-3">
+              {{ report.quantity }} {{ report.itemUnit }}
+            </p>
+          </div>
+          <div class="col-12 sm:col-6">
+            <p class="mb-0 text-secondary text-sm md:mb-2">ประเทศผู้ผลิต</p>
+            <p class="font-bold md:mb-3">{{ report.country }}</p>
+          </div>
+        </div>
+        <div class="grid grid-nogutter my-3 justify-content-between">
+          <div class="col-12 sm:col-6">
+            <p class="mb-0 text-secondary text-sm md:mb-2">ยี่ห้อ (Brand)</p>
+            <p class="font-bold mb-3">{{ report.brand }}</p>
+          </div>
+          <div class="col-12 sm:col-6">
+            <p class="mb-0 text-secondary text-sm md:mb-2">รุ่น</p>
+            <p class="font-bold md:mb-3">{{ report.model }}</p>
+          </div>
+        </div>
+        <div class="grid grid-nogutter my-3 justify-content-between">
+          <div class="col-12 sm:col-6">
+            <p class="mb-0 text-secondary text-sm md:mb-2">Serial Number</p>
+            <p class="font-bold mb-3">{{ report.serial }}</p>
+          </div>
+          <div class="col-12 sm:col-6">
+            <p class="mb-0 text-secondary text-sm md:mb-2">PEA No.</p>
+            <p class="font-bold mb-3">{{ report.peano }}</p>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-  <p-dialog [(visible)]="display" [modal]="true" [style]="{width: '80vw'}" [maximizable]="false" [draggable]="false"
-    [resizable]="false" (onHide)="onHide()">
-    <!-- <div id="outerContainer"> -->
-    <div class="pdf-container">
-      <pdf-viewer [src]="src" [rotation]="0" [original-size]="false" [show-all]="true"
-        style="width: 100%; height: 600px;"></pdf-viewer>
-    </div>
-    <!-- </div> -->
-  </p-dialog>
-
-  <p-dialog header="แจ้งผลการตรวจสอบอุปกรณ์" [(visible)]="displayExam" [modal]="true" [style]="{width: '50vw'}"
-    [maximizable]="false" [draggable]="false" [resizable]="false" (onHide)="onHide()">
-
-
-    <div class="grid">
-      <div class="col-9 ">ชื่ออุปกรณ์</div>
-      <div class="col-3  text-center">จำนวน</div>
-      <div class="col-9 font-bold ">On/oad tap-changing power transformer three-phase, 115-22 kV, 30/40/50 MVA (Dynl)
-      </div>
-      <div class="col-3 font-bold text-center">1 unit</div>
-      <div class="col-9 ">
-
-
-
-        <div class="flex flex-column gap-3">
-          <div *ngFor="let category of categories" class="field-checkbox">
-            <p-radioButton [inputId]="category.key" name="category" [value]="category" [(ngModel)]="selectedCategory">
-            </p-radioButton>
-            <label [for]="category.key" class="ml-2">{{ category.name }}</label>
-          </div>
-        </div>
-
-        <input type="text" pInputText [(ngModel)]="value" />
-        <div class="field grid">
-          <div class="col">
-            <p-inputNumber inputmode="none" [(ngModel)]="damageCount" (ngModelChange)="changeproblem($event)"   placeholder="ระบุจำนวน" class="job-daily__input-number--small ml-5"  id="damageCount"  >  </p-inputNumber>
-            <label for="damageCount"  class="col-fixed text-1xl"> มีความเสียหาย </label>
-          </div>
-        </div>
-        <div class="field grid">
-          <div class="col">
-            <p-inputNumber  [(ngModel)]="incompleteCount"  placeholder="ระบุจำนวน" class="job-daily__input-number--small ml-5" id="incompleteCount" > </p-inputNumber>
-            <label for="incompleteCount"  class="col-fixed text-1xl"> ของไม่ครบ </label>
-          </div>
-        </div>
-        <div class="field grid">
-          <div class="col">
-            <p-inputNumber  [(ngModel)]="incompleteCountContract"   placeholder="ระบุจำนวน" class="job-daily__input-number--small ml-5" id="incompleteCountContract" ></p-inputNumber>
-            <label for="incompleteCountContract"  class="col-fixed text-1xl"> ของไม่ตรงตามสัญญา </label>
-          </div>
-        </div>
-        <div class="field grid">
-          <div class="col">
-            <p-inputNumber [(ngModel)]="goodCount"   placeholder="ระบุจำนวน" class="job-daily__input-number--small ml-5" id="goodCount" > </p-inputNumber>
-            <label for="goodCount"  class="col-fixed text-1xl"> คงเหลือสถาพดี </label>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-12" *ngIf="selectedCategory == categories[1]">
-        <label class="font-bold" htmlFor="seeAlso">ความคิดเห็นเพิ่มเติม (ถ้ามี)</label>
-        <input pInputText
-          class="gap-3 text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
-          id="seeAlso" />
-      </div>
-
-      <div class="col-12">
-        <ngx-dropzone (change)="onSelect($event)">
-          <ngx-dropzone-label>
-            ลากไฟล์มาไว้ที่นี้ หรือ
-            <span class="text-primary fw-bold">เลือกไฟล์เพื่ออัปโหลด</span>
-            <br />
-            <span>ไฟล์ขนาดไม่เกิน 2 MB (เฉพาะ png jpeg เท่านั้น)</span>
-          </ngx-dropzone-label>
-          <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let f of files" [file]="f"
-            [removable]="true" (removed)="onRemove(f)">
-            <!-- <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label> -->
-          </ngx-dropzone-image-preview>
-        </ngx-dropzone>
-
-
-      </div>
-
-
-
-
-
-      <div class="col-12 text-center">
-        <button class="btn btn-lg btn-primary  px-5 mx-5 p-button" pButton (click)="confirm1()"
-          label="   ตกลง   "></button>
-      </div>
-
-      <p-confirmDialog [style]="{width: '25vw'}"></p-confirmDialog>
-
-
-    </div>
-  </p-dialog>
-
-
-
 </div>
+    <p-dialog [(visible)]="display" [modal]="true" [style]="{width: '80vw'}" [maximizable]="false" [draggable]="false"
+        [resizable]="false" (onHide)="onHide()">
+        <!-- <div id="outerContainer"> -->
+        <div class="pdf-container">
+            <pdf-viewer [src]="src" [rotation]="0" [original-size]="false" [show-all]="true"
+                style="width: 100%; height: 600px;"></pdf-viewer>
+        </div>
+        <!-- </div> -->
+    </p-dialog>
+</div>
+
+
+
+
+
+
+
