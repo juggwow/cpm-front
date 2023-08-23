@@ -1,92 +1,81 @@
-<div class="container">
-  <div class="my-5">
-    <div class="neutral-08 fw-bold text-2xl my-3">บริหารสัญญา</div>
-    <!-- <p-breadcrumb class="max-w-full" [model]="items"
-            [style]="{background:'none',border:'none',padding:'0'}">
-        </p-breadcrumb> -->
-  </div>
-  <div class="flex flex-row justify-content-between align-items-start align-items-center mb-3">
+<div class="p-0 mt-3">
+  <p class="font-bold text-2xl text-primary mb-4">บริหารสัญญา</p>
+  
+  <div class="flex flex-row justify-content-between align-items-center align-self-center mb-3">
     <div class="flex flex-row align-items-center gap-1 text-xs md:text-base text-secondary">
-      <span class="m-0 text-center">บริหารสัญญา</span><i class="pi pi-angle-right" style="font-size: 1rem"></i><span class="m-0">สระบุรี 1</span><i class="pi pi-angle-right" style="font-size: 1rem"></i><span class="m-0">Recieve and Damage</span><i class="pi pi-angle-right" style="font-size: 1rem"></i><span class="m-0 fw-bold">{{report.invoice.slice(0,20)}}</span><span *ngIf="report.invoice.length>20">...</span>
+      <span class="m-0 text-center">บริหารสัญญา</span><i class="pi pi-angle-right" style="font-size: 1rem"></i><span class="m-0">สระบุรี 1</span><i class="pi pi-angle-right" style="font-size: 1rem"></i><span class="m-0">Recieve and Damage</span><i class="pi pi-angle-right" style="font-size: 1rem"></i><span class="m-0 font-bold">{{report.invoice.slice(0,20)}}</span><span *ngIf="report.invoice.length>20">...</span>
     </div>
     <p *ngIf="comment.overAll == 'พบปัญหา'" class="text-red">พบปัญหา</p>
     <p *ngIf="comment.overAll == 'รับของเรียบร้อย'" class="text-green">
       รับของเรียบร้อย
     </p>
   </div>
-  <div class="row">
-    <div class="col-12">
       <div class="card">
-        <div>
-          <div class="row justify-content-between">
-            <div class="col-sm-12 col-md-8">
-              <p class="text-lg fw-bold text-primary">
+              <p class="text-lg font-bold text-primary m-0">
                 รายละเอียด Receive and Damage
               </p>
+          <hr class="my-4" />
+          <div class="grid grid-nogutter justify-content-between">
+            <div class="col-12 md:col-4">
+              <p class="font-bold text-lg text-primary">อุปกรณ์ที่ส่งมอบ</p>
+            </div>
+            <div class="col-12 m-0 md:col-8">
+              <p class="font-bold text-primary">{{ report.itemName }}</p>
             </div>
           </div>
-          <hr class="my-3" />
-          <div class="row justify-content-between">
-            <div class="col-sm-12 col-md-4">
-              <p class="fw-bold text-lg text-primary">อุปกรณ์ที่ส่งมอบ</p>
+          <hr class="my-4" />
+          <div class="grid grid-nogutter justify-content-between">
+            <div class="col-12 md:col-4">
+              <p class="font-bold text-primary mb-3 text-lg">รายละเอียดเบื้องต้น</p>
             </div>
-            <div class="col-sm-12 col-md-8">
-              <p class="fw-bold text-primary">{{ report.itemName }}</p>
-            </div>
-            <hr class="my-3" />
-          </div>
-          <div class="row justify-content-between">
-            <div class="col-sm-12 col-md-4">
-              <p class="fw-bold text-primary mb-3 text-lg">รายละเอียดเบื้องต้น</p>
-            </div>
-            <div class="col-sm-12 col-md-8 md:mt-1">
-              <div class="row justify-content-between">
-                <div class="col-md-6">
-                  <p class="text-secondary text-sm mb-0 md:mb-3">
+            <div class="col-12 md:col-8 md:mt-1">
+              <div class="grid grid-nogutter justify-content-between md:mb-4">
+                <div class="col-12 sm:col-6">
+                  <p class="text-secondary text-sm mb-0 md:mb-2">
                     วันที่ส่งของถึงหน้างาน
                   </p>
-                  <p class="fw-bold text-primary mb-3">{{ report.arrival }}</p>
+                  <p class="font-bold text-primary mb-3">{{ report.arrival }}</p>
                 </div>
-                <div class="col-md-6">
-                  <p class="text-secondary text-sm mb-0 md:mb-3">วันที่ตรวจสอบ</p>
-                  <p class="fw-bold text-primary mb-3">
+                <div class="col-12 mb-3 sm:col-6">
+                  <p class="text-secondary text-sm mb-0 md:mb-2">วันที่ตรวจสอบ</p>
+                  <p class="font-bold text-primary ">
                     {{ report.inspection }}
                   </p>
                 </div>
               </div>
-              <div class="row my-0 justify-content-between">
-                <div class="col-md-12">
-                  <p class="text-secondary text-sm mb-0 md:mb-3">
+              <div class="grid grid-nogutter my-0 justify-content-between">
+                <div class="col-12 sm:col-6">
+                  <p class="text-secondary text-sm mb-0 md:mb-2">
                     ชื่อผู้ควบคุมงานของบริษัท
                   </p>
-                  <p class="fw-bold text-primary">{{ report.taskMaster }}</p>
+                  <p class="font-bold text-primary">{{ report.taskMaster }}</p>
                 </div>
               </div>
             </div>
-            <hr class="my-3" />
+            
           </div>
-
-          <div class="row justify-content-between">
-            <div class="col-sm-12 col-md-4">
-              <p class="fw-bold text-primary text-lg mb-3">เอกสารการส่ง</p>
+          <hr class="my-4" />
+          <div class="grid grid-nogutter justify-content-between">
+            <div class="col-12 md:col-4">
+              <p class="font-bold text-primary text-lg mb-3">เอกสารการส่ง</p>
             </div>
-            <div class="col-sm-12 col-md-8 md:mt-1">
-              <div class="row justify-content-between">
-                <div class="col-md-12">
-                  <p class="text-secondary text-sm mb-0 md:mb-3">เลขที่ใบส่ง</p>
-                  <p class="fw-bold text-primary">{{ report.invoice }}</p>
+            <div class="col-12 md:col-8 md:mt-1">
+              <div class="grid grid-nogutter justify-content-between">
+                <div class="md:col-12">
+                  <p class="text-secondary text-sm mb-0 md:mb-2">เลขที่ใบส่ง</p>
+                  <p class="font-bold text-primary">{{ report.invoice }}</p>
                 </div>
 
-                <div class="col-md-12 my-5">
+                <div class="col-12 my-5">
                   <div *ngFor="let d of doctype" class="mb-3">
-                    <p *ngIf="filteredAttachFiles(d.id)" class="text-secondary text-sm ">{{ d.name }}</p>
+                    <p *ngIf="filteredAttachFiles(d.id)" class="text-secondary text-sm mb-2 ">{{ d.name }}</p>
                     <div *ngFor="let af of file">
-                      <div class="grid border-round bg-light pr-3">
-                        <div class="col-fixed flex bg-contain">
+                      <div class="grid grid-nogutter border-round-sm bg-light p-3 mb-1">
+                        <div class="col-fixed">
                           <img class="hidden sm:block" src="./../../../assets/svg/File-pdf-document.svg" width="48px" height="48px" />
                         </div>
-                        <div class="col">
-                          <p class="fw-bold">{{ af.name }}</p>
+                        <div class="col ml-3">
+                          <p class="font-bold">{{ af.name }}</p>
                           <p class="text-xs">ขนาดไฟล์ {{ af.size }} {{ af.unit }}</p>
                         </div>
                         <div
@@ -114,58 +103,57 @@
                 </div>
               </div>
             </div>
-            <hr class="my-3" />
+          
           </div>
-
-          <div class="row justify-content-between">
-            <div class="col-sm-12 col-md-4 text-lg">
-              <p class="fw-bold">รายละเอียดอุปกรณ์ไฟฟ้าที่ส่ง</p>
+          <hr class="mb-4" />
+          <div class="grid grid-nogutter justify-content-between">
+            <div class="col-12 md:col-4 text-lg">
+              <p class="font-bold">รายละเอียดอุปกรณ์ไฟฟ้าที่ส่ง</p>
             </div>
 
-            <div class="col-sm-12 col-md-8 md:mt-1">
-              <div class="row mt-3 md:mt-0 justify-content-between">
-                <div class="col-md-6">
-                  <p class="mb-0 text-secondary text-sm md:mb-3">จำนวนอุปกรณ์ที่ต้องการส่งมอบ</p>
-                  <p class="fw-bold mb-3">
+            <div class="col-12 md:col-8 md:mt-1">
+              <div class="grid grid-nogutter mt-3 md:mt-0 justify-content-between">
+                <div class="col-12 sm:col-6">
+                  <p class="mb-0 text-secondary text-sm md:mb-2">จำนวนอุปกรณ์ที่ต้องการส่งมอบ</p>
+                  <p class="font-bold mb-3">
                     {{ report.quantity }} {{ report.itemUnit }}
                   </p>
                 </div>
-                <div class="col-md-6">
-                  <p class="mb-0 text-secondary text-sm md:mb-3">ประเทศผู้ผลิต</p>
-                  <p class="fw-bold md:mb-3">{{ report.country }}</p>
+                <div class="col-12 sm:col-6">
+                  <p class="mb-0 text-secondary text-sm md:mb-2">ประเทศผู้ผลิต</p>
+                  <p class="font-bold md:mb-3">{{ report.country }}</p>
                 </div>
               </div>
-              <div class="row my-3 justify-content-between">
-                <div class="col-md-6">
-                  <p class="mb-0 text-secondary text-sm md:mb-3">ยี่ห้อ (Brand)</p>
-                  <p class="fw-bold mb-3">{{ report.brand }}</p>
+              <div class="grid grid-nogutter my-3 justify-content-between">
+                <div class="col-12 sm:col-6">
+                  <p class="mb-0 text-secondary text-sm md:mb-2">ยี่ห้อ (Brand)</p>
+                  <p class="font-bold mb-3">{{ report.brand }}</p>
                 </div>
-                <div class="col-md-6">
-                  <p class="mb-0 text-secondary text-sm md:mb-3">รุ่น</p>
-                  <p class="fw-bold md:mb-3">{{ report.model }}</p>
+                <div class="col-12 sm:col-6">
+                  <p class="mb-0 text-secondary text-sm md:mb-2">รุ่น</p>
+                  <p class="font-bold md:mb-3">{{ report.model }}</p>
                 </div>
               </div>
-              <div class="row my-3 justify-content-between">
-                <div class="col-md-6">
-                  <p class="mb-0 text-secondary text-sm md:mb-3">Serial Number</p>
-                  <p class="fw-bold mb-3">{{ report.serial }}</p>
+              <div class="grid grid-nogutter my-3 justify-content-between">
+                <div class="col-12 sm:col-6">
+                  <p class="mb-0 text-secondary text-sm md:mb-2">Serial Number</p>
+                  <p class="font-bold mb-3">{{ report.serial }}</p>
                 </div>
-                <div class="col-md-6">
-                  <p class="mb-0 text-secondary text-sm md:mb-3">PEA No.</p>
-                  <p class="fw-bold mb-3">{{ report.peano }}</p>
+                <div class="col-12 sm:col-6">
+                  <p class="mb-0 text-secondary text-sm md:mb-2">PEA No.</p>
+                  <p class="font-bold mb-3">{{ report.peano }}</p>
                 </div>
               </div>
             </div>
-
-            <hr class="my-3" />
           </div>
-          <div class="row justify-content-between">
-            <div class="col-sm-12 col-md-4 mb-3 md:mb-0">
-              <p class="fw-bold text-lg">ความคิดเห็นของ กฟภ.</p>
+          <hr class="my-3" />
+          <div class="grid grid-nogutter justify-content-between">
+            <div class="col-12 md:col-4 mb-3 md:mb-0">
+              <p class="font-bold text-lg">ความคิดเห็นของ กฟภ.</p>
             </div>
 
-            <div class="col-sm-12 col-md-8 mt-3">
-              <div class="grid">
+            <div class="col-12 md:col-8">
+              <div class="grid grid-nogutter">
                 <div
                   *ngIf="comment.problem.damage + comment.problem.lost > 0"
                   class="p-0 col-6 text-sm text-primary"
@@ -181,7 +169,7 @@
                     *ngIf="comment.problem.damage > 0"
                     class="flex flex-row gap-3 md:mt-3"
                   >
-                    <p class="ml-3 my-0">มีความเสียหาย</p>
+                    <p class="my-0">มีความเสียหาย</p>
                     <p class="my-0">{{ comment.problem.damage }}</p>
                     <p>รายการ</p>
                   </div>
@@ -189,7 +177,7 @@
                     *ngIf="comment.problem.lost > 0"
                     class="flex flex-row gap-3 md:mt-3"
                   >
-                    <p class="ml-3">ของไม่ครบ</p>
+                    <p>ของไม่ครบ</p>
                     <p class="my-0">{{ comment.problem.lost }}</p>
                     <p>รายการ</p>
                   </div>
@@ -205,68 +193,63 @@
                   </div>
                 </div>
               </div>
-              <p-galleria
-                [value]="comment.images"
-                [containerStyle]="{ 'max-width': '640px' }"
-                [numVisible]="3"
-              >
-                <ng-template pTemplate="item" let-item>
-                  <img [src]="item.src" style="width: 100%" />
-                </ng-template>
-                <ng-template pTemplate="thumbnail" let-item>
-                  <div class="grid grid-nogutter justify-content-center">
-                    <img [src]="item.src" style="max-width: 100%" />
-                  </div>
-                </ng-template>
-              </p-galleria>
+              <div class="flex flex-row flex-wrap align-self-auto gap-1">
+                <div *ngFor="let image of comment.images" class="mb-1">
+                  <p-image src={{image.src}} width="224px" height="180" [preview]="true" alt="Image">
+                    <ng-template pTemplate="indicator">
+                        <i class="pi pi-search"></i>
+                    </ng-template>
+                  </p-image>
+                </div>
+              </div>
+              
+              
+             
               <div class="flex flex-column my-3">
-                <p class="mb-0 text-sm text-secondary md:mb-3">ข้อคิดเห็นเพิ่มเติม</p>
-                <p class="fw-bold text-primary">{{ comment.extraComment }}</p>
+                <p class="mb-0 text-sm text-secondary md:mb-2">ข้อคิดเห็นเพิ่มเติม</p>
+                <p class="font-bold text-primary">{{ comment.extraComment }}</p>
               </div>
             </div>
           </div>
-          <hr class="my-3" />
-          <div class="row justify-content-between">
-            <div class="col-sm-12 col-md-4 mb-3 md:mb-0">
-              <p class="fw-bold">ไฟล์เอกสารใบส่ง (พร้อมลายเซ็นต์)</p>
+          <hr class="my-4" />
+          <div class="grid grid-nogutter justify-content-between">
+            <div class="col-12 md:col-4 mb-3 md:mb-0">
+              <p class="font-bold">ไฟล์เอกสารใบส่ง (พร้อมลายเซ็นต์)</p>
             </div>
 
-            <div class="col-sm-12 col-md-8 align-items-start">
-                <ngx-dropzone class="h-10rem mb-3" (change)="onSelectFileUpload($event)">
+            <div class="col-12 md:col-8 align-items-start">
+                <ngx-dropzone class="text-base mb-3" (change)="onSelectFileUpload($event)">
                     <ngx-dropzone-label>
                         ลากไฟล์มาไว้ที่นี้ หรือ
-                        <span class="text-primary fw-bold">เลือกไฟล์เพื่ออัปโหลด</span>
+                        <span class="text-pea font-bold">เลือกไฟล์เพื่ออัปโหลด</span>
                         <br />
                         <span>ไฟล์ขนาดไม่เกิน 50 MB (เฉพาะ .pdf เท่านั้น)</span>
                     </ngx-dropzone-label>
                 </ngx-dropzone>
-                <ngx-dropzone-preview *ngFor="let f of files;  index as i"
-                    class="mw-100 justify-content-start d-block">
-                    <ngx-dropzone-label class="grid border-round bg-light mb-0 mx-0 pr-3">
-                        <div class="col-fixed flex bg-contain">
+                
+                    <div *ngFor="let f of files;  index as i" class="grid grid-nogutter border-round-sm bg-light p-3 mb-1 mx-0 align-items-center">
+                        <div class="col-fixed">
                             <img class=" hidden md:block" src="./../../../assets/svg/File-pdf-document.svg" width="48px" height="48px" />
                         </div>
                         
-                        <div class="col">
-                            <p class="fw-bold"> {{ f.name }} </p>
-                            <p> ขนาดไฟล์ {{ b2s(f.size) }} </p>
+                        <div class="col ml-3">
+                            <p class="font-bold"> {{ f.name }} </p>
+                            <p class="text-xs"> ขนาดไฟล์ {{ b2s(f.size) }} </p>
                         </div>
                         <div
-                          class="col-fixed align-self-center"
+                          class="col-fixed"
                           style="width: 50px"
                         >
                             <p-button icon="pi pi-trash" styleClass="p-button-rounded p-button-text"
                                 (click)="onRemoveFileUpload(f,i)"></p-button>
                         </div>
-                    </ngx-dropzone-label>
-                </ngx-dropzone-preview>
+                    </div>
                 <div class="flex flex-row justify-content-center " *ngIf="files.length>0">
                     <button class="btn btn-lg btn-primary px-5 mx-3 p-button-outlined" pButton>แนบเอกสาร</button>
                     <button class="btn btn-lg btn-primary px-5 mx-3 p-button-outlined" pButton>ยกเลิกเอกสาร</button>
                 </div>
             </div>
           </div>
-        </div>
       </div>
       <div class="col text-center">
         <button
@@ -277,8 +260,6 @@
           ย้อนกลับ
         </button>
       </div>
-    </div>
-  </div>
   <p-dialog
     [(visible)]="display"
     [modal]="true"
