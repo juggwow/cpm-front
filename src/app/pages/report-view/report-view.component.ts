@@ -10,6 +10,7 @@ import { FormService } from 'src/app/services/form.service';
 import { ReportService } from 'src/app/services/report.service';
 import { DialogModule } from 'primeng/dialog';
 import { PdfViewerComponent, PdfViewerModule } from 'ng2-pdf-viewer';
+import { EditReportComponent } from './edit-report/edit-report.component';
 
 @Component({
   selector: 'app-report-view',
@@ -24,6 +25,7 @@ import { PdfViewerComponent, PdfViewerModule } from 'ng2-pdf-viewer';
     MenuModule,
     DialogModule,
     PdfViewerModule,
+    EditReportComponent
   ]
   ,
   providers: [FormService, ReportService]
@@ -32,6 +34,8 @@ export class ReportViewComponent implements OnInit {
 
   @ViewChild(PdfViewerComponent)
   private pdfComponent!: PdfViewerComponent;
+  
+  role = 'A'
   
   display: boolean = false;
 
@@ -66,7 +70,7 @@ export class ReportViewComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private form: FormService,
-    private r: ReportService
+    private r: ReportService,
   ) { }  
 
   blob2Base64 = (blob: Blob): Promise<string> => {
