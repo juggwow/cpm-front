@@ -17,6 +17,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService, MessageService, ConfirmEventType } from 'primeng/api';
 import { InputNumberModule } from 'primeng/inputnumber';import { EditReportComponent } from './edit-report/edit-report.component';
+import { EditReportComponent } from './edit-report/edit-report.component';
 
 @Component({
 
@@ -48,6 +49,11 @@ export class ReportViewComponent implements OnInit {
 
   @ViewChild(PdfViewerComponent)
   value5=2;
+  private pdfComponent!: PdfViewerComponent;
+  
+  role = 'A'
+  
+  display: boolean = false;
 
   value : string ="xxxx";
   damageCount : number =22;
@@ -170,6 +176,7 @@ onRemove(event: File) {
   console.log(event);
   this.files.splice(this.files.indexOf(event), 1);
 }
+  ) { }  
 
   blob2Base64 = (blob: Blob): Promise<string> => {
     return new Promise<string>((resolve, reject) => {

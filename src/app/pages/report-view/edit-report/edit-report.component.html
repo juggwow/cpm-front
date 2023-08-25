@@ -1,3 +1,4 @@
+<p-button *ngIf="role=='A'" icon="pi pi-pencil" styleClass="p-button-rounded p-button-text" (click)="editForm=true"></p-button>
 <p-dialog (onHide)="setFormData()" [(visible)]="editForm" header="แก้ไขรายละเอียดเบื้องต้น" [style]="{ width: '500px',margin: '1rem' }" [contentStyle]="{'overflow': 'visible'}" [modal]="true" [maximizable]="false" [draggable]="false" [resizable]="false">
     <form [formGroup]="fg">
       <div *ngIf="subFormShow==1">
@@ -5,6 +6,40 @@
         <p-calendar id="arrival" [(ngModel)]="fg.value.arrival" dateFormat="yy-mm-dd" formControlName="arrival" styleClass="w-full mb-3" [showIcon]="true" [showIcon]="true" ></p-calendar>
         <label for="inspection" class="text-primary text-sm mb-1">วันที่ตรวจสอบ</label>
         <p-calendar id="inspection" [(ngModel)]="fg.value.inspection" dateFormat="yy-mm-dd" formControlName="inspection" styleClass="w-full mb-3" [showIcon]="true" [showIcon]="true" ></p-calendar>
+        <p-calendar id="arrival" dateFormat="dd/mm/yy" formControlName="arrival" styleClass="w-full mb-3" [showIcon]="true" [showIcon]="true" ></p-calendar>
+        <label for="inspection" class="text-primary text-sm mb-1">วันที่ตรวจสอบ</label>
+        <p-calendar id="inspection" dateFormat="dd/mm/yy" formControlName="inspection" styleClass="w-full mb-3" [showIcon]="true" [showIcon]="true" ></p-calendar>
+        <label for="taskMaster" class="text-primary text-sm mb-1">ชื่อผู้ควบคุมงานของบริษัท</label>
+        <input id="taskMaster" formControlName="taskMaster" type="text" pInputText class="w-full mb-3"/>
+      </div>
+      <div *ngIf="subFormShow==2">
+        <label for="invoice" class="text-primary text-sm mb-1">เลขที่ใบส่ง</label>
+        <input id="invoice" formControlName="invoice" type="text" pInputText class="w-full mb-3"/>
+      </div>
+      <div *ngIf="subFormShow==3">
+        <label for="quantity" class="text-primary text-sm mb-1">จำนวนอุปกรณ์ที่ต้องการส่งมอบ</label>
+        <input id="quantity" formControlName="quantity" type="number" pInputText class="w-full mb-3"/>
+        <label for="country" class="text-primary text-sm mb-1">ประเทศผู้ผลิต</label>
+        <input id="country" formControlName="country" type="text" pInputText class="w-full mb-3"/>
+        <label for="brand" class="text-primary text-sm mb-1">ยี่ห้อ (Brand)</label>
+        <input id="brand" formControlName="brand" type="text" pInputText class="w-full mb-3"/>
+        <label for="model" class="text-primary text-sm mb-1">รุ่น</label>
+        <input id="model" formControlName="model" type="text" pInputText class="w-full mb-3"/>
+        <label for="serial" class="text-primary text-sm mb-1">Serial Number</label>
+        <input id="serial" formControlName="serial" type="text" pInputText class="w-full mb-3"/>
+        <label for="peano" class="text-primary text-sm mb-1">PEA No.</label>
+        <input id="peano" formControlName="peano" type="text" pInputText class="w-full mb-3"/>
+      </div>
+      <p-button type="submit" (onClick)="onSubmit($event)" styleClass="px-6 mx-auto flex align-items-center">ตกลง</p-button>
+    </form>
+  </p-dialog><p-dialog (onHide)="setFormData()" [(visible)]="editForm" header="แก้ไขรายละเอียดเบื้องต้น" [style]="{ width: '500px',margin: '1rem' }" [contentStyle]="{'overflow': 'visible'}" [modal]="true" [maximizable]="false" [draggable]="false" [resizable]="false">
+      
+    <form [formGroup]="fg">
+      <div *ngIf="subFormShow==1">
+        <label for="arrival" class="text-primary text-sm mb-1">วันที่ของถึงหน้างาน</label>
+        <p-calendar id="arrival" dateFormat="dd/mm/yy" formControlName="arrival" styleClass="w-full mb-3" [showIcon]="true" [showIcon]="true" ></p-calendar>
+        <label for="inspection" class="text-primary text-sm mb-1">วันที่ตรวจสอบ</label>
+        <p-calendar id="inspection" dateFormat="dd/mm/yy" formControlName="inspection" styleClass="w-full mb-3" [showIcon]="true" [showIcon]="true" ></p-calendar>
         <label for="taskMaster" class="text-primary text-sm mb-1">ชื่อผู้ควบคุมงานของบริษัท</label>
         <input id="taskMaster" formControlName="taskMaster" type="text" pInputText class="w-full mb-3"/>
       </div>

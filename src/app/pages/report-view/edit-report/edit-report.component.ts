@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ReportView } from 'src/app/models/form.model';
 import { DialogModule } from 'primeng/dialog';
 import { CalendarModule } from 'primeng/calendar';
@@ -35,6 +36,8 @@ export class EditReportComponent implements OnInit {
   constructor(
     private http: HttpClient,
   ) {}
+
+  @Output() reportChange = new EventEmitter<ReportView>();
 
   ngOnInit(): void {
     this.setFormData()
@@ -121,5 +124,31 @@ export class EditReportComponent implements OnInit {
     const month = (date.getMonth() + 1).toString().padStart(2, '0');
     const year = date.getFullYear();
     return `${year}-${month}-${day}`;
+    arrival: new FormControl<string>(''),
+    inspection: new FormControl<string>(''),
+    id: new FormControl<number>(0),
+    taskMaster: new FormControl<string>('test'),
+    invoice: new FormControl<string>(''),
+    quantity: new FormControl<number>(0),
+    country: new FormControl<string>(''),
+    brand: new FormControl<string>(''),
+    model: new FormControl<string>(''),
+    serial: new FormControl<string>(''),
+    peano: new FormControl<string>(''),
+  })
+
+  editForm : boolean = false
+
+
+  onSubmit(event:any){
+    event.preventDefault()
+    console.log(this.fg.value)
+    this.reportChange.emit({...this.report,...(this.fg.value as ReportView)})
+    this.setFormData()
+    this.editForm = false
+  }
+
+  setFormData(){
+    this.fg.patchValue(this.report)
   }
 }

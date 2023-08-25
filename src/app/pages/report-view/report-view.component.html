@@ -26,6 +26,8 @@
         <p-button *ngIf="role=='A'" icon="pi pi-pencil" styleClass="p-button-rounded p-button-text" (click)="editForm=true;subFormShow=1"></p-button>
       </div>
     <div class="grid grid-nogutter justify-content-between">
+        <app-edit-report [(report)]="report" [subFormShow]="1" [role]="role"></app-edit-report>
+      </div>
       <div class="col-12 md:col-4">
         <p class="font-bold text-primary mb-3 text-lg">รายละเอียดเบื้องต้น</p>
       </div>
@@ -59,6 +61,7 @@
     <div class="grid grid-nogutter justify-content-between relative">
       <div class="absolute top-0 right-0 -mt-2">
         <p-button *ngIf="role=='A'" icon="pi pi-pencil" styleClass="p-button-rounded p-button-text" (click)="editForm=true;subFormShow=2"></p-button>
+        <app-edit-report [(report)]="report" [subFormShow]="2" [role]="role"></app-edit-report>
       </div>
       <div class="col-12 md:col-4">
         <p class="font-bold text-primary text-lg mb-3">เอกสารการส่ง</p>
@@ -113,6 +116,7 @@
     <div class="grid grid-nogutter justify-content-between relative">
       <div class="absolute top-0 right-0 -mt-2">
         <p-button *ngIf="role=='A'" icon="pi pi-pencil" styleClass="p-button-rounded p-button-text" (click)="editForm=true;subFormShow=3"></p-button>
+        <app-edit-report [(report)]="report" [subFormShow]="3" [role]="role"></app-edit-report>
       </div>
       <div class="col-12 md:col-4 text-lg">
         <p class="font-bold">รายละเอียดอุปกรณ์ไฟฟ้าที่ส่ง</p>
