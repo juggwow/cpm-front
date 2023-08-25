@@ -21,7 +21,10 @@
       </div>
     </div>
     <hr class="my-4" />
-    <div class="grid grid-nogutter justify-content-between">
+    <div class="grid grid-nogutter justify-content-between relative">
+      <div class="absolute top-0 right-0 -mt-2">
+        <app-edit-report [(report)]="report" [subFormShow]="1" [role]="role"></app-edit-report>
+      </div>
       <div class="col-12 md:col-4">
         <p class="font-bold text-primary mb-3 text-lg">รายละเอียดเบื้องต้น</p>
       </div>
@@ -52,7 +55,10 @@
       
     </div>
     <hr class="my-4" />
-    <div class="grid grid-nogutter justify-content-between">
+    <div class="grid grid-nogutter justify-content-between relative">
+      <div class="absolute top-0 right-0 -mt-2">
+        <app-edit-report [(report)]="report" [subFormShow]="2" [role]="role"></app-edit-report>
+      </div>
       <div class="col-12 md:col-4">
         <p class="font-bold text-primary text-lg mb-3">เอกสารการส่ง</p>
       </div>
@@ -103,7 +109,10 @@
     
     </div>
     <hr class="mb-4" />
-    <div class="grid grid-nogutter justify-content-between">
+    <div class="grid grid-nogutter justify-content-between relative">
+      <div class="absolute top-0 right-0 -mt-2">
+        <app-edit-report [(report)]="report" [subFormShow]="3" [role]="role"></app-edit-report>
+      </div>
       <div class="col-12 md:col-4 text-lg">
         <p class="font-bold">รายละเอียดอุปกรณ์ไฟฟ้าที่ส่ง</p>
       </div>
@@ -153,7 +162,6 @@
         </div>
         <!-- </div> -->
     </p-dialog>
-</div>
 
 
 

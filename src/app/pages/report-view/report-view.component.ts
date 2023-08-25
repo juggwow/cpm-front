@@ -16,7 +16,8 @@ import { NgxDropzoneChangeEvent, NgxDropzoneModule } from 'ngx-dropzone';
 import { InputTextModule } from 'primeng/inputtext';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService, MessageService, ConfirmEventType } from 'primeng/api';
-import { InputNumberModule } from 'primeng/inputnumber';
+import { InputNumberModule } from 'primeng/inputnumber';import { EditReportComponent } from './edit-report/edit-report.component';
+
 @Component({
 
   templateUrl: './report-view.component.html',
@@ -38,6 +39,7 @@ import { InputNumberModule } from 'primeng/inputnumber';
     ConfirmDialogModule,
     InputNumberModule,
 
+    EditReportComponent
   ]
   ,
   providers: [ConfirmationService ,FormService, ReportService]
@@ -55,6 +57,8 @@ export class ReportViewComponent implements OnInit {
 //////
   private pdfComponent!: PdfViewerComponent;
   files: File[] = [];
+  
+  role = 'A'
   filesAttachType: Number[] = [];
   display: boolean = false;
   displayExam: boolean = false;
@@ -105,7 +109,7 @@ export class ReportViewComponent implements OnInit {
     private route: ActivatedRoute,
     private form: FormService,
     private r: ReportService,
-    private confirmationService: ConfirmationService, private messageService: MessageService
+    private confirmationService: ConfirmationService, private messageService: MessageService,
   ) { }
 
   ////tabe Edite
