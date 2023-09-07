@@ -47,7 +47,7 @@ export class AppTopBarComponent {
         const dataUrl = this.sanitizer.sanitize(
             SecurityContext.RESOURCE_URL,
             this.sanitizer.bypassSecurityTrustResourceUrl(
-                `${environment.authApiUrl}/logout/${encodeURIComponent(token!)}`
+                `${environment.authApiUrl}/logout/${encodeURIComponent(token!)}?page=${window.location}`
             )
         );
         window.location.replace(dataUrl!);
