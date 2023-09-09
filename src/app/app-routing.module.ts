@@ -90,6 +90,13 @@ import { LoginCallbackService } from './services/login-callback.service';
                                     './pages/pd-item-list/pd-item-list.component'
                                 ).then((m) => m.PdItemListComponent),
                         },
+                        {
+                            path: 'approve',
+                            loadComponent: () =>
+                                import(
+                                    './pages/pd-report-approve-list/pd-report-approve-list.component'
+                                ).then((m) => m.PdReportApproveListComponent),
+                        },
                     ]
                 },
                 {
