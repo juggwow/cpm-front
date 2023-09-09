@@ -97,6 +97,13 @@ import { LoginCallbackService } from './services/login-callback.service';
                                     './pages/pd-report-approve-list/pd-report-approve-list.component'
                                 ).then((m) => m.PdReportApproveListComponent),
                         },
+                        {
+                            path: 'progress',
+                            loadComponent: () =>
+                                import(
+                                    './pages/pd-report-wait-approve-list/pd-report-wait-approve-list.component'
+                                ).then((m) => m.PdReportWaitApproveListComponent),
+                        },
                     ]
                 },
                 {
@@ -108,7 +115,7 @@ import { LoginCallbackService } from './services/login-callback.service';
                         ).then((m) => m.ReportPdfComponent),
                 },
                 { path: 'pages/notfound', component: NotfoundComponent },
-                { path: '**', redirectTo: 'pages/notfound' },
+                // { path: '**', redirectTo: 'pages/notfound' },
             ],
             {
                 scrollPositionRestoration: 'enabled',
