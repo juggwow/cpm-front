@@ -79,6 +79,20 @@ import { LoginCallbackService } from './services/login-callback.service';
                     ],
                 },
                 {
+                    path: 'pd/contract/:id',
+                    canActivate: [LoginCallbackService],
+                    component: AppLayoutComponent,
+                    children: [
+                        {
+                            path: '',
+                            loadComponent: () =>
+                                import(
+                                    './pages/pd-item-list/pd-item-list.component'
+                                ).then((m) => m.PdItemListComponent),
+                        },
+                    ]
+                },
+                {
                     path: 'file/:id',
                     canActivate: [LoginCallbackService],
                     loadComponent: () =>
