@@ -91,6 +91,13 @@ import { LoginCallbackService } from './services/login-callback.service';
                                 ).then((m) => m.PdItemListComponent),
                         },
                         {
+                            path: ':itemID/report',
+                            loadComponent: () =>
+                                import(
+                                    './pages/pd-item-report-list/pd-item-report-list.component'
+                                ).then((m) => m.PdItemReportListComponent),
+                        },
+                        {
                             path: 'approve',
                             loadComponent: () =>
                                 import(
