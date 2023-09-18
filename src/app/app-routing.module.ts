@@ -111,6 +111,13 @@ import { LoginCallbackService } from './services/login-callback.service';
                                     './pages/pd-report-wait-approve-list/pd-report-wait-approve-list.component'
                                 ).then((m) => m.PdReportWaitApproveListComponent),
                         },
+                        {
+                            path: ':itemID/:reportID',
+                            loadComponent: () =>
+                                import(
+                                    './pages/pd-report-detail/pd-report-detail.component'
+                                ).then((m) => m.PdReportDetailComponent),
+                        },
                     ]
                 },
                 {
