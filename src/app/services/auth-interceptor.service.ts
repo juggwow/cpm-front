@@ -34,8 +34,8 @@ export class AuthInterceptorService implements HttpInterceptor {
                     (x as HttpErrorResponse).status === 401 ||
                     x.error.message === 'missing or malformed jwt'
                 ) {
-                    SessionUtils.clearSession();
-                    window.location.href = `${environment.authApiUrl}?page=${window.location}`;
+                    // SessionUtils.clearSession();
+                    // window.location.href = `${environment.authApiUrl}?page=${window.location}`;
                 }
                 
                 return throwError(() => x);
