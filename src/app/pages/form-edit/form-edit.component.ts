@@ -65,7 +65,9 @@ export class FormEditComponent implements OnInit {
     model: '',
     serial: '',
     peano: '',
-    attachFiles: []
+    attachFiles: [],
+    stateName: '',
+    stateID: 0
   };
 
   delAttachFiles: Number[] = [];
