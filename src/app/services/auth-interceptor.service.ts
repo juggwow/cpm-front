@@ -18,9 +18,9 @@ export class AuthInterceptorService implements HttpInterceptor {
         next: HttpHandler
     ): Observable<HttpEvent<any>> {
         const token = SessionUtils.getToken();
-        if (!token){
-            window.location.href = `${environment.authApiUrl}?page=${window.location}`;
-        }
+        // if (!token){
+        //     window.location.href = `${environment.authApiUrl}?page=${window.location}`;
+        // }
 
         const modifiedReq = req.clone({
             headers: new HttpHeaders({
