@@ -158,7 +158,7 @@
               <div class="col-12 md:col-8">
                 <div class="grid grid-nogutter">
                   <div
-                    *ngIf="report.comment.problem.defect > 0 || report.comment.problem.incomplate > 0 || report.comment.problem.mismatch > 0"
+                    *ngIf="report.comment!.problem.defect > 0 || report.comment!.problem.incomplate > 0 || report.comment!.problem.mismatch > 0"
                     class="p-0 col-6 text-primary"
                   >
                     <div class="flex flex-row align-items-center gap-3">
@@ -201,14 +201,14 @@
                     *ngIf="report.comment!.noProblem > 0"
                     class="p-0 col-6 mb-3 text-sm text-primary"
                   >
-                    <div *ngIf="report.comment.problem.defect > 0 || report.comment.problem.incomplate > 0 || report.comment.problem.mismatch > 0"
+                    <div *ngIf="report.comment!.problem.defect > 0 || report.comment!.problem.incomplate > 0 || report.comment!.problem.mismatch > 0"
                       class="flex flex-row align-items-center gap-3">
                       <p class="text-green">รับของเรียบร้อย</p>
                       <p class="my-0 font-bold mb-3">จำนวน</p>
                       <p class="my-0 font-bold mb-3">{{ report.comment!.noProblem }}</p>
                       <p class="my-0 font-bold mb-3">รายการ</p>
                     </div>
-                    <div *ngIf="report.comment.problem.defect == 0 && report.comment.problem.incomplate == 0 && report.comment.problem.mismatch == 0"
+                    <div *ngIf="report.comment!.problem.defect == 0 && report.comment!.problem.incomplate == 0 && report.comment!.problem.mismatch == 0"
                       class="flex flex-row align-items-center gap-3">
                       <p class="text-green">รับของเรียบร้อย</p>
                     </div>
