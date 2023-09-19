@@ -218,7 +218,7 @@
             </div>
 
             <div class="col-12 md:col-8 align-items-start">
-                <ngx-dropzone class="text-base mb-3" (change)="onSelectFileUpload($event)">
+                <ngx-dropzone class="text-base mb-3" accept="application/pdf" [multiple]="false" [disabled]="files.length>0" (change)="onSelectFileUpload($event)">
                     <ngx-dropzone-label>
                         ลากไฟล์มาไว้ที่นี้ หรือ
                         <span class="text-pea font-bold">เลือกไฟล์เพื่ออัปโหลด</span>
@@ -230,7 +230,7 @@
                     </ngx-dropzone-preview>
                 </ngx-dropzone>
                 
-                    <div *ngFor="let f of files;  index as i" class="grid grid-nogutter border-round-sm bg-light p-3 mb-1 mx-0 align-items-center">
+                    <!-- <div *ngFor="let f of files;  index as i" class="grid grid-nogutter border-round-sm bg-light p-3 mb-1 mx-0 align-items-center">
                         <div class="col-fixed">
                             <img class=" hidden md:block" src="./../../../assets/svg/File-pdf-document.svg" width="48px" height="48px" />
                         </div>
@@ -246,7 +246,7 @@
                             <p-button icon="pi pi-trash" styleClass="p-button-rounded p-button-text"
                                 (click)="onRemoveFileUpload(f,i)"></p-button>
                         </div>
-                    </div>
+                    </div> -->
                 <div class="flex flex-row justify-content-center " *ngIf="files.length>0">
                     <button class="btn btn-lg btn-primary px-5 mx-3 p-button-outlined" pButton>แนบเอกสาร</button>
                     <!-- <button class="btn btn-lg btn-primary px-5 mx-3 p-button-outlined" pButton>ยกเลิกเอกสาร</button> -->
