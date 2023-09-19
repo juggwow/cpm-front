@@ -139,6 +139,8 @@ export class DetailViewComponent implements OnInit {
     model: 'No Model',
     serial: 'No Serial',
     peano: 'No PEANo',
+    stateName : 'test',
+    stateID : 2,
     attachFiles: [
       {
         id: 1,
