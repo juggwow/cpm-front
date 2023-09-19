@@ -312,4 +312,5 @@ interface Comment {
     src: string;
   }[];
   extraComment: string;
+  attachFile? : string;
 }
