@@ -32,13 +32,13 @@ export class AppTopBarComponent {
     ) { }
 
     ngOnInit() {
-        // this.userService
-        //     .getCurrentUser$()
-        //     .pipe(take(1))
-        //     .subscribe((res) => {
-        //         // console.log(res);
-        //         this.userInfo = res;
-        //     });
+        this.userService
+            .getCurrentUser$()
+            .pipe(take(1))
+            .subscribe((res) => {
+                // console.log(res);
+                this.userInfo = res;
+            });
     }
 
     logout() {
