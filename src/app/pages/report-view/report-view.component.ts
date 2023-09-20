@@ -99,67 +99,29 @@ export class ReportViewComponent implements OnInit {
 
 
   report: ReportView = {
-    id: 1,
-    itemID: 1,
-    itemName:
-      'On-load tap-changing power transformer three-phase, 115-22 kV, 30/40/50 MVA (Dyn1)',
-    itemUnit: 'set',
-    arrival: '2021-07-07',
-    inspection: '2021-07-07',
-    taskMaster: 'สมชาย สุรัตน์',
-    invoice: 'J397/Equipmen',
-    quantity: 2,
-    country: 'thailand',
-    brand: 'No brand',
-    model: 'No Model',
-    serial: 'No Serial',
-    peano: 'No PEANo',
-    attachFiles: [
-      {
-        id: 1,
-        name: 'test.pdf',
-        size: '3',
-        unit: 'MB',
-        typeID: 1,
-        typeName: 'test 1',
-      },
-      {
-        id: 2,
-        name: 'test2.pdf',
-        size: '3',
-        unit: 'GB',
-        typeID: 2,
-        typeName: 'test 2',
-      },
-    ],
-    stateName: 'รอ กฟภ. ตรวจสอบ',
-    stateID: 3,
-    // radFile:{
-    //   id: 2,
-    //   name: 'test2.pdf',
-    //   size: '3',
-    //   unit: 'GB',
-    // },
-    ///comment: this.comment,
+    id: 0,
+    itemID: 0,
+    itemName: '',
+    itemUnit: '',
+    arrival: '',
+    inspection: '',
+    taskMaster: '',
+    invoice: '',
+    quantity: 0,
+    country: '',
+    brand: '',
+    model: '',
+    serial: '',
+    peano: '',
+    attachFiles: [],
+    stateName: '',
+    stateID: 0
   };
-
-  doctype: DocType[] = [
-    {
-      name: 'test 1',
-      id: 1,
-    },
-    {
-      name: 'test 2',
-      id: 2,
-    },
-  ];
-
-  isFile: boolean = false;
+  doctype!: DocType[];
+  isFile: boolean = false
   file!: AttachFile[];
 
-  files: File | null = null;
-
-  src: string = '';
+  src: string = "";
 
   selectedCategory: any = null;
 
@@ -268,9 +230,9 @@ else
     //   this.form.getListOfDocTypes<DocType[]>()
     //     .subscribe((res) => { this.doctype = res; });
 
-    //   this.form.reportView<ReportView>(this.reportId)
-    //     .subscribe((res) => { this.report = { ...this.report, ...res } });
-    // }
+      this.form.reportView<ReportView>(this.reportId)
+        .subscribe((res) => { this.report = { ...this.report, ...res } });
+    }
   }
 
   ShowMenuManage(id: number, filename: string) {
