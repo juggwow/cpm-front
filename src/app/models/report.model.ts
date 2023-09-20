@@ -2,7 +2,7 @@ export interface ReportProgress {
     id: number;
     seq: number;
     invNo: string;
-    itemID : number;
+    itemID: number;
     itemName: string;
     arrival: string;
     inspection: string;
@@ -32,4 +32,24 @@ export interface ReportItem {
     createBy: string,
     stateID: number,
     stateName: string
+}
+
+export interface Report {
+    id: number;
+    seq: number;
+    invNo: string;
+    deliveryNumber: string;
+    workName: string;
+    projectShortName: string;
+    itemID: number;
+    itemName: string;
+    arrival: string;
+    inspection: string;
+    stateID: number;
+    stateName: string;
+    amount: string;
+    good: string;
+    waste: string;
+    qty: string,
+    createBy: string,
 }

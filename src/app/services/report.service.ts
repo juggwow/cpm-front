@@ -13,6 +13,11 @@ export class ReportService {
   //   return this.http.get<ResponsePage<ReportProgress>>(`${this.url}/${id}?page=${page}&limit=${limit}`);
   // }
 
+  getWaitForApprovReportByContractId<T>(contractid: number, params?: HttpParams): Observable<T> {
+    const options = { params: params };
+    return this.http.get<T>(`${environment.apiUrl}/report/wait-for-approv/${contractid}`, options);
+  }
+
   getProgressByContractId<T>(id: number, params?: HttpParams): Observable<T> {
     const options = { params: params };
     return this.http.get<T>(`${environment.apiUrl}/listofdoc/progress/contract/${id}`, options);
