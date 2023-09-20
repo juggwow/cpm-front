@@ -61,10 +61,10 @@
     <div class="grid grid-nogutter justify-content-between relative">
       <div class="absolute top-0 right-0 -mt-2">
         <p-button *ngIf="role=='A'" icon="pi pi-pencil" styleClass="p-button-rounded p-button-text" (click)="editForm=true;subFormShow=2"></p-button>
+
         <app-edit-report [(report)]="report" [subFormShow]="2" [role]="role"></app-edit-report>
+
       </div>
-      <div class="col-12 md:col-4">
-        <p class="font-bold text-primary text-lg mb-3">เอกสารการส่ง</p>
       </div>
       <div class="col-12 md:col-8 md:mt-1">
         <div class="grid grid-nogutter justify-content-between">

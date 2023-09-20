@@ -39,6 +39,10 @@ export class EditReportComponent implements OnInit {
 
   @Output() reportChange = new EventEmitter<ReportView>();
 
+  constructor(
+    private http: HttpClient,
+  ) {}
+
   ngOnInit(): void {
     this.setFormData()
   }
@@ -137,18 +141,72 @@ export class EditReportComponent implements OnInit {
     peano: new FormControl<string>(''),
   })
 
-  editForm : boolean = false
-
 
   onSubmit(event:any){
     event.preventDefault()
-    console.log(this.fg.value)
-    this.reportChange.emit({...this.report,...(this.fg.value as ReportView)})
-    this.setFormData()
-    this.editForm = false
+    let body : any
+    let url : string
+    if(!this.fg.valid){
+      return window.alert("กรุณากรอกข้อมูล")
+    }
+    switch(this.subFormShow){
+      case 1 : {
+        this.fg.value.arrival instanceof Date? this.fg.value.arrival = this.formatDate(this.fg.value.arrival):undefined
+        this.fg.value.inspection instanceof Date? this.fg.value.inspection = this.formatDate(this.fg.value.inspection):undefined
+        body = {
+          arrival: this.fg.value.arrival,
+          inspection: this.fg.value.inspection,
+          taskMaster: this.fg.value.taskMaster
+        }
+        url = `${environment.apiUrl}/report-basic-detials/${this.report.id}`
+        break
+      }
+      case 2 : {
+        body = {
+          invoice: this.fg.value.invoice,
+        }
+        url = `${environment.apiUrl}/report-basic-detials/${this.report.id}`
+        break
+      }
+      case 3 : {
+        body = {
+          quantity: this.fg.value.quantity,
+          country: this.fg.value.country,
+          brand: this.fg.value.brand,
+          model: this.fg.value.model,
+          serial: this.fg.value.serial,
+          peano: this.fg.value.peano,
+        }
+        url = `${environment.apiUrl}/report-basic-detials/${this.report.id}`
+        break
+      }
+    }
+    this.http.put(url, body)
+      .pipe(
+        catchError(() => {
+          return throwError(()=>{
+            window.alert("เกิดข้อผิดพลาด")
+            this.editFormChange.emit(false)
+          });
+        })
+      )
+      .subscribe(()=>{
+        this.reportChange.emit({...this.report,...(this.fg.value as ReportView)})
+        this.setFormData()
+      })
   }
+
+  
 
   setFormData(){
     this.fg.patchValue(this.report)
+    this.editFormChange.emit(false)
+  }
+
+  formatDate(date: Date): string {
+    const day = date.getDate().toString().padStart(2, '0');
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const year = date.getFullYear();
+    return `${year}-${month}-${day}`;
   }
 }
