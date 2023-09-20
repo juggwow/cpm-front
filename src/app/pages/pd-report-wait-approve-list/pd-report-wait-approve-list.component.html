@@ -1,6 +1,6 @@
 <div class="container">
     <div class="my-5">
-      <div class="neutral-08 fw-bold fs-4 my-3">บริหารสัญญา</div>
+      <div class="neutral-08 fw-bold fs-4 my-3">Receive and Damage</div>
         <p-breadcrumb class="max-w-full" [model]="items" [style]="{background:'none',border:'none',padding:'0'}"></p-breadcrumb>
     </div>
     <div style="display: inline-flex; align-items: flex-end; gap: 40px;">
@@ -26,16 +26,28 @@
                     <p-sortIcon field="sortRowNo"></p-sortIcon>
                   </div>
                 </th>
-                <th pSortableColumn="sortInvNo">
+                <th pSortableColumn="sortDeliveryNumber">
                   <div class="flex justify-content-between align-items-center">
                     เลขที่ใบส่ง
-                    <p-sortIcon field="sortInvNo"></p-sortIcon>
+                    <p-sortIcon field="sortDeliveryNumber"></p-sortIcon>
                   </div>
                 </th>
                 <th pSortableColumn="sortItemName">
                   <div class="flex justify-content-between align-items-center">
                     อุปกรณ์ที่ส่งมอบ
                     <p-sortIcon field="sortItemName"></p-sortIcon>
+                  </div>
+                </th>
+                <th pSortableColumn="sortWorkName">
+                  <div class="flex justify-content-between align-items-center">
+                    ชื่องาน
+                    <p-sortIcon field="sortWorkName"></p-sortIcon>
+                  </div>
+                </th>
+                <th pSortableColumn="sortProjectShortName">
+                  <div class="flex justify-content-between align-items-center">
+                    โครงการ
+                    <p-sortIcon field="sortProjectShortName"></p-sortIcon>
                   </div>
                 </th>
                 <th pSortableColumn="sortArrival">
@@ -63,18 +75,34 @@
                 </th>
                 <th>
                   <span class="p-input-icon-right">
-                    <input #inputInvNo type="text" pInputText (keyup)="onFilterColumn('searchInvNo', $event)"
-                      placeholder="Search" style="width: 5rem" />
+                    <input #inputInvNo type="text" pInputText (keyup)="onFilterColumn('searchDeliveryNumber', $event)"
+                      placeholder="Search" style="width: 10rem" />
                     <i *ngIf="inputInvNo.value" class="pi pi-times cursor-pointer"
-                      (click)="inputInvNo.value = '';onClearFilter('searchInvNo')"></i>
+                      (click)="inputInvNo.value = '';onClearFilter('searchDeliveryNumber')"></i>
                   </span>
                 </th>
                 <th>
                   <span class="p-input-icon-right">
                     <input #inputItemName type="text" pInputText (keyup)="onFilterColumn('searchItemName', $event)"
-                      placeholder="Search" style="width: 5rem" />
+                      placeholder="Search" style="width: 15rem" />
                     <i *ngIf="inputItemName.value" class="pi pi-times cursor-pointer"
                       (click)="inputItemName.value = '';onClearFilter('searchItemName')"></i>
+                  </span>
+                </th>
+                <th>
+                  <span class="p-input-icon-right">
+                    <input #inputItemName type="text" pInputText (keyup)="onFilterColumn('searchWorkName', $event)"
+                      placeholder="Search" style="width: 10rem" />
+                    <i *ngIf="inputItemName.value" class="pi pi-times cursor-pointer"
+                      (click)="inputItemName.value = '';onClearFilter('searchWorkName')"></i>
+                  </span>
+                </th>
+                <th>
+                  <span class="p-input-icon-right">
+                    <input #inputItemName type="text" pInputText (keyup)="onFilterColumn('searchProjectShortName', $event)"
+                      placeholder="Search" style="width: 5rem" />
+                    <i *ngIf="inputItemName.value" class="pi pi-times cursor-pointer"
+                      (click)="inputItemName.value = '';onClearFilter('searchProjectShortName')"></i>
                   </span>
                 </th>
                 <th>
@@ -100,23 +128,27 @@
               <tr>
                 <td>{{ report.seq }}</td>
                 <td>
-                  {{ report.invNo }}
+                  {{ report.deliveryNumber }}
                 </td>
                 <td>
                   {{ report.itemName }}
                 </td>
                 <td>
-                  {{ report.arrival }}
+                  {{ report.workName }}
                 </td>
                 <td>
-                  {{ report.inspection }}
+                  {{ report.projectShortName }}
                 </td>
                 <td>
-                    <button pButton class="p-button-text" [routerLink]="['/contract',contractId,'item',report.itemID,'report',report.id,'view']">
-                        
-                        <i class="pi pi-search"></i>
+                  {{ report.arrival | date : "dd/MM/yyyy"}}
+                </td>
+                <td>
+                  {{ report.inspection | date : "dd/MM/yyyy"}}
+                </td>
+                <td>
+                    <button pButton class="p-button-text" [routerLink]="['/pd/contract',contractId,report.itemID,report.id]">
+                      <mat-icon [ngStyle]="{'color':'black'}" fontIcon="content_paste_search"></mat-icon>
                     </button>
-                    <!-- <p-button icon="pi pi-search" styleClass="p-button-rounded p-button-text" [routerLink]="['contract','31','item','9551','report','20','view']"></p-button> -->
                 </td>
               </tr>
             </ng-template>
@@ -143,12 +175,4 @@
         </div>
       </div>
     </div>
-    <p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>
   </div>
-  <p-dialog [(visible)]="display" [modal]="true" [style]="{width: '80vw'}" [maximizable]="false" [draggable]="false"
-  [resizable]="false" (onHide)="onHide()">
-  <div class="pdf-container">
-    <pdf-viewer [src]="src" [rotation]="0" [original-size]="false" [show-all]="true"
-      style="width: 100%; height: 600px;"></pdf-viewer>
-  </div>
-</p-dialog>

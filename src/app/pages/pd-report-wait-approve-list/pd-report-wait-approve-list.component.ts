@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { HttpParams } from '@angular/common/http';
 import { Component, CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA, OnInit, ViewChild } from '@angular/core';
+import { MatIconModule } from '@angular/material/icon';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { PdfViewerModule, PdfViewerComponent } from 'ng2-pdf-viewer';
 import { ConfirmationService, MenuItem, SortEvent, PrimeIcons } from 'primeng/api';
@@ -17,7 +18,7 @@ import { TableModule } from 'primeng/table';
 import { ToastModule } from 'primeng/toast';
 import { take, tap } from 'rxjs';
 import { CardComponent } from 'src/app/components/card/card.component';
-import { ReportProgress } from 'src/app/models/report.model';
+import { Report} from 'src/app/models/report.model';
 import { ResponsePage } from 'src/app/models/response-page.model';
 import { BoqService } from 'src/app/services/boq.service';
 import { ReportService } from 'src/app/services/report.service';
@@ -44,7 +45,8 @@ import { ReportService } from 'src/app/services/report.service';
     ConfirmDialogModule,
     PdfViewerModule,
     DialogModule,
-    RouterModule
+    RouterModule,
+    MatIconModule
   ]
 })
 export class PdReportWaitApproveListComponent implements OnInit{
@@ -68,7 +70,7 @@ export class PdReportWaitApproveListComponent implements OnInit{
 
   loading: boolean = true;
 
-  data!: ReportProgress[];
+  data!: Report[];
   first: number = 0;
   rows: number = 10;
   totalRecords: number = 0;
@@ -80,7 +82,7 @@ export class PdReportWaitApproveListComponent implements OnInit{
   private user_keyup_timeout: any;
 
   reportManageMenu: MenuItem[] = [];
-  activeItem!: ReportProgress;
+  // activeItem!: ReportProgress;
 
   constructor(
     private boqService: BoqService,
@@ -95,9 +97,8 @@ export class PdReportWaitApproveListComponent implements OnInit{
     this.contractId = Number(this.route.snapshot.parent?.paramMap.get('id'));
     this.boqService.getProjectDetail(this.contractId)
       .subscribe((res) => {
-        this.projectName = res.name;
+        this.projectName = res.workName;
         this.items = [
-          { label: 'บริหารจัดการสัญญา' },
           { label: 'บริหารสัญญา' },
           { label: this.projectName },
           { label: 'Receive and Damage' }
@@ -165,7 +166,7 @@ export class PdReportWaitApproveListComponent implements OnInit{
   }
 
 
-  setReportDrafMenu(report: ReportProgress) {
+  setReportDrafMenu(report: Report) {
     this.reportManageMenu = [
       {
         label: 'แก้ไข',
@@ -190,7 +191,7 @@ export class PdReportWaitApproveListComponent implements OnInit{
       }
     ];
   }
-  setReportSubmitMenu(report: ReportProgress) {
+  setReportSubmitMenu(report: Report) {
     this.reportManageMenu = [
       {
         label: 'ดูรายละเอียด',
@@ -207,7 +208,7 @@ export class PdReportWaitApproveListComponent implements OnInit{
     ];
   }
 
-  setReportManageMenu(report: ReportProgress) {
+  setReportManageMenu(report: Report) {
     if (report.stateID === 1) {
       this.setReportDrafMenu(report);
     } else {
@@ -291,7 +292,7 @@ export class PdReportWaitApproveListComponent implements OnInit{
 
   fetchData(id: number, params?: HttpParams) {
     this.loading = true;
-    this.report.getProgressByContractId<ResponsePage<ReportProgress>>(id, params)
+    this.report.getWaitForApprovReportByContractId<ResponsePage<Report>>(id, params)
       .subscribe((res) => {
         this.data = res.data;
         this.totalRecords = res.total;

@@ -8,28 +8,32 @@ export interface Boq {
     deliveryQty: string;
     receiveQty: string;
     damageQty: string;
-    receiveStatus:string;
+    receiveStatus: string;
 }
 
 export interface Project {
     contractID: number;
     workID: number;
     name: string;
+    projectName: string;
+    projectShortName: string;
+    workName: string;
+    workType: string;
 }
 
-export interface CardDetail{
-    all:All;
-    check:Check;
-    progress:{Amount:number;}
+export interface CardDetail {
+    all: All;
+    check: Check;
+    progress: { Amount: number; }
 }
 
 interface All {
-    Amount:number;
-    Complete:number;
-    Incomplete:number;
+    Amount: number;
+    Complete: number;
+    Incomplete: number;
 }
-interface Check{
-    Amount:number;
-    Good:number;
-    Waste:number;
+interface Check {
+    Amount: number;
+    Good: number;
+    Waste: number;
 }
