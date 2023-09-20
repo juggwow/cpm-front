@@ -26,7 +26,7 @@ export interface Report {
     invoice: string;
     quantity: number;
     country: string;
-    manufacturer: string;
+    brand: string;
     model: string;
     serial: string;
     peano: string;
@@ -50,7 +50,11 @@ export interface ReportView {
     model: string;
     serial: string;
     peano: string;
+    stateName: string;
+    stateID: number;
     attachFiles: AttachFile[];
+    radFile?: file;
+    comment?: Remark;
 }
 
 export interface AttachFile {
@@ -62,9 +66,25 @@ export interface AttachFile {
     typeName: string;
 }
 
-interface file {
+export interface file {
     id: number;
     name: string;
     size: string;
     unit: string;
+    typeID?: number;
+    typeName?: string;
 }
+
+export interface Remark {
+    overAll: 'พบปัญหา' | 'รับของเรียบร้อย';
+    problem: {
+        defect: number;
+        incomplate: number;
+        mismatch: number;
+    };
+    noProblem: number;
+    images: {
+      src: string;
+    }[];
+    extraComment: string;
+  }
