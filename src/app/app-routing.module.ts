@@ -139,6 +139,20 @@ import { LoginCallbackService } from './services/login-callback.service';
                                     './pages/comm-report-approve-list/comm-report-approve-list.component'
                                 ).then((m) => m.CommReportApproveListComponent),
                         },
+                        {
+                            path: 'progress',
+                            loadComponent: () =>
+                                import(
+                                    './pages/comm-report-wait-approve-list/comm-report-wait-approve-list.component'
+                                ).then((m) => m.CommReportWaitApproveListComponent),
+                        },
+                        {
+                            path: ':itemID/:reportID',
+                            loadComponent: () =>
+                                import(
+                                    './pages/pd-report-detail/pd-report-detail.component'
+                                ).then((m) => m.PdReportDetailComponent),
+                        },
                     ]
                 },
                 {
