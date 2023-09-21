@@ -121,6 +121,20 @@ import { LoginCallbackService } from './services/login-callback.service';
                     ]
                 },
                 {
+                    path: 'comm/:id',
+                    canActivate: [LoginCallbackService],
+                    component: AppLayoutComponent,
+                    children: [
+                        {
+                            path: '',
+                            loadComponent: () =>
+                                import(
+                                    './pages/comm-item-list/comm-item-list.component'
+                                ).then((m) => m.CommItemListComponent),
+                        },
+                    ]
+                },
+                {
                     path: 'file/:id',
                     canActivate: [LoginCallbackService],
                     loadComponent: () =>
