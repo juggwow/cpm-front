@@ -132,6 +132,13 @@ import { LoginCallbackService } from './services/login-callback.service';
                                     './pages/comm-item-list/comm-item-list.component'
                                 ).then((m) => m.CommItemListComponent),
                         },
+                        {
+                            path: 'approve',
+                            loadComponent: () =>
+                                import(
+                                    './pages/comm-report-approve-list/comm-report-approve-list.component'
+                                ).then((m) => m.CommReportApproveListComponent),
+                        },
                     ]
                 },
                 {
