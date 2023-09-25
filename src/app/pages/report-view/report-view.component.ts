@@ -10,9 +10,15 @@ import { FormService } from 'src/app/services/form.service';
 import { ReportService } from 'src/app/services/report.service';
 import { DialogModule } from 'primeng/dialog';
 import { PdfViewerComponent, PdfViewerModule } from 'ng2-pdf-viewer';
-
+import { RadioButtonModule } from 'primeng/radiobutton';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgxDropzoneChangeEvent, NgxDropzoneModule } from 'ngx-dropzone';
+import { InputTextModule } from 'primeng/inputtext';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ConfirmationService, MessageService, ConfirmEventType } from 'primeng/api';
+import { InputNumberModule } from 'primeng/inputnumber';
 @Component({
-  selector: 'app-report-view',
+
   templateUrl: './report-view.component.html',
   styleUrls: ['./report-view.component.scss'],
   standalone: true,
@@ -24,22 +30,42 @@ import { PdfViewerComponent, PdfViewerModule } from 'ng2-pdf-viewer';
     MenuModule,
     DialogModule,
     PdfViewerModule,
+    RadioButtonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    NgxDropzoneModule,
+    InputTextModule,
+    ConfirmDialogModule,
+    InputNumberModule,
+
   ]
   ,
-  providers: [FormService, ReportService]
+  providers: [ConfirmationService ,FormService, ReportService]
 })
 export class ReportViewComponent implements OnInit {
 
   @ViewChild(PdfViewerComponent)
-  private pdfComponent!: PdfViewerComponent;
-  
-  display: boolean = false;
+  value5=2;
 
+  value : string ="xxxx";
+  damageCount : number =22;
+  incompleteCount : number = 0 ;
+  incompleteCountContract : number = 0 ;
+  goodCount  : number = 0 ;
+//////
+  private pdfComponent!: PdfViewerComponent;
+  files: File[] = [];
+  filesAttachType: Number[] = [];
+  display: boolean = false;
+  displayExam: boolean = false;
+  multiple :boolean = true ;
   contractId!: number;
   itemId!: number;
   reportId!: number;
   manageMenu: MenuItem[] = [];
-
+  UserRole :number = 1 ;
+  ingredient: any = null;
+  plug=1;
   report: ReportView = {
     id: 0,
     itemID: 0,
@@ -63,11 +89,53 @@ export class ReportViewComponent implements OnInit {
 
   src: string = "";
 
+  selectedCategory: any = null;
+
+    categories!: any[]
+    b2s = function (bytes: number) {
+      const sizes = ["Bytes","KB","MB","GB","TB"]
+      if(bytes == 0){return "n/a"}
+      const i = ~~(Math.log2(bytes)/10)
+      if(i == 0){return bytes + " " + sizes[i]}
+      return (bytes / Math.pow(1024,i)).toFixed(2) + " " + sizes[i]
+    }
   constructor(
     private route: ActivatedRoute,
     private form: FormService,
-    private r: ReportService
-  ) { }  
+    private r: ReportService,
+    private confirmationService: ConfirmationService, private messageService: MessageService
+  ) { }
+
+  ////tabe Edite
+  changeproblem(evevt:any)
+  {
+    console.log("change input",evevt)
+  }
+ ///////////////
+
+  confirm1() {
+    this.confirmationService.confirm({
+        message: 'Are you sure that you want to proceed?',
+        header: 'Confirmation',
+        icon: 'pi pi-exclamation-triangle',
+        accept: () => {
+            this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: 'You have accepted' });
+        },
+        reject: () => {
+
+        }
+    });
+}
+
+onSelect(event:any) {
+  console.log(event);
+  this.files.push(...event.addedFiles);
+}
+
+onRemove(event: File) {
+  console.log(event);
+  this.files.splice(this.files.indexOf(event), 1);
+}
 
   blob2Base64 = (blob: Blob): Promise<string> => {
     return new Promise<string>((resolve, reject) => {
@@ -77,11 +145,53 @@ export class ReportViewComponent implements OnInit {
       reader.onerror = error => reject(error);
     })
   }
+  selectType(event: any, index: number) {
+    this.filesAttachType[index] = event.value.id
+    // console.log(this.filesAttachType.toString());
+  }
+  onSelectFileUpload(event: NgxDropzoneChangeEvent) {
+    this.files.push(...event.addedFiles);
+    //check file type and size
+  }
+
+  onRemoveFileUpload(event: any, index: number) {
+    console.log(event);
+    this.files.splice(this.files.indexOf(event), 1);
+    this.filesAttachType.splice(index, 1);
+
+  }
 
   ngOnInit(): void {
+//    this.problemCount = 200 ;
+   // this.selectedCategory = this.categories[1];
+
+    // { name: 'สภาพดี', key: 'A' },
+    // { name: 'มีความเสียหาย', key: 'B' },
+    // { name: 'ของไม่ครบ', key: 'C' },
+    // { name: 'ของไม่ครบตามสัญญา', key: 'D' }
+if(this.multiple)
+{
+  this.categories =
+  [
+      { name: 'สภาพดี', key: 'A' },
+      { name: 'พบปัญหา', key: 'E' },
+
+  ]
+}
+else
+{
+ this.categories =
+    [
+        { name: 'สภาพดี', key: 'A' },
+        { name: 'มีความเสียหาย', key: 'B' },
+        { name: 'ของไม่ครบ', key: 'C' },
+        { name: 'ของไม่ครบตามสัญญา', key: 'D' }
+    ]
+}
     this.contractId = Number(this.route.snapshot.parent?.paramMap.get('id'));
     this.itemId = Number(this.route.snapshot.paramMap.get('itemID'));
     this.reportId = Number(this.route.snapshot.paramMap.get('reportID'));
+    console.log("this.reportId",this.reportId);
     if (this.reportId) {
       this.form.getListOfDocTypes<DocType[]>()
         .subscribe((res) => { this.doctype = res; });
