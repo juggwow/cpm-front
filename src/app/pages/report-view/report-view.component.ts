@@ -81,7 +81,9 @@ export class ReportViewComponent implements OnInit {
     model: '',
     serial: '',
     peano: '',
-    attachFiles: []
+    attachFiles: [],
+    stateName: '',
+    stateID: 0
   };
   doctype!: DocType[];
   isFile: boolean = false

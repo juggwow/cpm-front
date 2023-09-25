@@ -4,10 +4,10 @@
 
 export const environment = {
   production: true,
-  apiUrl : 'http://127.0.0.1:8000/api/v1',
-  authApiUrl: 'http://127.0.0.1:8000/auth',
-  // apiUrl : 'https://cpm-rad-api-ing-dev.pea.co.th/api/v1',
-  // authApiUrl: 'https://cpm-rad-api-ing-dev.pea.co.th/auth',
+  // apiUrl : 'http://127.0.0.1:8000/api/v1',
+  // authApiUrl: 'http://127.0.0.1:8000/auth',
+  apiUrl : 'https://cpm-rad-api-ing-dev.pea.co.th/api/v1',
+  authApiUrl: 'https://cpm-rad-api-ing-dev.pea.co.th/auth',
 };
 
 /*
