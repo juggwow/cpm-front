@@ -10,6 +10,7 @@ import { FormService } from 'src/app/services/form.service';
 import { ReportService } from 'src/app/services/report.service';
 import { DialogModule } from 'primeng/dialog';
 import { PdfViewerComponent, PdfViewerModule } from 'ng2-pdf-viewer';
+import { EditReportComponent } from './edit-report/edit-report.component';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxDropzoneChangeEvent, NgxDropzoneModule } from 'ngx-dropzone';
@@ -41,6 +42,7 @@ import { EditReportComponent } from './edit-report/edit-report.component';
     InputNumberModule,
 
     EditReportComponent
+    EditReportComponent
   ]
   ,
   providers: [ConfirmationService ,FormService, ReportService]
@@ -65,6 +67,10 @@ export class ReportViewComponent implements OnInit {
 //////
   private pdfComponent!: PdfViewerComponent;
   files: File[] = [];
+  
+  role = 'A'
+  subFormShow : 1|2|3 = 1
+  editForm : boolean = false
   
   role = 'A'
   subFormShow : 1|2|3 = 1
@@ -145,7 +151,7 @@ export class ReportViewComponent implements OnInit {
     private route: ActivatedRoute,
     private form: FormService,
     private r: ReportService,
-    private confirmationService: ConfirmationService, private messageService: MessageService,
+    private confirmationService: ConfirmationService, private messageService: MessageService,,
   ) { }
 
   ////tabe Edite
