@@ -126,7 +126,7 @@ import { LoginCallbackService } from './services/login-callback.service';
                                 ).then((m) => m.PdReportWaitApproveListComponent),
                         },
                         {
-                            path: ':itemID/:reportID',
+                            path: ':reportID',
                             loadComponent: () =>
                                 import(
                                     './pages/pd-report-detail/pd-report-detail.component'

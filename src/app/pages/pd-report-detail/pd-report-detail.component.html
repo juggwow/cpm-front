@@ -309,7 +309,7 @@
             [multiple]="false"
             accept="application/pdf"
             [maxFileSize]="50000000"
-            *ngIf="!report.radFile && !files"
+            *ngIf="report.radFile!.id == 0 && !files"
             class="text-base mb-3"
             (change)="onSelectFileUpload($event)"
           >
@@ -337,7 +337,7 @@
               <p class="font-bold">{{ files.name }}</p>
               <p class="text-xs">ขนาดไฟล์ {{ b2s(files.size) }}</p>
             </div>
-            <div class="col-fixed" style="width: 50px">
+            <!-- <div class="col-fixed" style="width: 50px">
               <p-button
                       icon="pi pi-ellipsis-v"
                       styleClass="p-button-rounded p-button-text"
@@ -351,10 +351,10 @@
                       [popup]="true"
                       appendTo="body"
                     ></p-menu>
-            </div>
+            </div> -->
           </div>
           <div
-            *ngIf="report.radFile"
+            *ngIf="report.radFile!.id != 0"
             class="grid grid-nogutter border-round-sm bg-light p-3 mb-1 mx-0 align-items-center"
           >
             <div class="col-fixed">
@@ -366,9 +366,9 @@
               />
             </div>
             <div class="col ml-3">
-              <p class="font-bold">{{ report.radFile.name }}</p>
+              <p class="font-bold">{{ report.radFile!.name }}</p>
               <p class="text-xs">
-                ขนาดไฟล์ {{ report.radFile.size }} {{ report.radFile.unit }}
+                ขนาดไฟล์ {{ report.radFile!.size }} {{ report.radFile!.unit }}
               </p>
             </div>
             <div class="col-fixed" style="width: 50px">
@@ -376,7 +376,7 @@
                       icon="pi pi-ellipsis-v"
                       styleClass="p-button-rounded p-button-text"
                       (click)="
-                        showMenuRadFile(report.radFile.id, report.radFile.name); menu.toggle($event)
+                        showMenuRadFile(report.radFile!.id, report.radFile!.name); menu.toggle($event)
                       "
                     ></p-button>
                     <p-menu

@@ -165,7 +165,9 @@
                 <td>{{ report.good }}</td>
                 <td>{{ report.waste }}</td>
                 <td>
-                  <p-button icon="pi pi-eye" styleClass="p-button-rounded p-button-text" (click)="reportPreview(report.id)"></p-button>
+                  <button pButton class="p-button-text" [routerLink]="['/pd/contract',contractId,report.id]">
+                    <mat-icon [ngStyle]="{'color':'black'}" fontIcon="content_paste_search"></mat-icon>
+                  </button>
                 </td>
               </tr>
             </ng-template>
