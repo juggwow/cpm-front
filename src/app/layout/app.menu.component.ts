@@ -18,7 +18,9 @@ export class AppMenuComponent implements OnInit {
             {
                 label: '',
                 items: [
-                    { label: 'บริหาร/จัดการสัญญา', icon: 'pi pi-fw pi-home', routerLink: ['.'] },
+                    { label: 'บริหาร/จัดการสัญญา', icon: 'pi pi-fw pi-home', routerLink: ['/contract/31'] },
+                    { label: 'กรรมการตรวจรับ', icon: 'pi pi-fw pi-home', routerLink: ['/comm/31'] },
+                    { label: 'กองโค', icon: 'pi pi-fw pi-home', routerLink: ['/pd/contract/31'] },
                     // { label: 'Form', icon: 'pi pi-fw pi-chart-bar', routerLink: ['form'] },
                     // {
                     //     label: 'Menus',
