@@ -50,7 +50,7 @@ export class ReportViewComponent implements OnInit {
   value5 = 2;
   private pdfComponent!: PdfViewerComponent;
 
-  role = 'A'
+  role = 'B'
   subFormShow: 1 | 2 | 3 = 1
   editForm: boolean = false
 

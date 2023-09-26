@@ -164,8 +164,8 @@ import { LoginCallbackService } from './services/login-callback.service';
                             path: ':itemID/:reportID',
                             loadComponent: () =>
                                 import(
-                                    './pages/pd-report-detail/pd-report-detail.component'
-                                ).then((m) => m.PdReportDetailComponent),
+                                    './pages/comm-report-detial/comm-report-detial.component'
+                                ).then((m) => m.CommReportDetialComponent),
                         },
                     ]
                 },
