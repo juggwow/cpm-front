@@ -8,7 +8,7 @@ describe('PdReportDetailComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [PdReportDetailComponent]
+      declarations: [PdReportDetailComponent],
     });
     fixture = TestBed.createComponent(PdReportDetailComponent);
     component = fixture.componentInstance;

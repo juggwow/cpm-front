@@ -75,7 +75,21 @@ import { LoginCallbackService } from './services/login-callback.service';
                                 import(
                                     './pages/report-view/report-view.component'
                                 ).then((m) => m.ReportViewComponent),
-                        }
+                        },
+                        {
+                            path: 'project',
+                            loadComponent: () =>
+                                import(
+                                    './pages/project/project.component'
+                                ).then((m) => m.ProjectComponent),
+                        },
+                        {
+                            path: 'detail',
+                            loadComponent: () =>
+                                import(
+                                    './pages/detail-view/detail-view.component'
+                                ).then((m) => m.DetailViewComponent),
+                        },
                     ],
                 },
                 {
@@ -164,7 +178,8 @@ import { LoginCallbackService } from './services/login-callback.service';
                         ).then((m) => m.ReportPdfComponent),
                 },
                 { path: 'pages/notfound', component: NotfoundComponent },
-                // { path: '**', redirectTo: 'pages/notfound' },
+                { path: '**', redirectTo: 'pages/notfound' },
+                
             ],
             {
                 scrollPositionRestoration: 'enabled',

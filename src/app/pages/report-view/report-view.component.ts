@@ -10,13 +10,16 @@ import { FormService } from 'src/app/services/form.service';
 import { ReportService } from 'src/app/services/report.service';
 import { DialogModule } from 'primeng/dialog';
 import { PdfViewerComponent, PdfViewerModule } from 'ng2-pdf-viewer';
+import { EditReportComponent } from './edit-report/edit-report.component';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxDropzoneChangeEvent, NgxDropzoneModule } from 'ngx-dropzone';
 import { InputTextModule } from 'primeng/inputtext';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService, MessageService, ConfirmEventType } from 'primeng/api';
-import { InputNumberModule } from 'primeng/inputnumber';
+import { InputNumberModule } from 'primeng/inputnumber';import { EditReportComponent } from './edit-report/edit-report.component';
+import { EditReportComponent } from './edit-report/edit-report.component';
+
 @Component({
 
   templateUrl: './report-view.component.html',
@@ -38,6 +41,8 @@ import { InputNumberModule } from 'primeng/inputnumber';
     ConfirmDialogModule,
     InputNumberModule,
 
+    EditReportComponent
+    EditReportComponent
   ]
   ,
   providers: [ConfirmationService ,FormService, ReportService]
@@ -46,6 +51,13 @@ export class ReportViewComponent implements OnInit {
 
   @ViewChild(PdfViewerComponent)
   value5=2;
+  private pdfComponent!: PdfViewerComponent;
+  
+  role = 'A'
+  subFormShow : 1|2|3 = 1
+  editForm : boolean = false
+  
+  display: boolean = false;
 
   value : string ="xxxx";
   damageCount : number =22;
@@ -55,6 +67,14 @@ export class ReportViewComponent implements OnInit {
 //////
   private pdfComponent!: PdfViewerComponent;
   files: File[] = [];
+  
+  role = 'A'
+  subFormShow : 1|2|3 = 1
+  editForm : boolean = false
+  
+  role = 'A'
+  subFormShow : 1|2|3 = 1
+  editForm : boolean = false
   filesAttachType: Number[] = [];
   display: boolean = false;
   displayExam: boolean = false;
@@ -66,6 +86,32 @@ export class ReportViewComponent implements OnInit {
   UserRole :number = 1 ;
   ingredient: any = null;
   plug=1;
+  // report: ReportView = {
+  //   id: 0,
+  //   itemID: 0,
+  //   itemName: '',
+  //   itemUnit: '',
+  //   arrival: '',
+  //   inspection: '',
+  //   taskMaster: '',
+  //   invoice: '',
+  //   quantity: 0,
+  //   country: '',
+  //   brand: '',
+  //   model: '',
+  //   serial: '',
+  //   peano: '',
+  //   attachFiles: [],
+  //   stateName: '',
+  //   stateID: 0
+  // };
+  // doctype!: DocType[];
+  // isFile: boolean = false
+  // file!: AttachFile[];
+
+  // src: string = "";
+
+
   report: ReportView = {
     id: 0,
     itemID: 0,
@@ -105,7 +151,7 @@ export class ReportViewComponent implements OnInit {
     private route: ActivatedRoute,
     private form: FormService,
     private r: ReportService,
-    private confirmationService: ConfirmationService, private messageService: MessageService
+    private confirmationService: ConfirmationService, private messageService: MessageService,,
   ) { }
 
   ////tabe Edite
@@ -138,6 +184,7 @@ onRemove(event: File) {
   console.log(event);
   this.files.splice(this.files.indexOf(event), 1);
 }
+  ) { }  
 
   blob2Base64 = (blob: Blob): Promise<string> => {
     return new Promise<string>((resolve, reject) => {
@@ -190,10 +237,19 @@ else
         { name: 'ของไม่ครบตามสัญญา', key: 'D' }
     ]
 }
+    // this.contractId = Number(this.route.snapshot.parent?.paramMap.get('id'));
+    // this.itemId = Number(this.route.snapshot.paramMap.get('itemID'));
+    // this.reportId = Number(this.route.snapshot.paramMap.get('reportID'));
+    console.log("this.reportId",this.reportId);
+    // this.contractId = Number(this.route.snapshot.parent?.paramMap.get('id'));
+    // this.itemId = Number(this.route.snapshot.paramMap.get('itemID'));
+    // this.reportId = Number(this.route.snapshot.paramMap.get('reportID'));
+    // if (this.reportId) {
+    //   this.form.getListOfDocTypes<DocType[]>()
+    //     .subscribe((res) => { this.doctype = res; });
     this.contractId = Number(this.route.snapshot.parent?.paramMap.get('id'));
     this.itemId = Number(this.route.snapshot.paramMap.get('itemID'));
     this.reportId = Number(this.route.snapshot.paramMap.get('reportID'));
-    console.log("this.reportId",this.reportId);
     if (this.reportId) {
       this.form.getListOfDocTypes<DocType[]>()
         .subscribe((res) => { this.doctype = res; });
