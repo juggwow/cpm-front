@@ -198,16 +198,7 @@ export class ReportViewComponent implements OnInit {
           { name: 'ของไม่ครบตามสัญญา', key: 'D' }
         ]
     }
-    // this.contractId = Number(this.route.snapshot.parent?.paramMap.get('id'));
-    // this.itemId = Number(this.route.snapshot.paramMap.get('itemID'));
-    // this.reportId = Number(this.route.snapshot.paramMap.get('reportID'));
-    console.log("this.reportId", this.reportId);
-    // this.contractId = Number(this.route.snapshot.parent?.paramMap.get('id'));
-    // this.itemId = Number(this.route.snapshot.paramMap.get('itemID'));
-    // this.reportId = Number(this.route.snapshot.paramMap.get('reportID'));
-    // if (this.reportId) {
-    //   this.form.getListOfDocTypes<DocType[]>()
-    //     .subscribe((res) => { this.doctype = res; });
+    
     this.contractId = Number(this.route.snapshot.parent?.paramMap.get('id'));
     this.itemId = Number(this.route.snapshot.paramMap.get('itemID'));
     this.reportId = Number(this.route.snapshot.paramMap.get('reportID'));

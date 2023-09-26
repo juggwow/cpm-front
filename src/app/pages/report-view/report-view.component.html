@@ -25,80 +25,6 @@
       <div class="absolute top-0 right-0 -mt-2">
         <p-button *ngIf="role=='A'" icon="pi pi-pencil" styleClass="p-button-rounded p-button-text" (click)="editForm=true;subFormShow=1"></p-button>
       </div>
-    <div class="grid grid-nogutter justify-content-between">
-        <app-edit-report [(report)]="report" [subFormShow]="1" [role]="role"></app-edit-report>
-      </div>
-      <div class="col-12 md:col-4">
-        <p class="font-bold text-primary mb-3 text-lg">รายละเอียดเบื้องต้น</p>
-      </div>
-      <div class="col-12 md:col-8 md:mt-1">
-        <div class="grid grid-nogutter justify-content-between md:mb-4">
-          <div class="col-12 sm:col-6">
-            <p class="text-secondary text-sm mb-0 md:mb-2">
-              วันที่ส่งของถึงหน้างาน
-            </p>
-            <p class="font-bold text-primary mb-3">{{ report.arrival }}</p>
-          </div>
-          <div class="col-12 mb-3 sm:col-6">
-            <p class="text-secondary text-sm mb-0 md:mb-2">วันที่ตรวจสอบ</p>
-            <p class="font-bold text-primary ">
-              {{ report.inspection }}
-            </p>
-          </div>
-        </div>
-        <div class="grid grid-nogutter my-0 justify-content-between">
-          <div class="col-12 sm:col-6">
-            <p class="text-secondary text-sm mb-0 md:mb-2">
-              ชื่อผู้ควบคุมงานของบริษัท
-            </p>
-            <p class="font-bold text-primary">{{ report.taskMaster }}</p>
-          </div>
-        </div>
-      </div>
-      
-    </div>
-    <hr class="my-4" />
-    <div class="grid grid-nogutter justify-content-between relative">
-      <div class="absolute top-0 right-0 -mt-2">
-        <p-button *ngIf="role=='A'" icon="pi pi-pencil" styleClass="p-button-rounded p-button-text" (click)="editForm=true;subFormShow=2"></p-button>
-
-        <app-edit-report [(report)]="report" [subFormShow]="2" [role]="role"></app-edit-report>
-
-      </div>
-      </div>
-      <div class="col-12 md:col-8 md:mt-1">
-        <div class="grid grid-nogutter justify-content-between">
-          <div class="md:col-12">
-            <p class="text-secondary text-sm mb-0 md:mb-2">เลขที่ใบส่ง</p>
-            <p class="font-bold text-primary">{{ report.invoice }}</p>
-          </div>
-<div class="p-0 mt-3">
-    <p class="font-bold text-2xl text-primary mb-4">บริหารสัญญา</p>
-    <div class="flex flex-row align-items-center gap-1 text-xs md:text-base text-secondary mb-4">
-        <span class="m-0 text-center">รายการอนุมัติเอกสาร</span><i class="pi pi-angle-right" style="font-size: 1rem"></i><span class="m-0">Recieve and Damage</span><i class="pi pi-angle-right" style="font-size: 1rem"></i><span class="m-0 font-bold">{{report.invoice.slice(0,20)}}</span><span *ngIf="report.invoice.length>20">...</span>
-      </div>
-    
-      <div class="card">
-        <div class="flex flex-row justify-content-between align-items-center">
-            <p class="text-lg font-bold text-primary m-0"> รายละเอียด Receive and Damage </p>
-            <button class="px-5 mx-3 p-button-outlined" pButton
-                (click)="reportPreview()" icon="pi pi-eye" label="Preview เอกสาร"></button>
-        </div>
-        
-    <hr class="my-4" />
-    <div class="grid grid-nogutter justify-content-between">
-      <div class="col-12 md:col-4">
-        <p class="font-bold text-lg text-primary">อุปกรณ์ที่ส่งมอบ</p>
-      </div>
-      <div class="col-12 m-0 md:col-8">
-        <p class="font-bold text-primary">{{ report.itemName }}</p>
-      </div>
-    </div>
-    <hr class="my-4" />
-    <div class="grid grid-nogutter justify-content-between relative">
-      <div class="absolute top-0 right-0 -mt-2">
-        <p-button *ngIf="role=='A'" icon="pi pi-pencil" styleClass="p-button-rounded p-button-text" (click)="editForm=true;subFormShow=1"></p-button>
-      </div>
       <div class="col-12 md:col-4">
         <p class="font-bold text-primary mb-3 text-lg">รายละเอียดเบื้องต้น</p>
       </div>
@@ -237,4 +163,4 @@
         </div>
         <!-- </div> -->
     </p-dialog>
-</div>
+    <app-edit-report [(report)]="report" [subFormShow]="subFormShow" [role]="role" [(editForm)] = "editForm"></app-edit-report>
