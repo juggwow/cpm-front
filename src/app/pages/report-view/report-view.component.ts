@@ -17,15 +17,14 @@ import { NgxDropzoneChangeEvent, NgxDropzoneModule } from 'ngx-dropzone';
 import { InputTextModule } from 'primeng/inputtext';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService, MessageService, ConfirmEventType } from 'primeng/api';
-import { InputNumberModule } from 'primeng/inputnumber';import { EditReportComponent } from './edit-report/edit-report.component';
-import { EditReportComponent } from './edit-report/edit-report.component';
+import { InputNumberModule } from 'primeng/inputnumber';
 
 @Component({
 
   templateUrl: './report-view.component.html',
   styleUrls: ['./report-view.component.scss'],
   standalone: true,
-  schemas: [ CUSTOM_ELEMENTS_SCHEMA ,NO_ERRORS_SCHEMA],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
   imports: [
     ButtonModule,
     RouterModule,
@@ -40,76 +39,42 @@ import { EditReportComponent } from './edit-report/edit-report.component';
     InputTextModule,
     ConfirmDialogModule,
     InputNumberModule,
-
-    EditReportComponent
     EditReportComponent
   ]
   ,
-  providers: [ConfirmationService ,FormService, ReportService]
+  providers: [ConfirmationService, FormService, ReportService]
 })
 export class ReportViewComponent implements OnInit {
 
   @ViewChild(PdfViewerComponent)
-  value5=2;
+  value5 = 2;
   private pdfComponent!: PdfViewerComponent;
-  
+
   role = 'A'
-  subFormShow : 1|2|3 = 1
-  editForm : boolean = false
-  
+  subFormShow: 1 | 2 | 3 = 1
+  editForm: boolean = false
+
   display: boolean = false;
 
-  value : string ="xxxx";
-  damageCount : number =22;
-  incompleteCount : number = 0 ;
-  incompleteCountContract : number = 0 ;
-  goodCount  : number = 0 ;
-//////
-  private pdfComponent!: PdfViewerComponent;
+  value: string = "xxxx";
+  damageCount: number = 22;
+  incompleteCount: number = 0;
+  incompleteCountContract: number = 0;
+  goodCount: number = 0;
+
+  // private pdfComponent!: PdfViewerComponent;
   files: File[] = [];
-  
-  role = 'A'
-  subFormShow : 1|2|3 = 1
-  editForm : boolean = false
-  
-  role = 'A'
-  subFormShow : 1|2|3 = 1
-  editForm : boolean = false
+
   filesAttachType: Number[] = [];
-  display: boolean = false;
   displayExam: boolean = false;
-  multiple :boolean = true ;
+  multiple: boolean = true;
   contractId!: number;
   itemId!: number;
   reportId!: number;
   manageMenu: MenuItem[] = [];
-  UserRole :number = 1 ;
+  UserRole: number = 1;
   ingredient: any = null;
-  plug=1;
-  // report: ReportView = {
-  //   id: 0,
-  //   itemID: 0,
-  //   itemName: '',
-  //   itemUnit: '',
-  //   arrival: '',
-  //   inspection: '',
-  //   taskMaster: '',
-  //   invoice: '',
-  //   quantity: 0,
-  //   country: '',
-  //   brand: '',
-  //   model: '',
-  //   serial: '',
-  //   peano: '',
-  //   attachFiles: [],
-  //   stateName: '',
-  //   stateID: 0
-  // };
-  // doctype!: DocType[];
-  // isFile: boolean = false
-  // file!: AttachFile[];
-
-  // src: string = "";
+  plug = 1;
 
 
   report: ReportView = {
@@ -139,52 +104,49 @@ export class ReportViewComponent implements OnInit {
 
   selectedCategory: any = null;
 
-    categories!: any[]
-    b2s = function (bytes: number) {
-      const sizes = ["Bytes","KB","MB","GB","TB"]
-      if(bytes == 0){return "n/a"}
-      const i = ~~(Math.log2(bytes)/10)
-      if(i == 0){return bytes + " " + sizes[i]}
-      return (bytes / Math.pow(1024,i)).toFixed(2) + " " + sizes[i]
-    }
+  categories!: any[]
+  b2s = function (bytes: number) {
+    const sizes = ["Bytes", "KB", "MB", "GB", "TB"]
+    if (bytes == 0) { return "n/a" }
+    const i = ~~(Math.log2(bytes) / 10)
+    if (i == 0) { return bytes + " " + sizes[i] }
+    return (bytes / Math.pow(1024, i)).toFixed(2) + " " + sizes[i]
+  }
   constructor(
     private route: ActivatedRoute,
     private form: FormService,
     private r: ReportService,
-    private confirmationService: ConfirmationService, private messageService: MessageService,,
+    private confirmationService: ConfirmationService, private messageService: MessageService,
   ) { }
 
   ////tabe Edite
-  changeproblem(evevt:any)
-  {
-    console.log("change input",evevt)
+  changeproblem(evevt: any) {
+    console.log("change input", evevt)
   }
- ///////////////
 
   confirm1() {
     this.confirmationService.confirm({
-        message: 'Are you sure that you want to proceed?',
-        header: 'Confirmation',
-        icon: 'pi pi-exclamation-triangle',
-        accept: () => {
-            this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: 'You have accepted' });
-        },
-        reject: () => {
+      message: 'Are you sure that you want to proceed?',
+      header: 'Confirmation',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: 'You have accepted' });
+      },
+      reject: () => {
 
-        }
+      }
     });
-}
+  }
 
-onSelect(event:any) {
-  console.log(event);
-  this.files.push(...event.addedFiles);
-}
+  onSelect(event: any) {
+    console.log(event);
+    this.files.push(...event.addedFiles);
+  }
 
-onRemove(event: File) {
-  console.log(event);
-  this.files.splice(this.files.indexOf(event), 1);
-}
-  ) { }  
+  onRemove(event: File) {
+    console.log(event);
+    this.files.splice(this.files.indexOf(event), 1);
+  }
 
   blob2Base64 = (blob: Blob): Promise<string> => {
     return new Promise<string>((resolve, reject) => {
@@ -198,6 +160,7 @@ onRemove(event: File) {
     this.filesAttachType[index] = event.value.id
     // console.log(this.filesAttachType.toString());
   }
+  
   onSelectFileUpload(event: NgxDropzoneChangeEvent) {
     this.files.push(...event.addedFiles);
     //check file type and size
@@ -211,36 +174,34 @@ onRemove(event: File) {
   }
 
   ngOnInit(): void {
-//    this.problemCount = 200 ;
-   // this.selectedCategory = this.categories[1];
+    //    this.problemCount = 200 ;
+    // this.selectedCategory = this.categories[1];
 
     // { name: 'สภาพดี', key: 'A' },
     // { name: 'มีความเสียหาย', key: 'B' },
     // { name: 'ของไม่ครบ', key: 'C' },
     // { name: 'ของไม่ครบตามสัญญา', key: 'D' }
-if(this.multiple)
-{
-  this.categories =
-  [
-      { name: 'สภาพดี', key: 'A' },
-      { name: 'พบปัญหา', key: 'E' },
+    if (this.multiple) {
+      this.categories =
+        [
+          { name: 'สภาพดี', key: 'A' },
+          { name: 'พบปัญหา', key: 'E' },
 
-  ]
-}
-else
-{
- this.categories =
-    [
-        { name: 'สภาพดี', key: 'A' },
-        { name: 'มีความเสียหาย', key: 'B' },
-        { name: 'ของไม่ครบ', key: 'C' },
-        { name: 'ของไม่ครบตามสัญญา', key: 'D' }
-    ]
-}
+        ]
+    }
+    else {
+      this.categories =
+        [
+          { name: 'สภาพดี', key: 'A' },
+          { name: 'มีความเสียหาย', key: 'B' },
+          { name: 'ของไม่ครบ', key: 'C' },
+          { name: 'ของไม่ครบตามสัญญา', key: 'D' }
+        ]
+    }
     // this.contractId = Number(this.route.snapshot.parent?.paramMap.get('id'));
     // this.itemId = Number(this.route.snapshot.paramMap.get('itemID'));
     // this.reportId = Number(this.route.snapshot.paramMap.get('reportID'));
-    console.log("this.reportId",this.reportId);
+    console.log("this.reportId", this.reportId);
     // this.contractId = Number(this.route.snapshot.parent?.paramMap.get('id'));
     // this.itemId = Number(this.route.snapshot.paramMap.get('itemID'));
     // this.reportId = Number(this.route.snapshot.paramMap.get('reportID'));
