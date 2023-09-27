@@ -146,7 +146,7 @@
                   {{ report.inspection | date : "dd/MM/yyyy"}}
                 </td>
                 <td>
-                    <button pButton class="p-button-text" [routerLink]="['/pd/contract',contractId,report.id]">
+                    <button pButton class="p-button-text" [routerLink]="['/comm',contractId,report.itemID,report.id]">
                       <mat-icon [ngStyle]="{'color':'black'}" fontIcon="content_paste_search"></mat-icon>
                     </button>
                 </td>

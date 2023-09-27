@@ -1,7 +1,7 @@
 .card {
   box-shadow: 0px 4px 16px 0px rgba(192, 181, 205, 0.24);
   border: none;
-  background-color: #fff;
+  background-color: #FFF;
   border-radius: 8px;
   padding: 24px;
 }
@@ -18,12 +18,13 @@
   color: #6a6a6a !important;
 }
 
-.text-pea {
-  color: #7718bc;
+.text-pea{
+  color: #7718BC
 }
 
 .text-red {
   text-align: center;
+  font-size: 0.75rem;
   color: #970502;
   border-radius: 12px;
   background: #fff5f5;
@@ -33,6 +34,7 @@
 
 .text-green {
   text-align: center;
+  font-size: 0.75rem;
   color: #107f49;
   border-radius: 12px;
   background: #f2fdf6;
@@ -40,15 +42,6 @@
   margin: 0;
 }
 
-.text-orange {
-  text-align: center;
-  color: #c9b43e;
-  border-radius: 12px;
-  background: #fdfbf2;
-  padding: 4px 16px;
-  margin: 0;
-}
-
-.bg-light {
-  background-color: #f7f7f7 !important;
+.bg-light{
+  background-color: #F7F7F7 !important;
 }

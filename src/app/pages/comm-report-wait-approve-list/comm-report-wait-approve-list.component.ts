@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { HttpParams } from '@angular/common/http';
 import { Component, CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA, OnInit, ViewChild } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
-import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { RouterModule, ActivatedRoute, Router } from '@angular/router';
 import { PdfViewerModule, PdfViewerComponent } from 'ng2-pdf-viewer';
 import { ConfirmationService, MenuItem, SortEvent, PrimeIcons } from 'primeng/api';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
@@ -18,15 +18,15 @@ import { TableModule } from 'primeng/table';
 import { ToastModule } from 'primeng/toast';
 import { take, tap } from 'rxjs';
 import { CardComponent } from 'src/app/components/card/card.component';
-import { Report} from 'src/app/models/report.model';
+import { Report } from 'src/app/models/form.model';
 import { ResponsePage } from 'src/app/models/response-page.model';
 import { BoqService } from 'src/app/services/boq.service';
 import { ReportService } from 'src/app/services/report.service';
 
 @Component({
-  selector: 'app-pd-report-wait-approve-list',
-  templateUrl: './pd-report-wait-approve-list.component.html',
-  styleUrls: ['./pd-report-wait-approve-list.component.scss'],
+  selector: 'app-comm-report-wait-approve-list',
+  templateUrl: './comm-report-wait-approve-list.component.html',
+  styleUrls: ['./comm-report-wait-approve-list.component.scss'],
   standalone: true,
   schemas:[CUSTOM_ELEMENTS_SCHEMA,NO_ERRORS_SCHEMA],
   providers: [BoqService, ReportService, ConfirmationService],
@@ -49,7 +49,7 @@ import { ReportService } from 'src/app/services/report.service';
     MatIconModule
   ]
 })
-export class PdReportWaitApproveListComponent implements OnInit{
+export class CommReportWaitApproveListComponent implements OnInit{
   @ViewChild(PdfViewerComponent)
   private pdfComponent!: PdfViewerComponent;
 
@@ -206,14 +206,6 @@ export class PdReportWaitApproveListComponent implements OnInit{
         }
       }
     ];
-  }
-
-  setReportManageMenu(report: Report) {
-    if (report.stateID === 1) {
-      this.setReportDrafMenu(report);
-    } else {
-      this.setReportSubmitMenu(report);
-    }
   }
 
   ReportDelete(id: number) {

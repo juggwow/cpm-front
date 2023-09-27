@@ -2,34 +2,35 @@ import { CommonModule } from '@angular/common';
 import { HttpParams } from '@angular/common/http';
 import { Component, CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA, OnInit, ViewChild } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
-import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { PdfViewerModule, PdfViewerComponent } from 'ng2-pdf-viewer';
-import { ConfirmationService, MenuItem, SortEvent, PrimeIcons } from 'primeng/api';
+import { MenuItem, SortEvent } from 'primeng/api';
+import { BlockUIModule } from 'primeng/blockui';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { ButtonModule } from 'primeng/button';
-import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ContextMenuModule } from 'primeng/contextmenu';
 import { DialogModule } from 'primeng/dialog';
 import { InputTextModule } from 'primeng/inputtext';
 import { MenuModule } from 'primeng/menu';
 import { PaginatorModule } from 'primeng/paginator';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { RippleModule } from 'primeng/ripple';
 import { TableModule } from 'primeng/table';
 import { ToastModule } from 'primeng/toast';
-import { take, tap } from 'rxjs';
+import * as printJS from 'print-js';
 import { CardComponent } from 'src/app/components/card/card.component';
-import { Report} from 'src/app/models/report.model';
+import { ReportApprove } from 'src/app/models/report.model';
 import { ResponsePage } from 'src/app/models/response-page.model';
 import { BoqService } from 'src/app/services/boq.service';
 import { ReportService } from 'src/app/services/report.service';
 
 @Component({
-  selector: 'app-pd-report-wait-approve-list',
-  templateUrl: './pd-report-wait-approve-list.component.html',
-  styleUrls: ['./pd-report-wait-approve-list.component.scss'],
+  selector: 'app-comm-report-approve-list',
+  templateUrl: './comm-report-approve-list.component.html',
+  styleUrls: ['./comm-report-approve-list.component.scss'],
   standalone: true,
   schemas:[CUSTOM_ELEMENTS_SCHEMA,NO_ERRORS_SCHEMA],
-  providers: [BoqService, ReportService, ConfirmationService],
+  providers: [BoqService, ReportService],
   imports: [
     BreadcrumbModule,
     CardComponent,
@@ -42,14 +43,14 @@ import { ReportService } from 'src/app/services/report.service';
     ToastModule,
     ContextMenuModule,
     CommonModule,
-    ConfirmDialogModule,
     PdfViewerModule,
     DialogModule,
-    RouterModule,
+    BlockUIModule,
+    ProgressSpinnerModule,
     MatIconModule
   ]
 })
-export class PdReportWaitApproveListComponent implements OnInit{
+export class CommReportApproveListComponent implements OnInit {
   @ViewChild(PdfViewerComponent)
   private pdfComponent!: PdfViewerComponent;
 
@@ -70,7 +71,7 @@ export class PdReportWaitApproveListComponent implements OnInit{
 
   loading: boolean = true;
 
-  data!: Report[];
+  data!: ReportApprove[];
   first: number = 0;
   rows: number = 10;
   totalRecords: number = 0;
@@ -81,23 +82,20 @@ export class PdReportWaitApproveListComponent implements OnInit{
 
   private user_keyup_timeout: any;
 
-  reportManageMenu: MenuItem[] = [];
-  // activeItem!: ReportProgress;
+  selectedReports!: ReportApprove[] | null;
+  blockedDocument: boolean = false;
 
   constructor(
     private boqService: BoqService,
     private route: ActivatedRoute,
-    private report: ReportService,
-    private confirmationService: ConfirmationService,
-    private router: Router,
+    private report: ReportService
   ) { }
 
   ngOnInit(): void {
-
     this.contractId = Number(this.route.snapshot.parent?.paramMap.get('id'));
     this.boqService.getProjectDetail(this.contractId)
       .subscribe((res) => {
-        this.projectName = res.workName;
+        this.projectName = res.name;
         this.items = [
           { label: 'บริหารสัญญา' },
           { label: this.projectName },
@@ -117,6 +115,19 @@ export class PdReportWaitApproveListComponent implements OnInit{
     this.fetchData(this.contractId);
   }
 
+  fetchData(id: number, params?: HttpParams) {
+    this.loading = true;
+    this.report.getApproveByContractId<ResponsePage<ReportApprove>>(id, params)
+      .subscribe((res) => {
+        this.data = res.data;
+        this.totalRecords = res.total;
+        this.rows = res.limit;
+        this.first = (res.page - 1) * this.rows;
+        this.page = res.page;
+        this.loading = false;
+      });
+  }
+
   setParams(): HttpParams {
     let params = new HttpParams({
       fromObject: {
@@ -131,6 +142,14 @@ export class PdReportWaitApproveListComponent implements OnInit{
       params = params.set(key, this.search.get(key)!)
     }
     return params;
+  }
+
+  onPageChange(event: any) {
+    this.loading = true;
+    this.first = event.first;
+    this.rows = event.rows;
+    this.page = event.page + 1;
+    this.fetchData(this.contractId!, this.setParams());
   }
 
   onSortColumn(event: SortEvent) {
@@ -156,117 +175,12 @@ export class PdReportWaitApproveListComponent implements OnInit{
     }
 
     this.user_keyup_timeout = setTimeout(() => {
-      this.fetchData(this.contractId!,this.setParams());
+      this.fetchData(this.contractId!, this.setParams());
     }, 3000);
   }
 
   onClearFilter(key: string) {
     this.search = this.search.delete(key);
-    this.fetchData(this.contractId!, this.setParams());
-  }
-
-
-  setReportDrafMenu(report: Report) {
-    this.reportManageMenu = [
-      {
-        label: 'แก้ไข',
-        icon: PrimeIcons.PENCIL,
-        routerLink: `../item/${report.itemID}/report/${report.id}/edit`
-        // routerLink: ['/file',id]
-      },
-      {
-        label: 'Preview เอกสาร',
-        icon: PrimeIcons.EYE,
-        command: () => {
-          this.reportPreview(report.id)
-        }
-      },
-      {
-        label: 'ลบเอกสาร',
-        icon: PrimeIcons.TRASH,
-        command: () => {
-          //console.log(report.id)
-          this.ReportDelete(report.id);
-        }
-      }
-    ];
-  }
-  setReportSubmitMenu(report: Report) {
-    this.reportManageMenu = [
-      {
-        label: 'ดูรายละเอียด',
-        icon: PrimeIcons.SEARCH,
-        routerLink: `../item/${report.itemID}/report/${report.id}/view`
-      },
-      {
-        label: 'Preview เอกสาร',
-        icon: PrimeIcons.EYE,
-        command: () => {
-          this.reportPreview(report.id)
-        }
-      }
-    ];
-  }
-
-  setReportManageMenu(report: Report) {
-    if (report.stateID === 1) {
-      this.setReportDrafMenu(report);
-    } else {
-      this.setReportSubmitMenu(report);
-    }
-  }
-
-  ReportDelete(id: number) {
-    this.confirmationService.confirm({
-      message: '`คุณต้องการลบรายการนี้หรือไม่',
-      header: "เลือก ตกลง เพื่อลบ หรือ ย้อนกลับ เพื่อกลับไปหน้าเดิม",
-      acceptLabel: "ตกลง",
-      rejectLabel: "ย้อนกลับ",
-      accept: () => {
-        this.report.deleteReport(id).pipe(
-          take(1),
-          tap(() => {
-            console.log('..');
-            // this.show(status);        
-            // // this.appToastService.successToast();
-            // this.router.navigate(['/']);     
-          })
-        )
-          .subscribe({
-            error: () => console.log('error'),
-            complete: () => {
-              console.log('complete')
-              this.fetchData(this.contractId);
-              //   setTimeout(() => {
-              //     this.router.navigate(['/contract',this.contractId,'report','item',this.itemId]);
-              //  }, 1000);
-            }
-          });
-      }
-    });
-  }
-
-  reportPreview(id:number) {
-    this.display = true;
-    this.report.getPdfReport<Blob>(id).subscribe((response) => {
-      // let file = new Blob([response], { type: 'application/pdf' });
-      // var fileURL = URL.createObjectURL(file);
-      this.src = URL.createObjectURL(response);
-    })
-  }
-
-  onHide() {
-    // this.display = false;
-    // URL.revokeObjectURL(this.src);
-    this.pdfComponent.clear();
-    // console.log(this.pdfComponent.src);
-  }
-
-  onPageChange(event: any) {
-    this.loading = true;
-    this.first = event.first;
-    this.rows = event.rows;
-    this.page = event.page + 1;
     this.fetchData(this.contractId!, this.setParams());
   }
 
@@ -290,17 +204,29 @@ export class PdReportWaitApproveListComponent implements OnInit{
     return this.data ? this.first === 0 : true;
   }
 
-  fetchData(id: number, params?: HttpParams) {
-    this.loading = true;
-    this.report.getWaitForApprovReportByContractId<ResponsePage<Report>>(id, params)
-      .subscribe((res) => {
-        this.data = res.data;
-        this.totalRecords = res.total;
-        this.rows = res.limit;
-        this.first = (res.page - 1) * this.rows;
-        this.page = res.page;
-        this.loading = false;
+  reportPreview(id: number) {
+    this.display = true;
+    this.report.getPdfReport<Blob>(id).subscribe((response) => {
+      this.src = URL.createObjectURL(response);
+    })
+  }
 
-      });
+  onHide() {
+    this.pdfComponent.clear();
+  }
+
+  printSelectedReports() {
+    if (!this.selectedReports || !this.selectedReports.length){
+      return
+    }
+    this.blockedDocument = true;
+    let id = this.selectedReports![0].id
+    console.log(id)
+    this.selectedReports = null;
+    this.report.getPdfReport<Blob>(id).subscribe((response) => {
+      this.src = URL.createObjectURL(response);
+      printJS({ printable: this.src, type: 'pdf', showModal: true })
+      this.blockedDocument = false;
+    })
   }
 }

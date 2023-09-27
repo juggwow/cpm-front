@@ -75,7 +75,21 @@ import { LoginCallbackService } from './services/login-callback.service';
                                 import(
                                     './pages/report-view/report-view.component'
                                 ).then((m) => m.ReportViewComponent),
-                        }
+                        },
+                        {
+                            path: 'project',
+                            loadComponent: () =>
+                                import(
+                                    './pages/project/project.component'
+                                ).then((m) => m.ProjectComponent),
+                        },
+                        {
+                            path: 'detail',
+                            loadComponent: () =>
+                                import(
+                                    './pages/detail-view/detail-view.component'
+                                ).then((m) => m.DetailViewComponent),
+                        },
                     ],
                 },
                 {
@@ -112,11 +126,46 @@ import { LoginCallbackService } from './services/login-callback.service';
                                 ).then((m) => m.PdReportWaitApproveListComponent),
                         },
                         {
-                            path: ':itemID/:reportID',
+                            path: ':reportID',
                             loadComponent: () =>
                                 import(
                                     './pages/pd-report-detail/pd-report-detail.component'
                                 ).then((m) => m.PdReportDetailComponent),
+                        },
+                    ]
+                },
+                {
+                    path: 'comm/:id',
+                    canActivate: [LoginCallbackService],
+                    component: AppLayoutComponent,
+                    children: [
+                        {
+                            path: '',
+                            loadComponent: () =>
+                                import(
+                                    './pages/comm-item-list/comm-item-list.component'
+                                ).then((m) => m.CommItemListComponent),
+                        },
+                        {
+                            path: 'approve',
+                            loadComponent: () =>
+                                import(
+                                    './pages/comm-report-approve-list/comm-report-approve-list.component'
+                                ).then((m) => m.CommReportApproveListComponent),
+                        },
+                        {
+                            path: 'progress',
+                            loadComponent: () =>
+                                import(
+                                    './pages/comm-report-wait-approve-list/comm-report-wait-approve-list.component'
+                                ).then((m) => m.CommReportWaitApproveListComponent),
+                        },
+                        {
+                            path: ':itemID/:reportID',
+                            loadComponent: () =>
+                                import(
+                                    './pages/comm-report-detial/comm-report-detial.component'
+                                ).then((m) => m.CommReportDetialComponent),
                         },
                     ]
                 },
@@ -129,7 +178,8 @@ import { LoginCallbackService } from './services/login-callback.service';
                         ).then((m) => m.ReportPdfComponent),
                 },
                 { path: 'pages/notfound', component: NotfoundComponent },
-                // { path: '**', redirectTo: 'pages/notfound' },
+                { path: '**', redirectTo: 'pages/notfound' },
+                
             ],
             {
                 scrollPositionRestoration: 'enabled',

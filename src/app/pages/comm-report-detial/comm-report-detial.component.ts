@@ -1,28 +1,26 @@
 import { CommonModule } from '@angular/common';
 import { Component, CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, RouterModule } from '@angular/router';
-import { MenuItem, PrimeIcons } from 'primeng/api';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RouterModule, ActivatedRoute } from '@angular/router';
+import { NgxDropzoneModule, NgxDropzoneChangeEvent } from 'ngx-dropzone';
+import { ConfirmationService, MenuItem, MessageService, PrimeIcons } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { DialogModule } from 'primeng/dialog';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { InputTextModule } from 'primeng/inputtext';
 import { MenuModule } from 'primeng/menu';
+import { RadioButtonModule } from 'primeng/radiobutton';
 import { DocType } from 'src/app/models/doc.model';
 import { ReportView, AttachFile } from 'src/app/models/form.model';
 import { FormService } from 'src/app/services/form.service';
 import { ReportService } from 'src/app/services/report.service';
-import { DialogModule } from 'primeng/dialog';
-import { PdfViewerComponent, PdfViewerModule } from 'ng2-pdf-viewer';
-import { EditReportComponent } from './edit-report/edit-report.component';
-import { RadioButtonModule } from 'primeng/radiobutton';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { NgxDropzoneChangeEvent, NgxDropzoneModule } from 'ngx-dropzone';
-import { InputTextModule } from 'primeng/inputtext';
-import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { ConfirmationService, MessageService, ConfirmEventType } from 'primeng/api';
-import { InputNumberModule } from 'primeng/inputnumber';
+import { EditReportComponent } from '../report-view/edit-report/edit-report.component';
 
 @Component({
-
-  templateUrl: './report-view.component.html',
-  styleUrls: ['./report-view.component.scss'],
+  selector: 'app-comm-report-detial',
+  templateUrl: './comm-report-detial.component.html',
+  styleUrls: ['./comm-report-detial.component.scss'],
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
   imports: [
@@ -31,7 +29,6 @@ import { InputNumberModule } from 'primeng/inputnumber';
     CommonModule,
     MenuModule,
     DialogModule,
-    PdfViewerModule,
     RadioButtonModule,
     FormsModule,
     ReactiveFormsModule,
@@ -44,13 +41,10 @@ import { InputNumberModule } from 'primeng/inputnumber';
   ,
   providers: [ConfirmationService, FormService, ReportService]
 })
-export class ReportViewComponent implements OnInit {
-
-  @ViewChild(PdfViewerComponent)
+export class CommReportDetialComponent implements OnInit{
   value5 = 2;
-  private pdfComponent!: PdfViewerComponent;
 
-  role = 'B'
+  role = 'A'
   subFormShow: 1 | 2 | 3 = 1
   editForm: boolean = false
 
@@ -62,7 +56,6 @@ export class ReportViewComponent implements OnInit {
   incompleteCountContract: number = 0;
   goodCount: number = 0;
 
-  // private pdfComponent!: PdfViewerComponent;
   files: File[] = [];
 
   filesAttachType: Number[] = [];
@@ -248,12 +241,7 @@ export class ReportViewComponent implements OnInit {
   }
 
   reportPreview() {
-    this.display = true;
-    this.r.getPdfReport<Blob>(this.reportId).subscribe((response) => {
-      // let file = new Blob([response], { type: 'application/pdf' });
-      // var fileURL = URL.createObjectURL(file);
-      this.src = URL.createObjectURL(response);
-    })
+    this.displayExam = true;
   }
 
   filePreview(id: number) {
@@ -281,7 +269,7 @@ export class ReportViewComponent implements OnInit {
   onHide() {
     // this.display = false;
     // URL.revokeObjectURL(this.src);
-    this.pdfComponent.clear();
   }
 
 }
+

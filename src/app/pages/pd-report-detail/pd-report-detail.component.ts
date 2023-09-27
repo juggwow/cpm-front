@@ -1,6 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component, CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA, OnInit, ViewChild } from '@angular/core';
-import { RouterModule, ActivatedRoute } from '@angular/router';
+import {
+  Component,
+  CUSTOM_ELEMENTS_SCHEMA,
+  NO_ERRORS_SCHEMA,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
+import { RouterModule, ActivatedRoute,Router } from '@angular/router';
 import { PdfViewerComponent, PdfViewerModule } from 'ng2-pdf-viewer';
 import { NgxDropzoneModule } from 'ngx-dropzone';
 import { MenuItem, PrimeIcons } from 'primeng/api';
@@ -14,6 +20,9 @@ import { ReportService } from 'src/app/services/report.service';
 import { GalleriaModule } from 'primeng/galleria';
 import { CarouselModule } from 'primeng/carousel';
 import { ImageModule } from 'primeng/image';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
+import { catchError, throwError } from 'rxjs';
 
 @Component({
   selector: 'app-pd-report-detail',
@@ -32,12 +41,14 @@ import { ImageModule } from 'primeng/image';
     ImageModule,
     GalleriaModule,
     NgxDropzoneModule,
-    CarouselModule
+    CarouselModule,
   ],
 })
 export class PdReportDetailComponent implements OnInit {
   @ViewChild(PdfViewerComponent)
   private pdfComponent!: PdfViewerComponent;
+
+  
   // Non Mock
   display: boolean = false;
 
@@ -81,122 +92,16 @@ export class PdReportDetailComponent implements OnInit {
   doctype!: DocType[];
   isFile: boolean = false
   file!: AttachFile[];
-  files: File[] = [];
+  files: File|null = null;
   src: string = "";
-
-  //For Mock
-
-  // comment: Comment = {
-  //   overAll: 'รับของเรียบร้อย',
-  //   problem: {
-  //     damage: 2,
-  //     lost: 1,
-  //   },
-  //   noProblem: 2,
-  //   images: [
-  //     {
-  //       src: 'https://primefaces.org/cdn/primeng/images/galleria/galleria1.jpg',
-  //     },
-  //     {
-  //       src: 'https://primefaces.org/cdn/primeng/images/galleria/galleria2.jpg',
-  //     },
-  //     {
-  //       src: 'https://primefaces.org/cdn/primeng/images/galleria/galleria3.jpg',
-  //     },
-  //     // {
-  //     //   src: 'https://primefaces.org/cdn/primeng/images/galleria/galleria4.jpg'
-  //     // },
-  //     // {
-  //     //   src: 'https://primefaces.org/cdn/primeng/images/galleria/galleria5.jpg'
-  //     // },
-  //     // {
-  //     //   src: 'https://primefaces.org/cdn/primeng/images/galleria/galleria6.jpg'
-  //     // },
-  //     // {
-  //     //   src: 'https://primefaces.org/cdn/primeng/images/galleria/galleria7.jpg'
-  //     // },
-  //     {
-  //       src: 'https://images.pexels.com/photos/17486592/pexels-photo-17486592/free-photo-of-hand-holding-ice-cream.jpeg'
-  //     },
-  //     {
-  //       src: 'https://primefaces.org/cdn/primeng/images/galleria/galleria9.jpg',
-  //     },
-  //   ],
-  //   extraComment: 'test test test',
-  // };
-
-  // display: boolean = false;
-  // contractId: number = 1;
-  // itemId: number = 1;
-  // reportId: number = 1;
-  // manageMenu: MenuItem[] = [];
-
-  // report: ReportView = {
-  //   id: 1,
-  //   itemID: 1,
-  //   itemName: 'On-load tap-changing power transformer three-phase, 115-22 kV, 30/40/50 MVA (Dyn1)',
-  //   itemUnit: 'set',
-  //   arrival: '17/08/2564',
-  //   inspection: '18/07/2564',
-  //   taskMaster: 'สมชาย สุรัตน์',
-  //   invoice: 'J397/Equipmen',
-  //   quantity: 2,
-  //   country: 'thailand',
-  //   brand: 'No brand',
-  //   model: 'No Model',
-  //   serial: 'No Serial',
-  //   peano: 'No PEANo',
-  //   attachFiles: [
-  //     {
-  //       id: 1,
-  //       name: 'test.pdf',
-  //       size: '3',
-  //       unit: 'MB',
-  //       typeID: 1,
-  //       typeName: 'test 1',
-  //     },
-  //     {
-  //       id: 2,
-  //       name: 'test2.pdf',
-  //       size: '3',
-  //       unit: 'GB',
-  //       typeID: 2,
-  //       typeName: 'test 2',
-  //     },
-  //   ],
-  //   stateName: 'รอ กฟภ. ตรวจสอบ',
-  //   status: 3,
-  //   // radFile:{
-  //   //   id: 2,
-  //   //   name: 'test2.pdf',
-  //   //   size: '3',
-  //   //   unit: 'GB',
-  //   // },
-  // };
-
-  // doctype: DocType[] = [
-  //   {
-  //     name: 'test 1',
-  //     id: 1,
-  //   },
-  //   {
-  //     name: 'test 2',
-  //     id: 2,
-  //   },
-  // ];
-
-  // isFile: boolean = false;
-  // file!: AttachFile[];
-
-  // files: File[] = [];
-
-  // src: string = '';
 
   constructor(
     private route: ActivatedRoute,
     private form: FormService,
-    private r: ReportService
-  ) { }
+    private r: ReportService,
+    private http: HttpClient,
+    private router: Router
+  ) {}
 
   blob2Base64 = (blob: Blob): Promise<string> => {
     return new Promise<string>((resolve, reject) => {
@@ -216,7 +121,6 @@ export class PdReportDetailComponent implements OnInit {
       .subscribe((res) => { this.doctype = res; });
     this.form.reportView<ReportView>(this.reportId)
       .subscribe((res) => { this.report = { ...this.report, ...res } });
-
   }
 
   ShowMenuManage(id: number, filename: string) {
@@ -237,6 +141,52 @@ export class PdReportDetailComponent implements OnInit {
         command: () => {
           this.filePreview(id);
           // console.log("report.id");
+        },
+      },
+    ];
+  }
+
+  showMenuRadFile(id: number, filename: string) {
+    this.manageMenu = [
+      {
+        label: 'Download เอกสาร',
+        icon: PrimeIcons.DOWNLOAD,
+        command: () => {
+          this.fileDownload(id, filename);
+        },
+      },
+      {
+        label: 'Preview เอกสาร',
+        icon: PrimeIcons.EYE,
+        command: () => {
+          this.filePreview(id);
+        },
+      },
+      
+      {
+        label: 'Delete เอกสาร',
+        icon: PrimeIcons.TRASH,
+        command: () => {
+          window.alert("ยังไม่มี API");
+        },
+      },
+    ];
+  }
+
+  showMenuPreviewBeforeUpload() {
+    this.manageMenu = [
+      {
+        label: 'Delete เอกสาร',
+        icon: PrimeIcons.TRASH,
+        command: () => {
+          this.onRemoveFileUpload();
+        },
+      },
+      {
+        label: 'Preview เอกสาร',
+        icon: PrimeIcons.EYE,
+        command: () => {
+          this.filePreviewBeforeUpload();
         },
       },
     ];
@@ -264,6 +214,13 @@ export class PdReportDetailComponent implements OnInit {
     });
   }
 
+  filePreviewBeforeUpload(){
+    if(this.files){
+      this.display = true;
+      this.src = URL.createObjectURL(this.files)
+    }
+  }
+
   filePreview(id: number) {
     this.display = true;
     this.r.getFileAttach<Blob>(id).subscribe((response) => {
@@ -288,6 +245,30 @@ export class PdReportDetailComponent implements OnInit {
     downloadLink.click();
   }
 
+  uploadSignedPDF() {
+    if(this.files){
+      const formData = new FormData();
+      formData.append("upload", this.files);
+      const headers = new HttpHeaders().set('Access-Control-Allow-Origin', '*');
+      this.http.post(`${environment.apiUrl}/upload-pdfsign/${this.itemId}/${this.reportId}`, formData, { 'headers': headers })
+      .pipe(
+        catchError(() => {
+          return throwError(()=>{
+            window.alert("เกิดข้อผิดพลาดขณะอัปโหลดไฟล์")
+            this.router.navigate([`/pd/contract/${this.contractId}/${this.itemId}/${this.reportId}`])
+          });
+        })
+      )
+      .subscribe(() => {
+        window.alert("สำเร็จ")
+        this.router.navigate([`/pd/contract/${this.contractId}/${this.itemId}/${this.reportId}`])
+      });
+    }
+    else{
+      window.alert("กรุณาแนบไฟล์")
+    }
+  }
+
   onHide() {
     // this.display = false;
     // URL.revokeObjectURL(this.src);
@@ -295,23 +276,22 @@ export class PdReportDetailComponent implements OnInit {
   }
 
   onSelectFileUpload(event: any) {
-    this.files.push(...event.addedFiles);
-    //check file type and size
+    this.files = event.addedFiles[0];
   }
 
-  onRemoveFileUpload(event: any, index: number) {
-    console.log(event);
-    this.files.splice(this.files.indexOf(event), 1);
-
+  onRemoveFileUpload() {
+    this.files = null;
   }
 
   b2s = function (bytes: number) {
-    const sizes = ["Bytes", "KB", "MB", "GB", "TB"]
-    if (bytes == 0) { return "n/a" }
-    const i = ~~(Math.log2(bytes) / 10)
-    if (i == 0) { return bytes + " " + sizes[i] }
-    return (bytes / Math.pow(1024, i)).toFixed(2) + " " + sizes[i]
-  }
-
-
+    const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+    if (bytes == 0) {
+      return 'n/a';
+    }
+    const i = ~~(Math.log2(bytes) / 10);
+    if (i == 0) {
+      return bytes + ' ' + sizes[i];
+    }
+    return (bytes / Math.pow(1024, i)).toFixed(2) + ' ' + sizes[i];
+  };
 }

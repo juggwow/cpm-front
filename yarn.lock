@@ -6616,7 +6616,11 @@ primeng@^16.2.0:
 
 print-js@^1.6.0:
   version "1.6.0"
+<<<<<<< HEAD
   resolved "https://registry.npmjs.org/print-js/-/print-js-1.6.0.tgz"
+=======
+  resolved "https://registry.yarnpkg.com/print-js/-/print-js-1.6.0.tgz#692b046cf31992b46afa6c6d8a9db1c69d431d1f"
+>>>>>>> 3eab267f9f5a442f3bcfedcdceac759ca852be70
   integrity sha512-BfnOIzSKbqGRtO4o0rnj/K3681BSd2QUrsIZy/+WdCIugjIswjmx3lDEZpXB2ruGf9d4b3YNINri81+J0FsBWg==
 
 prismjs@^1.29.0:
