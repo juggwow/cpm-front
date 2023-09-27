@@ -12,5 +12,6 @@ import { CardModule } from 'primeng/card';
   ],
 })
 export class ProjectComponent {
+  test = "test"
 
 }
