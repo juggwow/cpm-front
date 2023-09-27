@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { HttpParams } from '@angular/common/http';
 import { Component, CUSTOM_ELEMENTS_SCHEMA, ViewChild } from '@angular/core';
+import { MatIconModule } from '@angular/material/icon';
 import { ActivatedRoute } from '@angular/router';
 import { PdfViewerComponent, PdfViewerModule } from 'ng2-pdf-viewer';
 import { MenuItem, SortEvent } from 'primeng/api';
@@ -45,7 +46,8 @@ import { ReportService } from 'src/app/services/report.service';
     PdfViewerModule,
     DialogModule,
     BlockUIModule,
-    ProgressSpinnerModule
+    ProgressSpinnerModule,
+    MatIconModule
   ]
 })
 export class PdReportApproveListComponent {
@@ -56,6 +58,7 @@ export class PdReportApproveListComponent {
   display: boolean = false;
 
   contractId!: number;
+
   items: MenuItem[] = [];
   projectName: string = "...";
 

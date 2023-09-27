@@ -291,9 +291,9 @@ export class ReportComponent implements OnInit {
           take(1),
           tap(() => {
             console.log('..');
-            // this.show(status);        
+            // this.show(status);
             // // this.appToastService.successToast();
-            // this.router.navigate(['/']);     
+            // this.router.navigate(['/']);
           })
         )
           .subscribe({

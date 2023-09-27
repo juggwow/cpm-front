@@ -1,0 +1,188 @@
+.job-daily {
+    &__breadcrumb ::ng-deep .p-breadcrumb {
+        padding: 0;
+        border: 0;
+        background-color: transparent;
+    }
+  
+    &__subtitle {
+        color: #7f7f7f;
+    }
+  
+    &__carousels ::ng-deep .p-carousel-item:first-child &__carousel-item {
+        border-top-left-radius: 8px;
+        border-bottom-left-radius: 8px;
+    }
+  
+    &__carousels ::ng-deep .p-carousel-item:last-child &__carousel-item {
+        border-top-right-radius: 8px;
+        border-bottom-right-radius: 8px;
+        border-right-width: 1px;
+    }
+  
+    &__carousel-item {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 0.5rem;
+        border-style: solid;
+        border-color: #efefef;
+        border-width: 1px 0 1px 1px;
+        padding: 2rem;
+    }
+  
+    &__carousel-item-active {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 0.5rem;
+        border-style: solid;
+        border-color: #efefef;
+        background-color: rgb(238, 236, 243);
+        border-width: 1px 0 1px 1px;
+        padding: 2rem;
+    }
+  
+    &__input-number--small {
+        &::ng-deep input {
+            width: 7rem;
+            height: 2rem;
+        }
+    }
+  
+    &__quantity-input-number {
+        &::ng-deep input {
+            width: 10rem;
+            text-align: center;
+        }
+    }
+  
+    &__edit-button {
+        width: 2rem;
+        height: 2rem;
+        background-color: rgba(9, 30, 66, 0.04);
+        color: #42526e;
+        border: 0;
+        // top: 1.5rem;
+        // right: 1rem;
+    }
+  
+    &__toggle ::ng-deep .p-togglebutton.p-button {
+        background: #ffffff;
+        border: 1px solid #d4d4d8;
+        color: #ffffff;
+        transition: none;
+    }
+  
+    &__toggle ::ng-deep .p-togglebutton.p-button-icon-left {
+        color: #ffffff;
+        background: #ffffff;
+    }
+  
+    &__toggleSelect ::ng-deep .p-selectbutton .p-button.p-highlight {
+        background: #7718BC;
+        border-color: #7718BC;
+        color: #ffffff;
+    }
+  
+    &__badge ::ng-deep .p-badge {
+        background: #6B6C7E;
+    }
+  }
+  .card {
+      box-shadow: 0px 4px 16px 0px rgba(192, 181, 205, 0.24);
+      border: none;
+      background-color: #FFF;
+      border-radius: 8px;
+      padding: 24px;
+    }
+    
+    .text-primary {
+      color: #454545 !important;
+    }
+    
+    .text-secondary {
+      color: #7f7f7f !important;
+    }
+    
+    .text-thirdary {
+      color: #6a6a6a !important;
+    }
+    
+    .text-pea{
+      color: #7718BC
+    }
+    
+    .text-red {
+      text-align: center;
+      font-size: 0.75rem;
+      color: #970502;
+      border-radius: 12px;
+      background: #fff5f5;
+      padding: 4px 16px;
+      margin: 0;
+    }
+    
+    .text-green {
+      text-align: center;
+      font-size: 0.75rem;
+      color: #107f49;
+      border-radius: 12px;
+      background: #f2fdf6;
+      padding: 4px 16px;
+      margin: 0;
+    }
+    
+    .bg-light{
+      background-color: #F7F7F7 !important;
+    }
+    .card {
+      box-shadow: 0px 4px 16px 0px rgba(192, 181, 205, 0.24);
+      border: none;
+      background-color: #FFF;
+      border-radius: 8px;
+      padding: 24px;
+    }
+    
+    .text-primary {
+      color: #454545 !important;
+    }
+    
+    .text-secondary {
+      color: #7f7f7f !important;
+    }
+    
+    .text-thirdary {
+      color: #6a6a6a !important;
+    }
+    
+    .text-pea{
+      color: #7718BC
+    }
+    
+    .text-red {
+      text-align: center;
+      font-size: 0.75rem;
+      color: #970502;
+      border-radius: 12px;
+      background: #fff5f5;
+      padding: 4px 16px;
+      margin: 0;
+    }
+    
+    .text-green {
+      text-align: center;
+      font-size: 0.75rem;
+      color: #107f49;
+      border-radius: 12px;
+      background: #f2fdf6;
+      padding: 4px 16px;
+      margin: 0;
+    }
+    
+    .bg-light{
+      background-color: #F7F7F7 !important;
+    }
+    

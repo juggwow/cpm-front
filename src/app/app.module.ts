@@ -14,6 +14,7 @@ import { AuthInterceptorService } from "./services/auth-interceptor.service";
         AppLayoutModule,
         FormsModule,
         ReactiveFormsModule,
+
     ],
     declarations: [AppComponent, NotfoundComponent],
     schemas: [ CUSTOM_ELEMENTS_SCHEMA ,NO_ERRORS_SCHEMA],

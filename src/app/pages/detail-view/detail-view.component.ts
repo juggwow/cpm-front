@@ -45,15 +45,6 @@ export class DetailViewComponent implements OnInit {
   @ViewChild(PdfViewerComponent)
   private pdfComponent!: PdfViewerComponent;
 
-  displayCustom: boolean = false;
-
-  activeIndex: number = 0;
-
-  imageClick(index: number) {
-    this.activeIndex = index;
-    this.displayCustom = true;
-}
-
   // Non Mock
   // display: boolean = false;
 
@@ -148,6 +139,8 @@ export class DetailViewComponent implements OnInit {
     model: 'No Model',
     serial: 'No Serial',
     peano: 'No PEANo',
+    stateName: 'test',
+    stateID: 2,
     attachFiles: [
       {
         id: 1,
@@ -190,7 +183,7 @@ export class DetailViewComponent implements OnInit {
     private route: ActivatedRoute,
     private form: FormService,
     private r: ReportService
-  ) {}
+  ) { }
 
   blob2Base64 = (blob: Blob): Promise<string> => {
     return new Promise<string>((resolve, reject) => {
@@ -300,14 +293,14 @@ export class DetailViewComponent implements OnInit {
   }
 
   b2s = function (bytes: number) {
-    const sizes = ["Bytes","KB","MB","GB","TB"]
-    if(bytes == 0){return "n/a"}
-    const i = ~~(Math.log2(bytes)/10)
-    if(i == 0){return bytes + " " + sizes[i]}
-    return (bytes / Math.pow(1024,i)).toFixed(2) + " " + sizes[i]
+    const sizes = ["Bytes", "KB", "MB", "GB", "TB"]
+    if (bytes == 0) { return "n/a" }
+    const i = ~~(Math.log2(bytes) / 10)
+    if (i == 0) { return bytes + " " + sizes[i] }
+    return (bytes / Math.pow(1024, i)).toFixed(2) + " " + sizes[i]
   }
 
-  
+
 }
 
 interface Comment {
@@ -321,4 +314,5 @@ interface Comment {
     src: string;
   }[];
   extraComment: string;
+  attachFile?: string;
 }

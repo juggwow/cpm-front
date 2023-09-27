@@ -1,6 +1,6 @@
 <div class="container">
     <div class="my-5">
-      <div class="neutral-08 fw-bold fs-4 my-3">บริหารสัญญา</div>
+      <div class="neutral-08 fw-bold fs-4 my-3">Receive and Damage</div>
       <p-breadcrumb class="max-w-full" [model]="items"
         [style]="{background:'none',border:'none',padding:'0'}"></p-breadcrumb>
     </div>
@@ -165,9 +165,9 @@
                 <td>{{ report.good }}</td>
                 <td>{{ report.waste }}</td>
                 <td>
-                  <button pButton class="p-button-text" [routerLink]="['/pd/contract',contractId,report.id]">
-                    <mat-icon [ngStyle]="{'color':'black'}" fontIcon="content_paste_search"></mat-icon>
-                  </button>
+                    <button pButton class="p-button-text" [routerLink]="['/pd/contract',contractId,report.id]">
+                        <mat-icon [ngStyle]="{'color':'black'}" fontIcon="content_paste_search"></mat-icon>
+                      </button>
                 </td>
               </tr>
             </ng-template>
