@@ -1,4 +1,4 @@
-<p-dialog (onHide)="setFormData()" [(visible)]="editForm" header="แก้ไขรายละเอียดเบื้องต้น" [style]="{ width: '500px',margin: '1rem' }" [contentStyle]="{'overflow': 'visible'}" [modal]="true" [maximizable]="false" [draggable]="false" [resizable]="false">
+<p-dialog (onHide)="setFormData()" (onShow)="patchValue()" [(visible)]="editForm" header="แก้ไขรายละเอียดเบื้องต้น" [style]="{ width: '500px',margin: '1rem' }" [contentStyle]="{'overflow': 'visible'}" [modal]="true" [maximizable]="false" [draggable]="false" [resizable]="false">
     <form [formGroup]="fg">
       <div *ngIf="subFormShow==1">
         <label for="arrival" class="text-primary text-sm mb-1">วันที่ของถึงหน้างาน</label>
@@ -16,7 +16,9 @@
         <label for="quantity" class="text-primary text-sm mb-1">จำนวนอุปกรณ์ที่ต้องการส่งมอบ</label>
         <input id="quantity" formControlName="quantity" type="number" pInputText class="w-full mb-3"/>
         <label for="country" class="text-primary text-sm mb-1">ประเทศผู้ผลิต</label>
-        <input id="country" formControlName="country" type="text" pInputText class="w-full mb-3"/>
+        <p-autoComplete styleClass="inputText" formControlName="country" [suggestions]="filteredCountries" [inputStyle]="{'width':'100%'}"
+                                        (completeMethod)="filterCountries($event)" [minLength]="1"
+                                        placeholder="กรุณากรอกประเทศผู้ผลิต" field="name"></p-autoComplete>
         <label for="brand" class="text-primary text-sm mb-1">ยี่ห้อ (Brand)</label>
         <input id="brand" formControlName="brand" type="text" pInputText class="w-full mb-3"/>
         <label for="model" class="text-primary text-sm mb-1">รุ่น</label>

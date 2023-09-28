@@ -6,9 +6,12 @@ import { DialogModule } from 'primeng/dialog';
 import { CalendarModule } from 'primeng/calendar';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
+import { AutoCompleteModule } from 'primeng/autocomplete';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { catchError, throwError } from 'rxjs';
+import { Country } from 'src/app/models/country.model';
+import { FormService } from 'src/app/services/form.service';
 
 @Component({
   selector: 'app-edit-report',
@@ -22,22 +25,40 @@ import { catchError, throwError } from 'rxjs';
     CalendarModule,
     ButtonModule,
     InputTextModule,
+    AutoCompleteModule
   ]
 })
 export class EditReportComponent implements OnInit {
-  @Input() role!: string
   @Input() subFormShow!: 1|2|3
   @Input()  report!: ReportView;
   @Input()  editForm!: boolean;
   @Output() editFormChange = new EventEmitter<boolean>();
   @Output() reportChange = new EventEmitter<ReportView>();
 
+  filteredCountries!: Country[];
+  countries!: Country[];
+
+  // mockCountries:Country[] = [{
+  //   id: 0,
+  //   code: "th",
+  //   name: "Thailand"
+  // },{
+  //   id: 1,
+  //   code: "en",
+  //   name: "English"
+  // },{
+  //   id: 2,
+  //   code: "sp",
+  //   name: "Spain"
+  // }]
+
   constructor(
     private http: HttpClient,
+    private form: FormService,
   ) {}
 
   ngOnInit(): void {
-    this.setFormData()
+    this.getCountries()
   }
 
   fg = new FormGroup({
@@ -77,7 +98,7 @@ export class EditReportComponent implements OnInit {
         body = {
           invoice: this.fg.value.invoice,
         }
-        url = `${environment.apiUrl}/report-basic-detials/${this.report.id}`
+        url = `${environment.apiUrl}/report-delivery-number/${this.report.id}`
         break
       }
       case 3 : {
@@ -89,7 +110,7 @@ export class EditReportComponent implements OnInit {
           serial: this.fg.value.serial,
           peano: this.fg.value.peano,
         }
-        url = `${environment.apiUrl}/report-basic-detials/${this.report.id}`
+        url = `${environment.apiUrl}/report-equipment-details/${this.report.id}`
         break
       }
     }
@@ -108,10 +129,12 @@ export class EditReportComponent implements OnInit {
       })
   }
 
-  
+  patchValue(){
+    this.fg.patchValue(this.report)
+  }
 
   setFormData(){
-    this.fg.patchValue(this.report)
+    this.patchValue()
     this.editFormChange.emit(false)
   }
 
@@ -120,5 +143,25 @@ export class EditReportComponent implements OnInit {
     const month = (date.getMonth() + 1).toString().padStart(2, '0');
     const year = date.getFullYear();
     return `${year}-${month}-${day}`;
+  }
+
+  filterCountries(event: any) {
+    let filtered: Country[] = [];
+    let query = event.query;
+
+    for (let i = 0; i < this.countries.length; i++) {
+      let country = this.countries[i];
+      if (country.name.toLowerCase().indexOf(query.toLowerCase()) == 0) {
+        filtered.push(country);
+      }
+    }
+    this.filteredCountries = filtered;
+  }
+
+  getCountries() {
+    this.form.getCountryList<Country[]>()
+      .subscribe((res) => {
+        this.countries = res;
+      });
   }
 }
