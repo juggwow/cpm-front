@@ -4,7 +4,7 @@ import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
 import { RouterModule, ActivatedRoute, Router } from '@angular/router';
-import { FormGroup, FormsModule, ReactiveFormsModule, FormBuilder, FormControl } from '@angular/forms';
+import { FormGroup, FormsModule, ReactiveFormsModule, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { tap, take, } from 'rxjs/operators';
 import { AutoCompleteModule } from 'primeng/autocomplete';
@@ -98,16 +98,16 @@ export class FormComponent implements OnInit {
     this.getCountries()
     this.fg = this.fb.group({
       // itemID: [''],
-      arrival: [''],
-      inspection: [''],
-      taskMaster: [''],
-      invoice: [''],
-      quantity: [''],
-      country: [''],
-      brand: [''],
-      model: [''],
-      serial: [''],
-      peano: [''],
+      arrival: ['',Validators.required],
+      inspection: ['',Validators.required],
+      taskMaster: ['',Validators.required],
+      invoice: ['',Validators.required],
+      quantity: [3,Validators.required],
+      country: ['',Validators.required],
+      brand: ['',Validators.required],
+      model: ['',Validators.required],
+      serial: ['',Validators.required],
+      peano: ['',Validators.required],
       createby: [''],
       // status: ['']
       // filesAttach: new FormControl([] as Upload[])
