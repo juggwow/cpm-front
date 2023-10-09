@@ -1,0 +1,86 @@
+<p-dialog header="แจ้งผลการตรวจสอบอุปกรณ์" [(visible)]="enableExam" [modal]="true" [style]="{width: '50vw'}"
+    [maximizable]="false" [draggable]="false" (onShow) ="onShow()" [resizable]="false" (onHide)="onHide()">
+    <div class="grid">
+        <div class="col-9 ">ชื่ออุปกรณ์</div>
+        <div class="col-3  text-center">จำนวน</div>
+        <!-- <div>
+            id = {{ report.id }}
+        </div> -->
+        <div class="col-9 font-bold ">{{ reportx.itemName }}
+        </div>
+        <div class="col-3 font-bold text-center"> {{ reportx.quantity }} {{ reportx.itemUnit }}</div>
+        <div class="col-9 ">
+            <div class="flex flex-column gap-3">
+                <div  *ngFor="let category of categories" class="field-checkbox">
+                    <p-radioButton [inputId]="category.key" name="category" [value]="category"
+                        [(ngModel)]="selectedCategory">
+                    </p-radioButton>
+                    <label [for]="category.key" class="ml-2">{{ category.name }}</label>
+                </div>
+            </div>
+            <div *ngIf="selectedCategory == categories[1] && multiple">
+
+            
+            <!-- <input type="text" pInputText [(ngModel)]="value" /> -->
+            <div class="field grid">
+                <div class="col">
+                    <p-inputNumber inputmode="none" [(ngModel)]="damageCount" (ngModelChange)="changeproblem($event)"
+                    (onInput)="changeValueCount($event.value)"   placeholder="ระบุจำนวน" class="job-daily__input-number--small ml-5" id="damageCount">
+                    </p-inputNumber>
+                    <label for="damageCount" class="col-fixed text-1xl"> มีความเสียหาย </label>
+                </div>
+            </div>
+            <div class="field grid">
+                <div class="col">
+                    <p-inputNumber [(ngModel)]="incompleteCount" placeholder="ระบุจำนวน"
+                    (onInput)="changeValueCount($event.value)" 
+                        class="job-daily__input-number--small ml-5" id="incompleteCount"> </p-inputNumber>
+                    <label for="incompleteCount" class="col-fixed text-1xl"> ของไม่ครบ </label>
+                </div>
+            </div>
+            <div class="field grid">
+                <div class="col">
+                    <p-inputNumber [(ngModel)]="incompleteCountContract" placeholder="ระบุจำนวน"
+                    (onInput)="changeValueCount($event.value)" 
+                        class="job-daily__input-number--small ml-5" id="incompleteCountContract"></p-inputNumber>
+                    <label for="incompleteCountContract" class="col-fixed text-1xl"> ของไม่ตรงตามสัญญา </label>
+                </div>
+            </div>
+            <div class="field grid">
+                <div class="col">
+                    <p-inputNumber [(ngModel)]="goodCount" placeholder="ระบุจำนวน"
+                    [disabled]="true" class="job-daily__input-number--small ml-5" id="goodCount"> </p-inputNumber>
+                    <label for="goodCount" class="col-fixed text-1xl"> คงเหลือสถาพดี </label>    <span *ngIf="goodCount < 0" style="color:red"><i class="pi pi-exclamation-circle" style="font-size: 1rem"></i> จำนวนไม่ตรงกับที่ส่งมอบ</span>
+                </div>
+            </div>
+        </div>
+        </div>
+        <div class="col-12" *ngIf="selectedCategory == categories[1]">
+            <label class="font-bold" htmlFor="seeAlso">ความคิดเห็นเพิ่มเติม (ถ้ามี)</label>
+            <input pInputText
+                class="gap-3 text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
+                id="seeAlso" />
+        </div>
+        <div class="col-12">
+            <ngx-dropzone (change)="onSelect($event)">
+                <ngx-dropzone-label>
+                    ลากไฟล์มาไว้ที่นี้ หรือ
+                    <span class="text-primary fw-bold">เลือกไฟล์เพื่ออัปโหลด</span>
+                    <br />
+                    <span>ไฟล์ขนาดไม่เกิน 2 MB (เฉพาะ png jpeg เท่านั้น)</span>
+                </ngx-dropzone-label>
+                <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let f of files" [file]="f"
+                    [removable]="true" (removed)="onRemove(f)">
+                    <!-- <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label> -->
+                </ngx-dropzone-image-preview>
+            </ngx-dropzone>
+        </div>
+        <div class="col-12 text-center">
+            <button class="btn btn-lg btn-primary  px-5 mx-5 p-button" pButton (click)="confirm1()"
+                label="   ตกลง   "></button>
+        </div>
+        <p-confirmDialog [style]="{width: '50vw'}"></p-confirmDialog>
+    </div>
+
+    
+</p-dialog>

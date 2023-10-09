@@ -16,7 +16,7 @@ import { ReportView, AttachFile } from 'src/app/models/form.model';
 import { FormService } from 'src/app/services/form.service';
 import { ReportService } from 'src/app/services/report.service';
 import { EditReportComponent } from '../report-view/edit-report/edit-report.component';
-
+import { ReportCheckComponent  } from '../../components/report-check/report-check.component';
 @Component({
   selector: 'app-comm-report-detial',
   templateUrl: './comm-report-detial.component.html',
@@ -36,7 +36,8 @@ import { EditReportComponent } from '../report-view/edit-report/edit-report.comp
     InputTextModule,
     ConfirmDialogModule,
     InputNumberModule,
-    EditReportComponent
+    EditReportComponent,
+    ReportCheckComponent
   ]
   ,
   providers: [ConfirmationService, FormService, ReportService]
@@ -179,7 +180,6 @@ export class CommReportDetialComponent implements OnInit{
         [
           { name: 'สภาพดี', key: 'A' },
           { name: 'พบปัญหา', key: 'E' },
-
         ]
     }
     else {
@@ -200,7 +200,10 @@ export class CommReportDetialComponent implements OnInit{
         .subscribe((res) => { this.doctype = res; });
 
       this.form.reportView<ReportView>(this.reportId)
-        .subscribe((res) => { this.report = { ...this.report, ...res } });
+        .subscribe((res) => { 
+          console.log("res",res)
+          this.report = { ...this.report, ...res } 
+        });
     }
   }
 
@@ -242,6 +245,7 @@ export class CommReportDetialComponent implements OnInit{
 
   reportPreview() {
     this.displayExam = true;
+    console.log("xxxx","aaaa")
   }
 
   filePreview(id: number) {
@@ -269,6 +273,11 @@ export class CommReportDetialComponent implements OnInit{
   onHide() {
     // this.display = false;
     // URL.revokeObjectURL(this.src);
+  }
+
+  update(event:any){
+    console.log("update displayExam",event)
+    this.displayExam = false
   }
 
 }
