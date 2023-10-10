@@ -46,6 +46,7 @@ export class ReportCheckComponent implements OnInit {
   selectedCategory!: any ;
   categories!: any[] ;
   multiple :boolean = true ;
+  files: File[] = [];
  // total !: number
   
   @Input() 
@@ -64,7 +65,7 @@ export class ReportCheckComponent implements OnInit {
   incompleteCount:number = 0;
   incompleteCountContract:number = 0;
   goodCount:number = 0;
-  files: File[] = [];
+
   
   
 
@@ -135,18 +136,17 @@ export class ReportCheckComponent implements OnInit {
     this.enabledChange.emit(false);
     console.log("onHide") ;
   }
-
   changeproblem(event:any){
     console.log(event);
   }
   onSelect(event:any){
     console.log(event);
+    this.files.push(...event.addedFiles);
   }
-
-  onRemove(f:File){
-
+  onRemove(event:any){
+    console.log(event);
+    this.files.splice(this.files.indexOf(event), 1);
   }
-
   confirm1(){
    // this.enabledChange.emit(false);
  //   this.reportx.id = 9999;

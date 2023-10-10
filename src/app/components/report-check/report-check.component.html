@@ -19,7 +19,7 @@
                 </div>
             </div>
             <div *ngIf="selectedCategory == categories[1] && multiple">
-
+                
             
             <!-- <input type="text" pInputText [(ngModel)]="value" /> -->
             <div class="field grid">
@@ -62,14 +62,15 @@
                 id="seeAlso" />
         </div>
         <div class="col-12">
-            <ngx-dropzone (change)="onSelect($event)">
+            <ngx-dropzone  accept="image/*" [maxFileSize]="20000000" (change)="onSelect($event)">
                 <ngx-dropzone-label>
                     ลากไฟล์มาไว้ที่นี้ หรือ
                     <span class="text-primary fw-bold">เลือกไฟล์เพื่ออัปโหลด</span>
                     <br />
                     <span>ไฟล์ขนาดไม่เกิน 2 MB (เฉพาะ png jpeg เท่านั้น)</span>
                 </ngx-dropzone-label>
-                <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let f of files" [file]="f"
+                <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" 
+                *ngFor="let f of files" [file]="f"
                     [removable]="true" (removed)="onRemove(f)">
                     <!-- <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label> -->
                 </ngx-dropzone-image-preview>
