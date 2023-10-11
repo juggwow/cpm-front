@@ -47,6 +47,8 @@ export class ReportCheckComponent implements OnInit {
   categories!: any[] ;
   multiple :boolean = true ;
   files: File[] = [];
+  disableButton :boolean =true ;
+  seeAlso : string ="";
  // total !: number
   
   @Input() 
@@ -65,10 +67,6 @@ export class ReportCheckComponent implements OnInit {
   incompleteCount:number = 0;
   incompleteCountContract:number = 0;
   goodCount:number = 0;
-
-  
-  
-
 
   constructor(
     private route: ActivatedRoute,
@@ -100,7 +98,7 @@ export class ReportCheckComponent implements OnInit {
   }
   onShow(){
     this.goodCount = this.reportx.quantity
-    console.log("report log show",this.reportx.quantity);
+    console.log("report log show",this.reportx);
     if(this.reportx.quantity>1)
     {
       this.multiple = true ;
@@ -157,6 +155,21 @@ export class ReportCheckComponent implements OnInit {
   icon: 'pi pi-exclamation-triangle',
   accept: () => {
       this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: 'You have accepted' });
+      let formData = new FormData();
+      formData.append("itemID", this.reportx.id);
+      formData.append("itemStatus", this.selectedCategory.name);
+      formData.append("itemDamageCount", this.damageCount.toString());
+      formData.append("itemIncompleteCount", this.incompleteCount.toString());
+      formData.append("itemIncompleteCountContract", this.incompleteCountContract.toString());
+      formData.append("itemGoodCount", this.goodCount.toString());
+      formData.append("itemSeeAlso", this.seeAlso.toString());
+      this.files.forEach(file => {
+        formData.append("itemFilesAttach", file);
+      });
+      //formData.append("itemCountFilesAttach", i.toString());
+       //formData.append("itemFilesAttach", this.files);
+      console.log("itemFilesAttach" ,formData.get("itemFilesAttach2"))
+   
   },
   reject: (type: any) => {
      
