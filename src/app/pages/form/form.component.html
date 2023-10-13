@@ -155,7 +155,7 @@
                 <div class="flex flex-row justify-content-end gap-3">
                     <button class="bg-white px-5 p-button-outlined" pButton
                         (click)="onDraft()">บันทึกร่าง</button>
-                    <button class="bg-white px-5 p-button-outlined" [ngClass]="!fg.valid || files.length != filesAttachType.length || files.length == 0?'disabled-button':''" pButton
+                    <button class="bg-white px-5 p-button-outlined"  [ngClass]="!fg.valid || files.length != filesAttachType.length || files.length == 0?'disabled-button':''" pButton
                         (click)="onConfirm()" [disabled]="!fg.valid || files.length != filesAttachType.length || files.length == 0">ส่งให้
                         กฟภ. </button>
                 </div>
