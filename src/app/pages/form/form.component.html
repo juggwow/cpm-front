@@ -116,7 +116,7 @@
                             <div class="col-12 sm:col-6 sm:pl-3">
                               <p class="mb-0 text-secondary text-sm md:mb-2">ประเทศผู้ผลิต</p>
                               <p-autoComplete class="inputText" formControlName="country" [suggestions]="filteredCountries" [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}"
-                                        (completeMethod)="filterCountries($event)" [minLength]="1"
+                                        (completeMethod)="filterCountries($event)" [minLength]="1" (onBlur)="checkCountryValid()"
                                         placeholder="กรุณากรอกประเทศผู้ผลิต" field="name" >
                                     </p-autoComplete>
                             </div>

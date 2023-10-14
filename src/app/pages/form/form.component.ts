@@ -4,7 +4,7 @@ import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
 import { RouterModule, ActivatedRoute, Router } from '@angular/router';
-import { FormGroup, FormsModule, ReactiveFormsModule, FormBuilder, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormsModule, ReactiveFormsModule, FormBuilder, FormControl, Validators, AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { tap, take, } from 'rxjs/operators';
 import { AutoCompleteModule } from 'primeng/autocomplete';
@@ -38,7 +38,7 @@ export class FormComponent implements OnInit {
 
   contractId!: number;
   items: MenuItem[] = [];
-  projectName: string = "...";
+  projectName: string = "test";
 
   itemId!: number;
   itemDetial !: Item;
@@ -82,13 +82,13 @@ export class FormComponent implements OnInit {
 
         this.boqService.getProjectDetail(this.contractId)
           .subscribe((res) => {
-            this.projectName = res.name;
+            this.projectName = res.workName;
             this.items = [
               { label: 'บริหารจัดการสัญญา' },
               { label: 'บริหารสัญญา' },
               { label: this.projectName },
               { label: 'Receive and Damage' },
-              { label: `${this.itemDetial.name.slice(0, 25)}...` }
+              { label: `${this.itemDetial.name.slice(0, 25)}${this.itemDetial.name.length>25?'...':undefined}` }
             ];
           });
 
@@ -103,7 +103,19 @@ export class FormComponent implements OnInit {
       taskMaster: ['',Validators.required],
       invoice: ['',Validators.required],
       quantity: [3,Validators.required],
-      country: ['',Validators.required],
+      country: ['',[
+          Validators.required,
+          (control: AbstractControl<Country|string>): null | { countryInvalid: boolean } => {
+            if(typeof(control.value)=='string'){
+              return {countryInvalid:true}
+            }
+            if(!this.countries.includes(control.value)){
+              return {countryInvalid:true}
+            }
+            return null
+          }
+        ]
+      ],
       brand: ['',Validators.required],
       model: ['',Validators.required],
       serial: ['',Validators.required],
@@ -149,15 +161,23 @@ export class FormComponent implements OnInit {
   }
 
   onBack() {
-    this.confirmationService.confirm({
-      message: 'กด "ยืนยัน" หากต้องการยกเลิกโดยไม่บันทึกการเปลี่ยนแปลง',
-      header: `ยืนยันยกเลิกโดย "ไม่บันทึก" หรือไม่`,
-      acceptLabel: "ยืนยัน",
-      rejectLabel: "ยกเลิก",
-      accept: () => {
-        this.router.navigate(['/contract', this.contractId, 'item', this.itemId, 'report']);
+    console.log(this.fg)
+    Object.keys(this.fg.controls).forEach(formControlName => {
+      if (formControlName == 'country') {
+        // console.log(this.fg.get(formControlName)?.value);
+      } else {
+        // console.log(this.fg.get(formControlName)?.value);
       }
     });
+    // this.confirmationService.confirm({
+    //   message: 'กด "ยืนยัน" หากต้องการยกเลิกโดยไม่บันทึกการเปลี่ยนแปลง',
+    //   header: `ยืนยันยกเลิกโดย "ไม่บันทึก" หรือไม่`,
+    //   acceptLabel: "ยืนยัน",
+    //   rejectLabel: "ยกเลิก",
+    //   accept: () => {
+    //     this.router.navigate(['/contract', this.contractId, 'item', this.itemId, 'report']);
+    //   }
+    // });
   }
 
   onConfirm() {
@@ -249,7 +269,10 @@ export class FormComponent implements OnInit {
       })
     )
       .subscribe({
-        error: () => console.log('error'),
+        error: (err) => {
+          let detail = `เกิดข้อผิดพลาด: ${err.status}, ${err.statusText}`
+          this.messageService.add({ severity: 'error', summary: 'Error', detail});
+        },
         complete: () => {
           this.show(status);
           setTimeout(() => {
@@ -267,9 +290,14 @@ export class FormComponent implements OnInit {
     }
   }
 
-
-
+  checkCountryValid(){
+    if(!this.countries.includes(this.fg.value.country)){
+      this.messageService.add({ severity: 'error', summary: 'ประเทศไม่ถูกต้อง', detail: "กรุณาเลือกประเทศจากรายการที่แนะนำ"});
+    }
+  }
 }
+
+
 
 
 

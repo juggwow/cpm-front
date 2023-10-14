@@ -118,7 +118,7 @@ export class FormEditComponent implements OnInit {
               this.items = [
                 { label: 'บริหารจัดการสัญญา' },
                 { label: 'บริหารสัญญา' },
-                { label: res.name },
+                { label: res.workName},
                 { label: 'Receive and Damage' },
                 { label: `${this.report.itemName.slice(0, 25)}...` }
               ];
