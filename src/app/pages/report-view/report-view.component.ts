@@ -10,7 +10,7 @@ import { FormService } from 'src/app/services/form.service';
 import { ReportService } from 'src/app/services/report.service';
 import { DialogModule } from 'primeng/dialog';
 import { PdfViewerComponent, PdfViewerModule } from 'ng2-pdf-viewer';
-import { EditReportComponent } from './edit-report/edit-report.component';
+import { EditReportComponent } from '../../components/edit-report/edit-report.component';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxDropzoneChangeEvent, NgxDropzoneModule } from 'ngx-dropzone';

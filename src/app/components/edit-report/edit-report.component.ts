@@ -12,6 +12,9 @@ import { HttpClient } from '@angular/common/http';
 import { catchError, throwError } from 'rxjs';
 import { Country } from 'src/app/models/country.model';
 import { FormService } from 'src/app/services/form.service';
+import { ToastModule } from 'primeng/toast';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 @Component({
   selector: 'app-edit-report',
@@ -25,7 +28,9 @@ import { FormService } from 'src/app/services/form.service';
     CalendarModule,
     ButtonModule,
     InputTextModule,
-    AutoCompleteModule
+    AutoCompleteModule,
+    ToastModule,
+    ConfirmDialogModule
   ]
 })
 export class EditReportComponent implements OnInit {
@@ -35,7 +40,7 @@ export class EditReportComponent implements OnInit {
   @Output() editFormChange = new EventEmitter<boolean>();
   @Output() reportChange = new EventEmitter<ReportView>();
 
-  filteredCountries!: Country[];
+  filteredCountries!: string[];
   countries!: Country[];
 
   // mockCountries:Country[] = [{
@@ -55,6 +60,8 @@ export class EditReportComponent implements OnInit {
   constructor(
     private http: HttpClient,
     private form: FormService,
+    private messageService: MessageService,
+    private confirmationService: ConfirmationService,
   ) {}
 
   ngOnInit(): void {
@@ -114,19 +121,29 @@ export class EditReportComponent implements OnInit {
         break
       }
     }
-    this.http.put(url, body)
+
+    const update = ()=>{this.http.put(url, body)
       .pipe(
         catchError(() => {
           return throwError(()=>{
-            window.alert("เกิดข้อผิดพลาด")
+            this.messageService.add({ severity: 'error', summary: 'Error', detail: 'บันทึกไม่สำเร็จ' });
             this.editFormChange.emit(false)
           });
         })
       )
       .subscribe(()=>{
+        this.messageService.add({ severity: 'success', summary: 'Success', detail: 'บันทึกสำเร็จ' });
         this.reportChange.emit({...this.report,...(this.fg.value as ReportView)})
         this.setFormData()
-      })
+      })}
+    
+    this.confirmationService.confirm({
+      message: 'ระบบจะเปลี่ยนแปลงข้อมูลเมื่อกด “ตกลง”',
+      header: "ยืนยันการเปลี่ยนแปลง",
+      acceptLabel: "ตกลง",
+      rejectLabel: "ยกเลิก",
+      accept: update
+    });
   }
 
   patchValue(){
@@ -146,13 +163,13 @@ export class EditReportComponent implements OnInit {
   }
 
   filterCountries(event: any) {
-    let filtered: Country[] = [];
+    let filtered: string[] = [];
     let query = event.query;
 
     for (let i = 0; i < this.countries.length; i++) {
       let country = this.countries[i];
       if (country.name.toLowerCase().indexOf(query.toLowerCase()) == 0) {
-        filtered.push(country);
+        filtered.push(country.name);
       }
     }
     this.filteredCountries = filtered;

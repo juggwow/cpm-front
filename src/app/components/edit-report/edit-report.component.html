@@ -17,8 +17,8 @@
         <input id="quantity" formControlName="quantity" type="number" pInputText class="w-full mb-3"/>
         <label for="country" class="text-primary text-sm mb-1">ประเทศผู้ผลิต</label>
         <p-autoComplete styleClass="inputText" formControlName="country" [suggestions]="filteredCountries" [inputStyle]="{'width':'100%'}"
-                                        (completeMethod)="filterCountries($event)" [minLength]="1"
-                                        placeholder="กรุณากรอกประเทศผู้ผลิต" field="name"></p-autoComplete>
+                                        (completeMethod)="filterCountries($event)" [minLength]="1" [forceSelection]="fg.value.country != ''"
+                                        placeholder="กรุณากรอกประเทศผู้ผลิต"></p-autoComplete>
         <label for="brand" class="text-primary text-sm mb-1">ยี่ห้อ (Brand)</label>
         <input id="brand" formControlName="brand" type="text" pInputText class="w-full mb-3"/>
         <label for="model" class="text-primary text-sm mb-1">รุ่น</label>
@@ -31,3 +31,5 @@
       <p-button type="submit" (onClick)="onSubmit($event)" styleClass="px-6 mx-auto flex align-items-center">ตกลง</p-button>
     </form>
   </p-dialog>
+<p-toast></p-toast>  
+<p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>

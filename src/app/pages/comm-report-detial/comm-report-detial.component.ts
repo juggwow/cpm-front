@@ -15,7 +15,7 @@ import { DocType } from 'src/app/models/doc.model';
 import { ReportView, AttachFile } from 'src/app/models/form.model';
 import { FormService } from 'src/app/services/form.service';
 import { ReportService } from 'src/app/services/report.service';
-import { EditReportComponent } from '../report-view/edit-report/edit-report.component';
+import { EditReportComponent } from '../../components/edit-report/edit-report.component';
 import { ReportCheckComponent  } from '../../components/report-check/report-check.component';
 @Component({
   selector: 'app-comm-report-detial',
