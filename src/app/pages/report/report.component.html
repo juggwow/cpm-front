@@ -151,7 +151,7 @@
                 {{ report.createBy }}
               </td>
               <td>
-                <p class="text-status">{{ report.stateName }}</p>
+                <p class="badge" [ngClass]="{'badge-draft':report.stateName=='บันทึกร่าง','badge-progress':report.stateName=='รอ กฟภ. อนุมัติ','badge-approve':report.stateName=='อนุมัติแล้ว'}" >{{ report.stateName }}</p>
               </td>
               <td>
                 <div class="flex gap-1">

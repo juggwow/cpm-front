@@ -55,11 +55,25 @@
     color: white !important;
 }
 
-.text-status{
-    font-size: 12px !important;
-    background-color: #F6EDFD; 
+.badge{
+    font-size: 12px;
     padding: 4px 16px;
     text-align: center;
-    color: #7718BC !important;
     border-radius: 12px;
+
+    &-draft{
+        background-color: #F6EDFD;
+        color: #7718BC;
+    }
+
+    &-progress{
+        background-color: #FFF0CC;
+        color: #996B00;
+    }
+
+    &-approve{
+        background-color: #F2FDF6;
+        color: #107F49;
+    }
+    
 }

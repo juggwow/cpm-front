@@ -75,7 +75,7 @@ export class BoqItemComponent implements OnInit {
     this.contractId = Number(this.route.snapshot.paramMap.get('id'));
     this.BoqService.getProjectDetail(this.contractId)
       .subscribe((res) => {
-        this.projectName = res.name;
+        this.projectName = res.workName;
         this.items = [
           { label: 'บริหารจัดการสัญญา' },
           { label: 'บริหารสัญญา' },

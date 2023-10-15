@@ -1,0 +1,40 @@
+.text-primar {
+    color: #454545 !important;
+  }
+  
+  .text-secondary {
+    color: #7f7f7f !important;
+  }
+  
+  .text-thirdary {
+    color: #6a6a6a !important;
+  }
+  
+  .text-pea{
+    color: #7718BC
+  }
+
+  .card {
+    box-shadow: 0px 4px 16px 0px rgba(192, 181, 205, 0.24);
+    border: none;
+    background-color: #FFF;
+    border-radius: 8px;
+    padding: 24px;
+}
+
+::ng-deep .p-breadcrumb ul {
+    li .p-menuitem-link .p-menuitem-text {
+        color: #7f7f7f !important;
+        margin: 0 0.5rem;
+        font-size: 1rem;
+    }
+    li .p-icon-wrapper {
+        fill: #7f7f7f 
+    }
+    li:last-child .p-menuitem-text {
+        font-weight: 600;
+    }
+    li:first-child .p-menuitem-text {
+        margin-left: 0;
+    }
+}

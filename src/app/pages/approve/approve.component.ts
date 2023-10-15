@@ -93,7 +93,7 @@ export class ApproveComponent implements OnInit {
     this.contractId = Number(this.route.snapshot.parent?.paramMap.get('id'));
     this.boqService.getProjectDetail(this.contractId)
       .subscribe((res) => {
-        this.projectName = res.name;
+        this.projectName = res.workName;
         this.items = [
           { label: 'บริหารจัดการสัญญา' },
           { label: 'บริหารสัญญา' },
