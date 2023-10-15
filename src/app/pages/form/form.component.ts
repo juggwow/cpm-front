@@ -154,8 +154,7 @@ export class FormComponent implements OnInit {
             })
       })
     }
-
-    if (this.reportId && this.typeForm == 'edit') {
+    else if (this.reportId && this.typeForm == 'edit') {
       this.form.reportView<ReportView>(this.reportId)
         .subscribe((res) => {
           this.report = { ...this.report, ...res };
@@ -175,6 +174,9 @@ export class FormComponent implements OnInit {
             })
 
         });
+    }
+    else{
+      this.router.navigate(['/pages/notfound']);
     }
   }
 
