@@ -1,171 +1,191 @@
 <div class="p-0 mt-3">
-    <p class="font-bold text-2xl text-primar mb-4">บริหารสัญญา</p>
-    <p-breadcrumb *ngIf="items" [model]="items" [style]="{background:'none',border:'none',padding:'0',margin: '0 0 1.5rem 0'}"></p-breadcrumb>
-    
-        
-            <div class="card ">
-                <form *ngIf="fg" [formGroup]="fg" enctype="multipart/form-data">
-                    
-                        <p class="text-lg font-bold text-primar m-0">รายละเอียด Receive and Damage </p>
-                        <hr class="my-4" />
-                        <div class="grid grid-nogutter justify-content-between">
-                            <div class="col-12 md:col-4">
-                              <p class="font-bold text-lg text-primar">อุปกรณ์ที่ส่งมอบ</p>
-                            </div>
-                            <div class="col-12 m-0 md:col-8">
-                                <input type="text" pInputText class="form-control outline-none border-none bg-gray-300 w-full"  value="{{itemDetial ? itemDetial.name : ''}}" disabled>
-                            </div>
-                        </div>
-                        <hr class="my-4" />
-                        <div class="grid grid-nogutter justify-content-between">
-                            <div class="col-12 md:col-4">
-                              <p class="font-bold text-primar mb-3 text-lg">รายละเอียดเบื้องต้น</p>
-                            </div>
-                            <div class="col-12 md:col-8 md:mt-1">
-                              <div class="grid grid-nogutter justify-content-between md:mb-4">
-                                <div class="col-12 mb-3 sm:pr-3 sm:col-6 ">
-                                  <p class="text-secondary text-sm mb-0 md:mb-2">
-                                    วันที่ส่งของถึงหน้างาน
-                                  </p>
-                                  <input type="date" pInputText class="form-control w-full" formControlName="arrival">
-                                </div>
-                                <div class="col-12 mb-3 sm:pl-3 sm:col-6">
-                                  <p class="text-secondary text-sm mb-0 md:mb-2">วันที่ตรวจสอบ</p>
-                                  <input type="date" pInputText class="form-control w-full" formControlName="inspection">
-                                </div>
-                              </div>
-                              <div class="grid grid-nogutter my-0 justify-content-between">
-                                <div class="col-12">
-                                  <p class="text-secondary text-sm mb-0 md:mb-2">
-                                    ชื่อผู้ควบคุมงานของบริษัท
-                                  </p>
-                                  <input type="text" pInputText class="form-control w-full" placeholder="กรุณากรอกชื่อผู้ควบคุมงานของบริษัท" formControlName="taskMaster">
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        <hr class="my-4" />
-                        <div class="grid grid-nogutter justify-content-between relative">
-                            <div class="col-12 md:col-4">
-                                <p class="font-bold text-primar text-lg mb-3">เอกสารการส่ง</p>
-                            </div>
-                            <div class="col-12 md:col-8 md:mt-1">
-                                <div class="grid grid-nogutter justify-content-between">
-                                    <div class="col-12">
-                                        <p class="text-secondary text-sm mb-0 md:mb-2">เลขที่ใบส่ง</p>
-                                        <input type="text" pInputText class="form-control w-full mb-3" placeholder="เลขที่ใบส่ง"
-                                            formControlName="invoice">
-                                    </div>
-                                    <div class="col-12 md:mt-4">
-                                        <p class="text-secondary text-sm mb-0 md:mb-2">เอกสารแนบ (Packing List, ใบออกของ, ใบ Shipping, Factory Test
-                                            report)</p>
-                                        <ngx-dropzone accept="application/pdf" [maxFileSize]="50000000" (change)="onSelectFileUpload($event)">
-                                            <ngx-dropzone-label>
-                                                ลากไฟล์มาไว้ที่นี้ หรือ
-                                                <span class="text-primary fw-bold">เลือกไฟล์เพื่ออัปโหลด</span>
-                                                <br />
-                                                <span>ไฟล์ขนาดไม่เกิน 50 MB (เฉพาะ .pdf เท่านั้น)</span>
-                                            </ngx-dropzone-label>
-                                        </ngx-dropzone>
-                                        <div *ngFor="let f of files;  index as i">
-                                            <div class="grid grid-nogutter border-round-sm bg-gray-200 p-3 mb-1 align-items-center relative">
-                                                <div class="col-12 sm:col-6 grid grid-nogutter">
-                                                    <div class="col-fixed">
-                                                        <img src="./../../../assets/svg/File-pdf-document.svg" width="48px" height="48px" />
-                                                    </div>
-                                                    <div class="col ml-3">
-                                                        <p class="font-bold overflow-hidden">{{ f.name.slice(0,25)}} <span *ngIf="f.name.length>25">...</span></p>
-                                                        <p class="text-xs overflow-hidden">ขนาดไฟล์ {{ b2s(f.size) }}</p>
-                                                    </div>
-                                                </div>
-                                                <div class="col-12 sm:col-6 sm:justify-content-end  grid grid-nogutter">
-                                                    <div class="col-fixed flex flew-row align-self-center" style="width: 200px">
-                                                        <p-dropdown class="w-full" [options]="doctype" optionLabel="name"
-                                                            placeholder="เลือกประเภทเอกสาร" (onChange)="selectType($event,i)"></p-dropdown>
-                                                        <div class="hidden sm:block ">
-                                                            <p-button icon="pi pi-trash" styleClass="p-button-rounded p-button-text" (click)="onRemoveFileUpload(f,i)"></p-button>
-                                                        </div>
-                                                        <div style="width: 50px" class="sm:hidden absolute top-0 right-0">
-                                                            <p-button icon="pi pi-trash" styleClass="p-button-rounded p-button-text" (click)="onRemoveFileUpload(f,i)"></p-button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                
-                                            </div>
-                                        </div>
-                                    </div>
-                                    
-                                </div>
-                            </div>
-                        </div>
-                        
-                    
-                    <hr class="my-4" />
-                    <div class="grid grid-nogutter justify-content-between">
-                        <div class="col-12 md:col-4 text-lg">
-                          <p class="font-bold text-primar text-lg mb-3">รายละเอียดอุปกรณ์ไฟฟ้าที่ส่ง</p>
-                        </div>
+  <p class="font-bold text-2xl text-primar mb-4">บริหารสัญญา</p>
+  <p-breadcrumb *ngIf="items" [model]="items" [style]="{background:'none',border:'none',padding:'0',margin: '0 0 1.5rem 0'}"></p-breadcrumb>
+  
+      
+          <div class="card ">
+              <form *ngIf="fg" [formGroup]="fg" enctype="multipart/form-data">
                   
-                        <div class="col-12 md:col-8 md:mt-1">
-                          <div class="grid grid-nogutter mt-3 md:mt-0 justify-content-between">
-                            <div class="col-12 sm:col-6 sm:pr-3">
-                              <p class="mb-0 text-secondary text-sm md:mb-2">จำนวนอุปกรณ์ที่ต้องการส่งมอบ</p>
-                              <input type="number" pInputText class="form-control mb-3 w-full"
-                                        placeholder="กรุณากรอกจำนวนอุปกรณ์ที่ต้องการส่งมอบ" formControlName="quantity">
-                            </div>
-                            <div class="col-12 sm:col-6 sm:pl-3">
-                              <p class="mb-0 text-secondary text-sm md:mb-2">ประเทศผู้ผลิต</p>
-                              <p-autoComplete class="inputText" formControlName="country" [suggestions]="filteredCountries" [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}"
-                                        (completeMethod)="filterCountries($event)" [minLength]="1" (onBlur)="checkCountryValid()"
-                                        placeholder="กรุณากรอกประเทศผู้ผลิต" field="name" >
-                                    </p-autoComplete>
-                            </div>
+                      <p class="text-lg font-bold text-primar m-0">รายละเอียด Receive and Damage </p>
+                      <hr class="my-4" />
+                      <div class="grid grid-nogutter justify-content-between">
+                          <div class="col-12 md:col-4">
+                            <p class="font-bold text-lg text-primar">อุปกรณ์ที่ส่งมอบ</p>
                           </div>
-                          <div class="grid grid-nogutter my-3 justify-content-between">
-                            <div class="col-12 sm:col-6 sm:pr-3">
-                              <p class="mb-0 text-secondary text-sm md:mb-2">ยี่ห้อ (Brand)</p>
-                              <input type="text" pInputText class="form-control w-full mb-3" placeholder="ยี่ห้อ"
-                                        formControlName="brand">
-                            </div>
-                            <div class="col-12 sm:col-6 sm:pl-3">
-                              <p class="mb-0 text-secondary text-sm md:mb-2">รุ่น</p>
-                              <input type="text" pInputText class="form-control w-full" placeholder="กรุณากรอกรุ่น"
-                                        formControlName="model">
-                            </div>
+                          <div class="col-12 m-0 md:col-8">
+                              <input type="text" pInputText class="form-control outline-none border-none bg-gray-300 w-full"  value="{{itemDetial ? itemDetial.name : (report ? report.itemName : '')}}" disabled>
                           </div>
-                          <div class="grid grid-nogutter my-3 justify-content-between">
-                            <div class="col-12 sm:col-6 sm:pr-3">
-                              <p class="mb-0 text-secondary text-sm md:mb-2">Serial Number</p>
-                              <input type="text" pInputText class="form-control w-full mb-3"
-                                        placeholder="กรุณากรอก Serial Number" formControlName="serial">
+                      </div>
+                      <hr class="my-4" />
+                      <div class="grid grid-nogutter justify-content-between">
+                          <div class="col-12 md:col-4">
+                            <p class="font-bold text-primar mb-3 text-lg">รายละเอียดเบื้องต้น</p>
+                          </div>
+                          <div class="col-12 md:col-8 md:mt-1">
+                            <div class="grid grid-nogutter justify-content-between md:mb-4">
+                              <div class="col-12 mb-3 sm:pr-3 sm:col-6 ">
+                                <p class="text-secondary text-sm mb-0 md:mb-2">
+                                  วันที่ส่งของถึงหน้างาน
+                                </p>
+                                <input type="date" pInputText class="form-control w-full" formControlName="arrival">
+                              </div>
+                              <div class="col-12 mb-3 sm:pl-3 sm:col-6">
+                                <p class="text-secondary text-sm mb-0 md:mb-2">วันที่ตรวจสอบ</p>
+                                <input type="date" pInputText class="form-control w-full" formControlName="inspection">
+                              </div>
                             </div>
-                            <div class="col-12 sm:col-6 sm:pl-3">
-                              <p class="mb-0 text-secondary text-sm md:mb-2">PEA No.</p>
-                              <input type="text" pInputText class="form-control w-full" placeholder="กรุณากรอก PEA No."
-                                        formControlName="peano">
+                            <div class="grid grid-nogutter my-0 justify-content-between">
+                              <div class="col-12">
+                                <p class="text-secondary text-sm mb-0 md:mb-2">
+                                  ชื่อผู้ควบคุมงานของบริษัท
+                                </p>
+                                <input type="text" pInputText class="form-control w-full" placeholder="กรุณากรอกชื่อผู้ควบคุมงานของบริษัท" formControlName="taskMaster">
+                              </div>
                             </div>
                           </div>
                         </div>
-                    </div>
-                </form>
-            </div>
-            <div class="flex flex-row justify-content-between px-3">
-                    <button class="bg-white px-5 p-button-outlined" pButton
-                        (click)="onBack()">ยกเลิก</button>
-                <div class="flex flex-row justify-content-end gap-3">
-                    <button class="bg-white px-5 p-button-outlined" pButton
-                        (click)="onDraft()">บันทึกร่าง</button>
-                    <button class="bg-white px-5 p-button-outlined"  [ngClass]="!fg.valid || files.length != filesAttachType.length || files.length == 0?'disabled-button':''" pButton
-                        (click)="onConfirm()" [disabled]="!fg.valid || files.length != filesAttachType.length || files.length == 0">ส่งให้
-                        กฟภ. </button>
-                </div>
-            </div>
-        
-    <p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>
-    <p-toast [breakpoints]="{'920px': {width: '100%', right: '0', left: '0'}}"></p-toast>
+                      <hr class="my-4" />
+                      <div class="grid grid-nogutter justify-content-between relative">
+                          <div class="col-12 md:col-4">
+                              <p class="font-bold text-primar text-lg mb-3">เอกสารการส่ง</p>
+                          </div>
+                          <div class="col-12 md:col-8 md:mt-1">
+                              <div class="grid grid-nogutter justify-content-between">
+                                  <div class="col-12">
+                                      <p class="text-secondary text-sm mb-0 md:mb-2">เลขที่ใบส่ง</p>
+                                      <input type="text" pInputText class="form-control w-full mb-3" placeholder="เลขที่ใบส่ง"
+                                          formControlName="invoice">
+                                  </div>
+                                  <div class="col-12 md:mt-4">
+                                      <p class="text-secondary text-sm mb-0 md:mb-2">เอกสารแนบ (Packing List, ใบออกของ, ใบ Shipping, Factory Test
+                                          report)</p>
+                                      <ngx-dropzone accept="application/pdf" [maxFileSize]="50000000" (change)="onSelectFileUpload($event)">
+                                          <ngx-dropzone-label>
+                                              ลากไฟล์มาไว้ที่นี้ หรือ
+                                              <span class="text-primary fw-bold">เลือกไฟล์เพื่ออัปโหลด</span>
+                                              <br />
+                                              <span>ไฟล์ขนาดไม่เกิน 50 MB (เฉพาะ .pdf เท่านั้น)</span>
+                                          </ngx-dropzone-label>
+                                      </ngx-dropzone>
+                                      <div *ngFor="let f of files;  index as i">
+                                          <div class="grid grid-nogutter border-round-sm bg-gray-200 p-3 mb-1 align-items-center relative">
+                                              <div class="col-12 sm:col-6 grid grid-nogutter">
+                                                  <div class="col-fixed">
+                                                      <img src="./../../../assets/svg/File-pdf-document.svg" width="48px" height="48px" />
+                                                  </div>
+                                                  <div class="col ml-3">
+                                                      <p class="font-bold overflow-hidden">{{ f.name.slice(0,25)}} <span *ngIf="f.name.length>25">...</span></p>
+                                                      <p class="text-xs overflow-hidden">ขนาดไฟล์ {{ b2s(f.size) }}</p>
+                                                  </div>
+                                              </div>
+                                              <div class="col-12 sm:col-6 sm:justify-content-end  grid grid-nogutter">
+                                                  <div class="col-fixed flex flew-row align-self-center" style="width: 200px">
+                                                      <p-dropdown class="w-full" [options]="doctype" optionLabel="name"
+                                                          placeholder="เลือกประเภทเอกสาร" (onChange)="selectType($event,i)"></p-dropdown>
+                                                      <div class="hidden sm:block ">
+                                                          <p-button icon="pi pi-trash" styleClass="p-button-rounded p-button-text" (click)="onRemoveFileUpload(f,i)"></p-button>
+                                                      </div>
+                                                      <div style="width: 50px" class="sm:hidden absolute top-0 right-0">
+                                                          <p-button icon="pi pi-trash" styleClass="p-button-rounded p-button-text" (click)="onRemoveFileUpload(f,i)"></p-button>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                              
+                                          </div>
+                                      </div>
+                                      <div *ngFor="let f of report.attachFiles"
+                                          class="mw-100 mx-0  justify-content-start d-block" style="min-height:auto;">
+                                          <div class="grid grid-nogutter border-round-sm bg-gray-200 p-3 mb-1 align-items-center relative">
+                                              <div class="col-12 sm:col-6 grid grid-nogutter">
+                                                  <div class="col-fixed">
+                                                      <img src="./../../../assets/svg/File-pdf-document.svg" width="48px" height="48px" />
+                                                  </div>
+                                                  <div class="col ml-3">
+                                                      <p class="font-bold overflow-hidden">{{ f.name.slice(0,25)}} <span *ngIf="f.name.length>25">...</span></p>
+                                                      <p class="text-xs overflow-hidden">{{ f.size }} {{ f.unit }}</p>
+                                                  </div>
+                                              </div>
+                                              <div class="col-12 sm:col-6 sm:justify-content-end  grid grid-nogutter">
+                                                  <div class="col-fixed flex flew-row align-self-center" style="width: 200px">
+                                                      <p-dropdown class="w-full" [options]="doctype" optionLabel="name"
+                                                          placeholder="{{f.typeName}}" (onChange)="changeType($event,f)"></p-dropdown>
+                                                      <div class="hidden sm:block ">
+                                                          <p-button icon="pi pi-trash" styleClass="p-button-rounded p-button-text" (click)="removeOldAttachFile(f)"></p-button>
+                                                      </div>
+                                                      <div style="width: 50px" class="sm:hidden absolute top-0 right-0">
+                                                          <p-button icon="pi pi-trash" styleClass="p-button-rounded p-button-text" (click)="removeOldAttachFile(f)"></p-button>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                                  
+                              </div>
+                          </div>
+                      </div>
+                      
+                  
+                  <hr class="my-4" />
+                  <div class="grid grid-nogutter justify-content-between">
+                      <div class="col-12 md:col-4 text-lg">
+                        <p class="font-bold text-primar text-lg mb-3">รายละเอียดอุปกรณ์ไฟฟ้าที่ส่ง</p>
+                      </div>
+                
+                      <div class="col-12 md:col-8 md:mt-1">
+                        <div class="grid grid-nogutter mt-3 md:mt-0 justify-content-between">
+                          <div class="col-12 sm:col-6 sm:pr-3">
+                            <p class="mb-0 text-secondary text-sm md:mb-2">จำนวนอุปกรณ์ที่ต้องการส่งมอบ</p>
+                            <input type="number" pInputText class="form-control mb-3 w-full"
+                                      placeholder="กรุณากรอกจำนวนอุปกรณ์ที่ต้องการส่งมอบ" formControlName="quantity">
+                          </div>
+                          <div class="col-12 sm:col-6 sm:pl-3">
+                            <p class="mb-0 text-secondary text-sm md:mb-2">ประเทศผู้ผลิต</p>
+                            <p-autoComplete class="inputText" formControlName="country" [suggestions]="filteredCountries" [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}"
+                                      [forceSelection]="true"(completeMethod)="filterCountries($event)" [minLength]="1" (onFocus)="checkCountryValid()"
+                                      placeholder="กรุณากรอกประเทศผู้ผลิต" field="name" >
+                            </p-autoComplete>
+                          </div>
+                        </div>
+                        <div class="grid grid-nogutter my-3 justify-content-between">
+                          <div class="col-12 sm:col-6 sm:pr-3">
+                            <p class="mb-0 text-secondary text-sm md:mb-2">ยี่ห้อ (Brand)</p>
+                            <input type="text" pInputText class="form-control w-full mb-3" placeholder="ยี่ห้อ"
+                                      formControlName="brand">
+                          </div>
+                          <div class="col-12 sm:col-6 sm:pl-3">
+                            <p class="mb-0 text-secondary text-sm md:mb-2">รุ่น</p>
+                            <input type="text" pInputText class="form-control w-full" placeholder="กรุณากรอกรุ่น"
+                                      formControlName="model">
+                          </div>
+                        </div>
+                        <div class="grid grid-nogutter my-3 justify-content-between">
+                          <div class="col-12 sm:col-6 sm:pr-3">
+                            <p class="mb-0 text-secondary text-sm md:mb-2">Serial Number</p>
+                            <input type="text" pInputText class="form-control w-full mb-3"
+                                      placeholder="กรุณากรอก Serial Number" formControlName="serial">
+                          </div>
+                          <div class="col-12 sm:col-6 sm:pl-3">
+                            <p class="mb-0 text-secondary text-sm md:mb-2">PEA No.</p>
+                            <input type="text" pInputText class="form-control w-full" placeholder="กรุณากรอก PEA No."
+                                      formControlName="peano">
+                          </div>
+                        </div>
+                      </div>
+                  </div>
+              </form>
+          </div>
+          <div class="flex flex-row justify-content-between px-3">
+                  <button class="bg-white px-5 p-button-outlined" pButton
+                      (click)="onBack()">ยกเลิก</button>
+              <div class="flex flex-row justify-content-end gap-3">
+                  <button class="bg-white px-5 p-button-outlined" pButton
+                      (click)="onDraft()">บันทึกร่าง</button>
+                  <button class="bg-white px-5 p-button-outlined"  [ngClass]="!fg.valid || files.length != filesAttachType.length || (files.length == 0 && report.attachFiles.length == 0)?'disabled-button':''" pButton
+                      (click)="onConfirm()" [disabled]="!fg.valid || files.length != filesAttachType.length || (files.length == 0 && report.attachFiles.length == 0)">ส่งให้
+                      กฟภ. </button>
+              </div>
+          </div>
 </div>
-
-<!-- <div>
-    <p>FG Debug</p><br/>
-    <p>{{fg.value.quantity}}</p>
-</div> -->
+<p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+<p-toast [breakpoints]="{'920px': {width: '100%', right: '0', left: '0'}}"></p-toast>

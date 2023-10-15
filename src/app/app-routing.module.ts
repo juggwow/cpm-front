@@ -21,18 +21,18 @@ import { LoginCallbackService } from './services/login-callback.service';
                                 ).then((m) => m.BoqItemComponent),
                         },
                         {
-                            path: 'item/:id/report/create',
+                            path: 'item/:itemID/report/:typeForm',
                             loadComponent: () =>
                                 import(
                                     './pages/form/form.component'
                                 ).then((m) => m.FormComponent),
                         },
                         {
-                            path: 'item/:itemID/report/:reportID/edit',
+                            path: 'item/:itemID/report/:reportID/:typeForm',
                             loadComponent: () =>
                                 import(
-                                    './pages/form-edit/form-edit.component'
-                                ).then((m) => m.FormEditComponent),
+                                    './pages/form/form.component'
+                                ).then((m) => m.FormComponent),
                         },
                         {
                             path: 'formupdate',
@@ -75,20 +75,6 @@ import { LoginCallbackService } from './services/login-callback.service';
                                 import(
                                     './pages/report-view/report-view.component'
                                 ).then((m) => m.ReportViewComponent),
-                        },
-                        {
-                            path: 'project',
-                            loadComponent: () =>
-                                import(
-                                    './pages/project/project.component'
-                                ).then((m) => m.ProjectComponent),
-                        },
-                        {
-                            path: 'detail',
-                            loadComponent: () =>
-                                import(
-                                    './pages/detail-view/detail-view.component'
-                                ).then((m) => m.DetailViewComponent),
                         },
                     ],
                 },

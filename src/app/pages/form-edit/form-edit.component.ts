@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA, OnInit } from '@angular/core';
-import { Form, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AbstractControl, Form, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { NgxDropzoneChangeEvent, NgxDropzoneModule } from 'ngx-dropzone';
 import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
@@ -34,11 +34,14 @@ import { ReportService } from 'src/app/services/report.service';
 export class FormEditComponent implements OnInit {
   public fg!: FormGroup;
 
+  typeForm!: "edit"|"create"
+
   contractId!: number;
   items: MenuItem[] = [];
   projectName: string = "...";
 
   itemId!: number;
+  itemDetial !: Item;
   reportId!: number;
 
   files: File[] = [];
@@ -97,21 +100,47 @@ export class FormEditComponent implements OnInit {
     this.contractId = Number(this.route.snapshot.parent?.paramMap.get('id'));
     this.itemId = Number(this.route.snapshot.paramMap.get('itemID'));
     this.reportId = Number(this.route.snapshot.paramMap.get('reportID'));
-    // this.getDocType();
-    // this.getCountries();
-    if (this.reportId) {
-      this.form.reportView<ReportView>(this.reportId)
-        .subscribe((res) => {
-          this.report = { ...this.report, ...res };
-          this.fg.patchValue(this.report);
-          this.getDocType();
+    this.typeForm = <'edit'|'create'>this.route.snapshot.paramMap.get('typeForm')
+
+    this.fg = this.fb.group({
+      // itemID: [''],
+      arrival: ['',Validators.required],
+      inspection: ['',Validators.required],
+      taskMaster: ['',Validators.required],
+      invoice: ['',Validators.required],
+      quantity: [3,Validators.required],
+      country: ['',[
+        Validators.required,
+        (control: AbstractControl<Country|string>): null | { countryInvalid: boolean } => {
+            if(typeof(control.value)=='string'){
+              return {countryInvalid:true}
+            }
+            if(!this.countries.includes(control.value)){
+              return {countryInvalid:true}
+            }
+            return null
+          }
+        ]
+      ],
+      brand: ['',Validators.required],
+      model: ['',Validators.required],
+      serial: ['',Validators.required],
+      peano: ['',Validators.required],
+      createby: [''],
+      // status: ['']
+      // filesAttach: new FormControl([] as Upload[])
+      // docType: new FormControl([] as Upload[])
+      // selectedCity: new FormControl<City | null>(null)
+    })
+
+    if (this.typeForm == "create"){
+      this.boqService.getBoqItemDetail(this.itemId)
+      .subscribe((res) => {
+        this.itemDetial = { ...this.itemDetial, ...res };
+        this.fg.patchValue({ quantity: `${this.itemDetial.quantity}` });
+
+        this.getDocType();
           this.getCountries();
-          // this.countries?.map((o) => {
-          //   if (o.code == this.report.country) {
-          //     this.fg.patchValue({ country: o });
-          //     console.log(this.fg.get(`country`)?.value)
-          //   }
-          // });
 
           this.boqService.getProjectDetail(this.contractId)
             .subscribe((res) => {
@@ -120,35 +149,33 @@ export class FormEditComponent implements OnInit {
                 { label: 'บริหารสัญญา' },
                 { label: res.workName},
                 { label: 'Receive and Damage' },
-                { label: `${this.report.itemName.slice(0, 25)}...` }
+                { label: `${this.itemDetial.name.slice(0, 25)}${this.itemDetial.name.length>25?'...':undefined}` }
               ];
-            });
-          // this.files.push(this.report.attachFiles);
-        });
+            })
+      })
     }
 
-    // this.getDocType();
-    // this.getCountries();
+    if (this.reportId && this.typeForm == 'edit') {
+      this.form.reportView<ReportView>(this.reportId)
+        .subscribe((res) => {
+          this.report = { ...this.report, ...res };
+          this.fg.patchValue(this.report);
+          this.getDocType();
+          this.getCountries();
 
+          this.boqService.getProjectDetail(this.contractId)
+            .subscribe((res) => {
+              this.items = [
+                { label: 'บริหารจัดการสัญญา' },
+                { label: 'บริหารสัญญา' },
+                { label: res.workName},
+                { label: 'Receive and Damage' },
+                { label: `${this.report.itemName.slice(0, 25)}${this.report.itemName.length>25?'...':undefined}` }
+              ];
+            })
 
-    this.fg = this.fb.group({
-      // itemName: [''],
-      arrival: [''],
-      inspection: [''],
-      taskMaster: [''],
-      invoice: [''],
-      quantity: [''],
-      country: [''],
-      brand: [''],
-      model: [''],
-      serial: [''],
-      peano: [''],
-      createby: ['']
-      // status: ['']
-      // filesAttach: new FormControl([] as Upload[])
-      // docType: new FormControl([] as Upload[])
-    })
-
+        });
+    }
   }
 
   getDocType() {
@@ -162,11 +189,9 @@ export class FormEditComponent implements OnInit {
     this.form.getCountryList<Country[]>()
       .subscribe((res) => {
         this.countries = res;
-        console.log(`country=>>${this.report.country}`)
         this.countries?.map((o) => {
           if (o.code == this.report.country) {
             this.fg.patchValue({ country: o });
-            console.log(this.fg.get(`country`)?.value)
           }
         });
       });
@@ -191,15 +216,20 @@ export class FormEditComponent implements OnInit {
   }
 
   onBack() {
-    this.confirmationService.confirm({
-      message: 'กด "ยืนยัน" หากต้องการยกเลิกโดยไม่บันทึกการเปลี่ยนแปลง',
-      header: `ยืนยันยกเลิกโดย "ไม่บันทึก" หรือไม่`,
-      acceptLabel: "ยืนยัน",
-      rejectLabel: "ยกเลิก",
-      accept: () => {
-        this.router.navigate(['/contract', this.contractId, 'item', this.itemId, 'report']);
-      }
-    });
+    if(this.fg.dirty){
+      this.confirmationService.confirm({
+        message: 'กด "ยืนยัน" หากต้องการยกเลิกโดยไม่บันทึกการเปลี่ยนแปลง',
+        header: `ยืนยันยกเลิกโดย "ไม่บันทึก" หรือไม่`,
+        acceptLabel: "ยืนยัน",
+        rejectLabel: "ยกเลิก",
+        accept: () => {
+          this.router.navigate(['/contract', this.contractId, 'item', this.itemId, 'report']);
+        }
+      });
+    }
+    else{
+      this.router.navigate(['/contract', this.contractId, 'item', this.itemId, 'report']);
+    }
   }
 
   onConfirm() {
@@ -253,6 +283,7 @@ export class FormEditComponent implements OnInit {
     this.report.attachFiles.splice(this.report.attachFiles.indexOf(f), 1);
     this.delAttachFiles.push(f.id);
   }
+
   changeType(e: any, f: AttachFile) {
     console.log(`filenewid=${f.id}`);
     this.changeAttachFilesType.map((o) => {
@@ -278,9 +309,32 @@ export class FormEditComponent implements OnInit {
       formData.append("filesAttach", file);
     });
     formData.append("docType", this.filesAttachType.toString());
+
+    
+    if (this.typeForm == "create"){
+      this.form.addNewReport(formData).pipe(
+        take(1),
+        tap(() => {
+          console.log('..');    
+        })
+      )
+        .subscribe({
+          error: (err) => {
+            let detail = `บันทึกไม่สำเร็จ: ${err.status}, ${err.statusText}`
+            this.messageService.add({ severity: 'error', summary: 'Error', detail});
+          },
+          complete: () => {
+            this.show(status);
+            setTimeout(() => {
+              this.router.navigate(['/contract', this.contractId, 'item', this.itemId, 'report']);
+            }, 1000);
+          }
+        });
+    }
+
+    if (this.reportId && this.typeForm == 'edit'){
     formData.append("changeFileType", JSON.stringify(this.changeAttachFilesType));
     formData.append("removeFile", this.delAttachFiles.toString());
-
 
     this.form.editReport(formData, this.reportId).pipe(
       take(1),
@@ -292,8 +346,9 @@ export class FormEditComponent implements OnInit {
       })
     )
       .subscribe({
-        error: () => {
-          this.messageService.add({ severity: 'error', summary: 'Error', detail: 'บันทึกไม่สำเร็จ' });
+        error: (err) => {
+          let detail = `บันทึกไม่สำเร็จ: ${err.status}, ${err.statusText}`
+          this.messageService.add({ severity: 'error', summary: 'Error', detail});
         },
         complete: () => {
           this.show(status);
@@ -302,6 +357,7 @@ export class FormEditComponent implements OnInit {
           }, 1000);
         }
       });
+    } 
   }
 
   show(status: string) {
@@ -309,6 +365,12 @@ export class FormEditComponent implements OnInit {
       this.messageService.add({ severity: 'success', summary: 'Success', detail: 'บันทึกร่างสำเร็จ' });
     } else {
       this.messageService.add({ severity: 'success', summary: 'Success', detail: 'ส่งให้ กฟภ.สำเร็จ' });
+    }
+  }
+
+  checkCountryValid(){
+    if(!this.countries.includes(this.fg.value.country)){
+      this.messageService.add({ severity: 'info', summary: 'Info', detail: "กรุณาเลือกประเทศจากรายการที่แนะนำ"});
     }
   }
 }
