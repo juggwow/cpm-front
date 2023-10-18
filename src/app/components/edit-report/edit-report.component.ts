@@ -98,7 +98,7 @@ export class EditReportComponent implements OnInit {
           inspection: this.fg.value.inspection,
           taskMaster: this.fg.value.taskMaster
         }
-        url = `${environment.apiUrl}/report-basic-detials/${this.report.id}`
+        url = `${environment.apiUrl}/report-basic-details/${this.report.id}`
         break
       }
       case 2 : {
@@ -109,9 +109,16 @@ export class EditReportComponent implements OnInit {
         break
       }
       case 3 : {
+        let country!:string
+        for (let i = 0; i < this.countries.length; i++){
+          if(this.fg.value.country == this.countries[i].name){
+            country = this.countries[i].code
+            break;
+          }
+        }
         body = {
-          quantity: this.fg.value.quantity,
-          country: this.fg.value.country,
+          quantity: String(this.fg.value.quantity),
+          country,
           brand: this.fg.value.brand,
           model: this.fg.value.model,
           serial: this.fg.value.serial,
@@ -121,6 +128,8 @@ export class EditReportComponent implements OnInit {
         break
       }
     }
+
+    console.log(body)
 
     const update = ()=>{this.http.put(url, body)
       .pipe(
