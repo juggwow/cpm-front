@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import { Component, CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA, OnInit } from '@angular/core';
 import { AbstractControl, Form, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
@@ -92,7 +92,8 @@ export class FormComponent implements OnInit {
     private boqService: BoqService,
     private form: FormService,
     public fb: FormBuilder,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private location: Location
   ) { }
 
   ngOnInit(): void {
@@ -225,12 +226,12 @@ export class FormComponent implements OnInit {
         acceptLabel: "ยืนยัน",
         rejectLabel: "ยกเลิก",
         accept: () => {
-          this.router.navigate(['/contract', this.contractId, 'item', this.itemId, 'report']);
+          this.location.back()
         }
       });
     }
     else{
-      this.router.navigate(['/contract', this.contractId, 'item', this.itemId, 'report']);
+      this.location.back()
     }
   }
 
