@@ -30,7 +30,7 @@ import { ReportService } from 'src/app/services/report.service';
   styleUrls: ['./pd-report-approve-list.component.scss'],
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  providers: [BoqService, ReportService],
+  providers: [ ReportService],
   imports: [
     BreadcrumbModule,
     CardComponent,

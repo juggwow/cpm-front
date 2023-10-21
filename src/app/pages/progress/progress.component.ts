@@ -44,7 +44,7 @@ import { DialogModule } from 'primeng/dialog';
     PdfViewerModule,
     DialogModule
   ],
-  providers: [BoqService, ReportService, ConfirmationService]
+  providers: [ ReportService, ConfirmationService]
 })
 export class ProgressComponent implements OnInit {
   @ViewChild(PdfViewerComponent)

@@ -29,7 +29,7 @@ import { ReportService } from 'src/app/services/report.service';
   styleUrls: ['./pd-report-wait-approve-list.component.scss'],
   standalone: true,
   schemas:[CUSTOM_ELEMENTS_SCHEMA,NO_ERRORS_SCHEMA],
-  providers: [BoqService, ReportService, ConfirmationService],
+  providers: [ReportService, ConfirmationService],
   imports: [
     BreadcrumbModule,
     CardComponent,

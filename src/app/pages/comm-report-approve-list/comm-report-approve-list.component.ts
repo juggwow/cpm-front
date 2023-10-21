@@ -30,7 +30,7 @@ import { ReportService } from 'src/app/services/report.service';
   styleUrls: ['./comm-report-approve-list.component.scss'],
   standalone: true,
   schemas:[CUSTOM_ELEMENTS_SCHEMA,NO_ERRORS_SCHEMA],
-  providers: [BoqService, ReportService],
+  providers: [ReportService],
   imports: [
     BreadcrumbModule,
     CardComponent,

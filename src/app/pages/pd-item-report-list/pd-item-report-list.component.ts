@@ -31,7 +31,7 @@ import {MatIconModule} from '@angular/material/icon';
   styleUrls: ['./pd-item-report-list.component.scss'],
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
-  providers: [ListDocumentService, ConfirmationService, BoqService, ReportService],
+  providers: [ListDocumentService, ConfirmationService, ReportService],
   imports: [ConfirmDialogModule,
     TableModule,
     InputTextModule,

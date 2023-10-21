@@ -29,7 +29,7 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './approve.component.html',
   styleUrls: ['./approve.component.scss'],
-  providers: [BoqService, ReportService],
+  providers: [ReportService],
   imports: [
     BreadcrumbModule,
     CardComponent,

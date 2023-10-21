@@ -21,7 +21,7 @@ import { BoqService } from 'src/app/services/boq.service';
   templateUrl: './pd-item-list.component.html',
   styleUrls: ['./pd-item-list.component.scss'],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ,NO_ERRORS_SCHEMA],
-  providers: [BoqService],
+  providers: [],
   imports: [
     TableModule,
     InputTextModule,

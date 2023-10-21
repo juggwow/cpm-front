@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { NotfoundComponent } from './components/notfound/notfound.component';
 import { AppLayoutComponent } from './layout/app.layout.component';
 import { LoginCallbackService } from './services/login-callback.service';
+import { BoqService } from './services/boq.service';
 
 @NgModule({
     imports: [
@@ -174,7 +175,7 @@ import { LoginCallbackService } from './services/login-callback.service';
             }
         ),
     ],
-    providers: [LoginCallbackService],
+    providers: [LoginCallbackService,BoqService],
     exports: [RouterModule],
 })
 export class AppRoutingModule { }

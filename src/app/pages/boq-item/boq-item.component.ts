@@ -17,7 +17,7 @@ import { ResponsePage } from 'src/app/models/response-page.model';
 import { PageEvent } from 'src/app/models/paginator.model';
 
 @Component({
-  providers: [BoqService],
+  providers: [],
   imports: [
     TableModule,
     InputTextModule,
